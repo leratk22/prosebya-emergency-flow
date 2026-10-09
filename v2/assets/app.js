@@ -251,7 +251,8 @@
       '</span><a class="user__logout" href="auth.html" aria-label="Выйти">' + ICONS.logout + "</a></div>";
     if (layout === "client") {
       return '<header class="site-header">' + logo +
-        '<button class="menu-btn" type="button" aria-label="Меню" aria-expanded="false" data-menu-open><span class="menu-btn__bars"></span></button></header>';
+        '<button class="menu-btn" type="button" aria-label="Меню" aria-expanded="false" data-menu-open><span class="menu-btn__bars"></span></button>' +
+        '<a class="site-header__logout" href="auth.html">' + ICONS.logout + "<span>Выйти</span></a></header>";
     }
     return '<header class="site-header">' + logo +
       '<button class="menu-btn" type="button" aria-label="Меню" aria-expanded="false" data-menu-open><span class="menu-btn__bars"></span></button>' +
@@ -296,7 +297,8 @@
           '<button class="menu-btn menu-close" type="button" aria-label="Закрыть меню" data-menu-close></button></div>' +
           '<nav class="drawer__rows" aria-label="Меню">' +
           '<a class="drawer__row' + (active === "sessions" ? " is-active" : "") + '" href="sessions.html">' + ICONS.calendar + "<span>Мои записи</span></a>" +
-          '<a class="drawer__row" href="specialties.html">' + ICONS.chatPlus + "<span>Записаться на сессию</span></a></nav></div>";
+          '<a class="drawer__row" href="specialties.html">' + ICONS.chatPlus + "<span>Записаться на сессию</span></a>" +
+          '<a class="drawer__row drawer__row--quiet" href="auth.html">' + ICONS.logout + "<span>Выйти</span></a></nav></div>";
       } else {
         drawerHtml = '<div class="drawer" role="dialog" aria-modal="true" aria-label="Меню АЗ">' +
           '<div class="site-header"><a class="site-header__logo" href="index.html"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>' +

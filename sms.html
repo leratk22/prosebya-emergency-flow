@@ -46,7 +46,7 @@
 
       var input = document.getElementById("code"), field = document.getElementById("code-field");
       function check() {
-        if (isValid(input.value)) location.href = "loading.html?next=specialties.html";
+        if (isValid(input.value)) location.href = "loading.html?next=sessions.html";
         else { field.classList.add("is-error"); showToast("Неверный код"); }
       }
       input.addEventListener("input", function () {

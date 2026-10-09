@@ -245,7 +245,8 @@
   }
 
   function headerHtml(layout, user) {
-    var logo = '<a class="site-header__logo" href="index.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>';
+    var home = layout === "client" ? "sessions.html" : "index.html";   /* логотип клиента ведёт в «Мои записи» */
+    var logo = '<a class="site-header__logo" href="' + home + '" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>';
     if (layout === "guest") return '<header class="site-header">' + logo + "</header>";
     var userBlock = '<div class="user"><span class="user__avatar">' + ICONS.user + '</span><span class="user__name">' + user +
       '</span><a class="user__logout" href="auth.html" aria-label="Выйти">' + ICONS.logout + "</a></div>";
@@ -293,7 +294,7 @@
       if (layout === "client") {
         /* мобильное меню клиента: только два пункта — строки с иконками */
         drawerHtml = '<div class="drawer" role="dialog" aria-modal="true" aria-label="Меню">' +
-          '<div class="site-header"><a class="site-header__logo" href="index.html"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>' +
+          '<div class="site-header"><a class="site-header__logo" href="sessions.html"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>' +
           '<button class="menu-btn menu-close" type="button" aria-label="Закрыть меню" data-menu-close></button></div>' +
           '<nav class="drawer__rows" aria-label="Меню">' +
           '<a class="drawer__row' + (active === "sessions" ? " is-active" : "") + '" href="sessions.html">' + ICONS.calendar + "<span>Мои записи</span></a>" +

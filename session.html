@@ -6,19 +6,23 @@
   <title>Запланированная сессия · Просебя</title>
   <link rel="stylesheet" href="assets/app.css">
 </head>
-<body data-layout="app" data-active="sessions">
+<body data-layout="app" data-active="">
   <main class="main-wrap">
     <a class="back" href="sessions.html"><span data-icon="back"></span>Назад</a>
-    <section class="card card--summary">
-      <div class="summary">
-        <div class="summary__body" style="padding-top:32px;padding-bottom:24px"><h1 class="title-l" id="name"></h1><p class="text-m" style="color:var(--color-fg-tertiary)">Психолог</p></div>
+    <section class="card session">
+      <div class="session__panel">
+        <img class="session__img" src="assets/illustration-session.png" alt="" width="128" height="128">
+        <div class="session__who">
+          <h1 class="session__name" id="name"></h1>
+          <p class="session__role">Психолог</p>
+        </div>
       </div>
-      <div class="details">
-        <h2 class="title-xl" id="when"></h2>
-        <p class="text-l">Вам нужно подключиться к звонку в указанное время. Сессию можно перенести или отменить не позднее чем за 6 часов до начала.</p>
-      </div>
-      <div class="actions">
-        <a class="btn btn--primary btn--l" href="#">Подключиться к звонку</a>
+      <div class="session__main">
+        <div class="session__text">
+          <h2 class="title-xl" id="when"></h2>
+          <p class="text-m">Вам нужно подключиться к звонку в указанное время. Сессию можно перенести или отменить не позднее чем за 6 часов до начала.</p>
+        </div>
+        <a class="btn btn--primary session__btn" href="#">Подключиться к звонку</a>
       </div>
     </section>
   </main>

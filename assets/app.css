@@ -308,6 +308,18 @@ img { display: block; max-width: 100%; }
 .card--summary .actions .checkbox { width: 100%; max-width: 320px; align-self: center; padding: 0; }
 .details { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 16px 0; text-align: center; }
 
+
+/* ---------- Запланированная сессия (макет «Запланированная сессия») ---------- */
+.card.session { padding: 8px; gap: 0; }
+.session__panel { display: flex; flex-direction: column; align-items: center; background: var(--color-bg-tertiary); border-radius: var(--radius-m); padding: 16px; }
+.session__img { display: none; width: 128px; height: 128px; object-fit: cover; }
+.session__who { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0; text-align: center; }
+.session__name { font-size: var(--text-title-l); line-height: var(--leading-title-l); letter-spacing: var(--tracking-title-l); font-weight: var(--font-weight-semibold); max-width: 400px; }
+.session__role { font-size: var(--text-caption); line-height: var(--leading-caption); font-weight: var(--font-weight-medium); color: var(--color-fg-tertiary); }
+.session__main { display: flex; flex-direction: column; gap: 24px; padding: 24px 16px 16px; text-align: center; }
+.session__text { display: flex; flex-direction: column; gap: 8px; }
+.session__btn { width: 100%; }
+
 /* ---------- Слоты (по макету «Специалист — Запись») ---------- */
 .main-wrap--tight { padding-left: 8px; padding-right: 8px; }
 .slots-card { padding: 0 0 24px; gap: 0; }
@@ -450,6 +462,14 @@ img { display: block; max-width: 100%; }
   .day-block .day__head { padding: 0 16px; }
   .main-wrap { padding: 0 16px 16px; }
   .card { padding: 32px; gap: 32px; }
+  .card.session { flex-direction: row; align-items: stretch; padding: 8px; }
+  .session__main { order: 1; flex: 1; justify-content: flex-end; text-align: left; padding: 24px; }
+  .session__panel { order: 2; width: 320px; flex-shrink: 0; padding: 24px 32px; gap: 16px; }
+  .session__img { display: block; }
+  .session__who { padding: 16px; width: 100%; }
+  .session__name { font-size: var(--text-title-m); line-height: var(--leading-title-m); letter-spacing: var(--tracking-title-m); }
+  .session__btn { width: auto; align-self: flex-start; padding-left: 16px; padding-right: 16px; }
+
   .card--summary { padding: 8px 8px 32px; gap: 24px; }
   .summary__body { padding: 24px 32px 16px; }
   .facts { width: 360px; margin: 0 auto 32px; }

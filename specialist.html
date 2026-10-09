@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Выбор времени · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="app" data-active="">
+  <main class="main-wrap main-wrap--tight">
+    <a class="back" href="javascript:history.back()"><span data-icon="back"></span>Назад</a>
+    <section class="card slots-card" id="slots-card"></section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var card = document.getElementById("slots-card");
+      var id = +qs("id") || 1;
+      var s = SPECIALISTS.filter(function (x) { return x.id === id; })[0] || SPECIALISTS[0];
+      var state = qs("state");   /* ?state=none — нет мест, ?state=unavailable — время недоступно */
+
+      var head = '<div class="specialist-head"><h1 class="title-l">' + s.name + "</h1></div>";
+
+      if (state === "none") {
+        card.innerHTML = head + '<div class="empty"><h2 class="title-l">Нет свободных мест</h2><p class="text-l">Всё время занято или специалист в отпуске</p></div>';
+        return;
+      }
+      if (state === "unavailable") {
+        card.innerHTML = head + '<div class="empty"><img class="empty__img" src="assets/illustration-time.png" alt=""><h2 class="title-l">Время для записи недоступно</h2>' +
+          '<a class="btn btn--primary btn--l btn--inline" href="specialist.html?id=' + s.id + '">Выбрать другое время</a></div>';
+        return;
+      }
+
+      var html = head;
+      for (var d = 0; d < 14; d++) {
+        var lbl = PS.dayLabel(d);
+        var groups = slotsFor(d).filter(function (g) { return g.times.length; });
+        html += '<div class="day"><div class="day__head"><span class="day__date">' + lbl.title + '</span>' + (lbl.tag ? '<span class="day__tag">' + lbl.tag + "</span>" : "") + "</div>";
+        groups.forEach(function (g) {
+          html += '<div class="slot-group"><div class="slot-group__caption">' + g.title + '</div><div class="slot-group__list">' +
+            g.times.map(function (t) { return '<button type="button" class="slot" data-day="' + d + '" data-time="' + t + '">' + t + "</button>"; }).join("") +
+            "</div></div>";
+        });
+        html += "</div>";
+      }
+      card.innerHTML = html;
+      card.addEventListener("click", function (e) {
+        var b = e.target.closest(".slot");
+        if (!b) return;
+        b.setAttribute("aria-pressed", "true");
+        location.href = "confirm.html?id=" + s.id + "&day=" + b.dataset.day + "&time=" + encodeURIComponent(b.dataset.time);
+      });
+    })();
+  </script>
+</body>
+</html>

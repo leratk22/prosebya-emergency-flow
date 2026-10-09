@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ваши данные · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <a class="back" href="sms.html"><span data-icon="back"></span>Назад</a>
+    <form class="card card--center" id="client-form" novalidate>
+      <div class="card__head">
+        <h1 class="title-xl">Ваши данные</h1>
+        <p class="text-l">Эта информация понадобится специалисту во время сессии.</p>
+      </div>
+      <div class="controls controls--fields">
+        <div class="field" data-required="Укажите фамилию">
+          <div class="field__box"><div class="field__body"><label class="field__label" for="last">Фамилия</label><input class="field__input" id="last" name="last" autocomplete="family-name" placeholder="Фамилия"></div></div>
+          <div class="field__helper"></div>
+        </div>
+        <div class="field" data-required="Укажите имя">
+          <div class="field__box"><div class="field__body"><label class="field__label" for="first">Имя</label><input class="field__input" id="first" name="first" autocomplete="given-name" placeholder="Имя"></div></div>
+          <div class="field__helper"></div>
+        </div>
+        <div class="field">
+          <div class="field__box"><div class="field__body"><label class="field__label" for="middle">Отчество</label><input class="field__input" id="middle" name="middle" autocomplete="additional-name" placeholder="Отчество"></div></div>
+          <div class="field__helper">При наличии</div>
+        </div>
+        <div class="field" data-required="Укажите название компании">
+          <div class="field__box"><div class="field__body"><label class="field__label" for="company">Название компании</label><input class="field__input" id="company" name="company" autocomplete="organization" placeholder="Название компании"></div></div>
+          <div class="field__helper"></div>
+        </div>
+        <div class="segmented" role="group" aria-label="Пол">
+          <button type="button" class="segmented__item" aria-pressed="true" data-gender="f">Женщина</button>
+          <button type="button" class="segmented__item" aria-pressed="false" data-gender="m">Мужчина</button>
+        </div>
+        <div class="field" id="birth-field">
+          <div class="field__box"><div class="field__body"><label class="field__label" for="birth">Дата рождения</label><input class="field__input" id="birth" name="birth" inputmode="numeric" autocomplete="bday" placeholder="Дата рождения" maxlength="10"></div><button type="button" class="field__icon field__icon-btn" id="birth-open" aria-label="Выбрать дату в календаре" data-icon="calendar"></button><input type="date" id="birth-native" tabindex="-1" aria-hidden="true" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px"></div>
+          <div class="field__helper">Услуги доступны для пользователей старше 18 лет</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn btn--primary btn--l" type="submit" id="submit" disabled>Продолжить</button>
+        <label class="checkbox" style="padding:0">
+          <input class="checkbox__input" type="checkbox" id="consent">
+          <span class="checkbox__box" data-icon="check"></span>
+          <span class="checkbox__label">Я даю согласие на обработку персональных данных</span>
+        </label>
+      </div>
+    </form>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      document.getElementById("birth-open").innerHTML = ICONS.calendarSmall;
+      document.querySelector(".checkbox__box").innerHTML = ICONS.check;
+
+      var form = document.getElementById("client-form");
+      var submit = document.getElementById("submit");
+      var consent = document.getElementById("consent");
+      var birth = document.getElementById("birth");
+      var birthField = document.getElementById("birth-field");
+      var required = Array.prototype.slice.call(form.querySelectorAll("[data-required]"));
+
+      function age(str) {
+        var m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(str);
+        if (!m) return null;
+        var d = new Date(+m[3], +m[2] - 1, +m[1]);
+        if (d.getFullYear() !== +m[3] || d.getMonth() !== +m[2] - 1) return null;
+        var t = PS.TODAY, a = t.getFullYear() - d.getFullYear();
+        if (t.getMonth() < d.getMonth() || (t.getMonth() === d.getMonth() && t.getDate() < d.getDate())) a--;
+        return a;
+      }
+      function valid() {
+        var ok = required.every(function (f) { return f.querySelector("input").value.trim(); });
+        var a = age(birth.value);
+        return ok && a !== null && a >= 18 && consent.checked;
+      }
+      function refresh() { submit.disabled = !valid(); }
+
+      required.forEach(function (f) {
+        var i = f.querySelector("input");
+        i.addEventListener("blur", function () { setFieldError(f, i.value.trim() ? "" : f.dataset.required); });
+        i.addEventListener("input", function () { if (i.value.trim()) setFieldError(f, ""); refresh(); });
+      });
+      birth.addEventListener("input", function () {
+        var d = birth.value.replace(/\D/g, "").slice(0, 8), out = d.slice(0, 2);
+        if (d.length > 2) out += "." + d.slice(2, 4);
+        if (d.length > 4) out += "." + d.slice(4, 8);
+        birth.value = out;
+        var a = age(out);
+        setFieldError(birthField, a !== null && a < 18 ? "Услуги доступны для пользователей старше 18 лет" : "");
+        if (a !== null && a < 18) birthField.classList.add("is-error");
+        refresh();
+      });
+      /* системный календарь: скрытый <input type="date"> открывается по иконке, значение уходит в текстовое поле */
+      var nativeDate = document.getElementById("birth-native");
+      var iso = function (d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); };
+      nativeDate.max = iso(PS.TODAY);
+      nativeDate.min = "1900-01-01";
+      document.getElementById("birth-open").addEventListener("click", function () {
+        var m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(birth.value);
+        if (m) nativeDate.value = m[3] + "-" + m[2] + "-" + m[1];
+        if (nativeDate.showPicker) { try { nativeDate.showPicker(); return; } catch (e) {} }
+        nativeDate.focus(); nativeDate.click();
+      });
+      nativeDate.addEventListener("change", function () {
+        var p = nativeDate.value.split("-");
+        if (p.length !== 3) return;
+        birth.value = p[2] + "." + p[1] + "." + p[0];
+        birth.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      consent.addEventListener("change", refresh);
+      Array.prototype.forEach.call(document.querySelectorAll("[data-gender]"), function (b) {
+        b.addEventListener("click", function () {
+          Array.prototype.forEach.call(document.querySelectorAll("[data-gender]"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        });
+      });
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        required.forEach(function (f) { var i = f.querySelector("input"); setFieldError(f, i.value.trim() ? "" : f.dataset.required); });
+        if (valid()) location.href = "specialties.html";
+      });
+    })();
+  </script>
+</body>
+</html>

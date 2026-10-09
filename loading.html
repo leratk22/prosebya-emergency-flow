@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Загрузка · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <div class="loader" role="status" aria-label="Загрузка"><div class="spinner"></div></div>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    /* loading.html?next=client.html — спиннер на экране, затем переход; без next остаётся лоадером */
+    var next = qs("next");
+    if (next && /^[a-z-]+\.html(\?.*)?$/.test(next)) setTimeout(function () { location.href = next; }, 1200);
+  </script>
+</body>
+</html>

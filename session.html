@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Запланированная сессия · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="app" data-active="sessions">
+  <main class="main-wrap">
+    <a class="back" href="sessions.html"><span data-icon="back"></span>Назад</a>
+    <section class="card card--summary">
+      <div class="summary">
+        <div class="summary__body" style="padding-top:32px;padding-bottom:24px"><h1 class="title-l" id="name"></h1><p class="text-m" style="color:var(--color-fg-tertiary)">Психолог</p></div>
+      </div>
+      <div class="details">
+        <h2 class="title-xl" id="when"></h2>
+        <p class="text-l">Вам нужно подключиться к звонку в указанное время. Сессию можно перенести или отменить не позднее чем за 6 часов до начала.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn--primary btn--l" href="#">Подключиться к звонку</a>
+      </div>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var id = +qs("id") || 2;
+      var s = SPECIALISTS.filter(function (x) { return x.id === id; })[0] || SPECIALISTS[1];
+      var day = qs("day") !== null ? +qs("day") : s.day;
+      var time = qs("time") || s.time;
+      var d = day === 0 ? "Сегодня" : day === 1 ? "Завтра" : PS.dateLabel(PS.addDays(PS.TODAY, day));
+      document.getElementById("name").textContent = s.name;
+      document.getElementById("when").textContent = d + " в " + time;
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Что-то пошло не так · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <a class="back" href="javascript:history.back()"><span data-icon="back"></span>Назад</a>
+    <section class="card card--center">
+      <img class="empty__img" src="assets/illustration-error.png" alt="" width="180" height="180" style="width:200px;height:auto">
+      <div class="card__head">
+        <h1 class="title-xl">Что-то пошло не так</h1>
+        <p class="text-l">Нам не удалось загрузить страницу, пожалуйста, попробуйте еще раз</p>
+      </div>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>document.querySelector("[data-icon=back]").outerHTML = ICONS.back;</script>
+</body>
+</html>

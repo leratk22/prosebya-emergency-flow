@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Код из СМС · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <a class="back" href="auth.html"><span data-icon="back"></span>Назад</a>
+    <section class="card card--center">
+      <div class="card__head">
+        <h1 class="title-l">Код из СМС</h1>
+        <p class="text-l">Отправлен на <span id="phone-label">+7 (985) 456-78-99</span></p>
+      </div>
+      <div class="controls">
+        <div class="field" id="code-field">
+          <div class="field__box">
+            <div class="field__body">
+              <label class="field__label" for="code">СМС-код</label>
+              <input class="field__input" id="code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="СМС-код" maxlength="4">
+            </div>
+          </div>
+          <div class="field__helper" id="resend" style="text-align:center;color:var(--color-fg-secondary)"></div>
+        </div>
+      </div>
+    </section>
+    <p class="terms">Регистрируясь, вы принимаете условия<br><a href="#">пользовательского соглашения</a></p>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      /* в макете верный код — 0 (подходят 0, 00, 000, 0000); любой другой — ошибка */
+      function isValid(v) { return /^0+$/.test(v); }
+      var d = (qs("phone") || "9854567899").replace(/\D/g, "");
+      document.getElementById("phone-label").textContent = "+7 (" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6, 8) + "-" + d.slice(8, 10);
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+
+      var seconds = 52, resend = document.getElementById("resend");
+      function tick() {
+        if (seconds > 0) { resend.innerHTML = "Повторная отправка через 00:" + (seconds < 10 ? "0" : "") + seconds; seconds--; setTimeout(tick, 1000); }
+        else resend.innerHTML = '<a href="" style="color:var(--color-fg-accent);font-weight:600">Отправить код ещё раз</a>';
+      }
+      tick();
+
+      var input = document.getElementById("code"), field = document.getElementById("code-field");
+      function check() {
+        if (isValid(input.value)) location.href = "loading.html?next=client.html";
+        else { field.classList.add("is-error"); showToast("Неверный код"); }
+      }
+      input.addEventListener("input", function () {
+        input.value = input.value.replace(/\D/g, "").slice(0, 4);
+        field.classList.remove("is-error");
+        if (input.value.length === 4) check();
+      });
+      input.addEventListener("keydown", function (e) { if (e.key === "Enter" && input.value) check(); });
+      if (qs("state") === "wrong") { input.value = "1111"; field.classList.add("is-error"); showToast("Неверный код"); }
+    })();
+  </script>
+</body>
+</html>

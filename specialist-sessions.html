@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кабинет специалиста · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="specialist" data-user="Кузнецова Анна Сергеевна">
+  <main class="main-wrap">
+    <div class="sessions-page">
+      <div class="page-title">
+        <h1 class="title-xl">Мои сессии</h1>
+        <p class="text-l">Отметьте, состоялась ли сессия с клиентом</p>
+      </div>
+      <div id="days"></div>
+      <button type="button" class="reset-demo" id="reset">Сбросить отметки (демо)</button>
+    </div>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      /* «Сейчас» для макета — пятница 9 октября, 14:07. Отметить можно только начавшуюся сессию. */
+      var NOW = { day: 0, minutes: 14 * 60 + 7 };
+      var KEY = "ps-specialist-marks";
+      var days = [
+        { offset: -1, items: [
+          { id: "a1", time: "12:00", client: "Орлова Дарья Сергеевна", mark: "done" },
+          { id: "a2", time: "15:30", client: "Лебедев Артём Игоревич", mark: "missed" },
+          { id: "a3", time: "19:00", client: "Миронова Ольга Андреевна" }] },
+        { offset: 0, items: [
+          { id: "b1", time: "10:00", client: "Громов Павел Николаевич", mark: "done" },
+          { id: "b2", time: "13:30", client: "Белова Ксения Дмитриевна" },
+          { id: "b3", time: "18:00", client: "Тихонов Роман Олегович" },
+          { id: "b4", time: "20:30", client: "Крылова Алина Викторовна" }] },
+        { offset: 1, items: [
+          { id: "c1", time: "11:00", client: "Соловьёва Мария Павловна" },
+          { id: "c2", time: "16:00", client: "Фролов Георгий Александрович" }] }
+      ];
+
+      /* specialist-sessions.html?reset=1 — сбросить отметки, сделанные в браузере */
+      if (qs("reset")) { try { localStorage.removeItem(KEY); } catch (e) {} }
+      var saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+      function toMin(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+      function started(offset, time) { return offset < NOW.day || (offset === NOW.day && toMin(time) <= NOW.minutes); }
+      function markOf(it) { return saved[it.id] || it.mark || ""; }
+
+      /* как на клиентской части: дата тёмным, «Вчера / Сегодня / Завтра» светлее */
+      function dayTitle(offset) {
+        var d = PS.addDays(PS.TODAY, offset);
+        return { title: PS.dateLabel(d), tag: offset === -1 ? "Вчера" : offset === 0 ? "Сегодня" : "Завтра" };
+      }
+      function actions(can, m) {
+        if (m === "done") return '<div class="mark-status mark-status--done">' + ICONS.check + "Вы отметили: сессия состоялась</div>";
+        if (m === "missed") return '<div class="mark-status mark-status--missed">' + ICONS.cross + "Вы отметили: сессия не состоялась</div>";
+        var dis = can ? "" : " disabled";
+        return '<button type="button" class="btn-mark" data-mark="done"' + dis + ">" + ICONS.check + "<span>Состоялась</span></button>" +
+          '<button type="button" class="btn-mark" data-mark="missed"' + dis + ">" + ICONS.cross + "<span>Не состоялась</span></button>";
+      }
+      function render() {
+        document.getElementById("days").innerHTML = days.map(function (g) {
+          var t = dayTitle(g.offset);
+          var rows = g.items.map(function (it) {
+            var can = started(g.offset, it.time), m = markOf(it);
+            return '<div class="row-session' + (can ? "" : " row-session--future") + '" data-id="' + it.id + '">' +
+              '<div class="row-session__who"><span class="row-session__time">' + it.time + '</span><span class="row-session__name">' + it.client + "</span></div>" +
+              '<div class="row-session__actions">' + actions(can, m) + "</div></div>";
+          }).join("");
+          return '<section class="day-block"><div class="day__head"><span class="day__date">' + t.title + '</span><span class="day__tag">' + t.tag + "</span></div>" +
+            '<div class="card" style="padding:8px;gap:0">' + rows + "</div></section>";
+        }).join('<div style="height:24px"></div>');
+      }
+      render();
+      document.getElementById("reset").addEventListener("click", function () {
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        saved = {}; render();
+      });
+
+      document.getElementById("days").addEventListener("click", function (e) {
+        var b = e.target.closest(".btn-mark");
+        if (!b || b.disabled) return;
+        var id = b.closest(".row-session").dataset.id;
+        /* ответ принимается один раз и навсегда: кнопки заменяются статусом */
+        saved[id] = b.dataset.mark;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (err) {}
+        render();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -446,7 +446,7 @@ img { display: block; max-width: 100%; }
 .panel__ill { align-self: center; width: 128px; height: 128px; object-fit: cover; }
 .panel__center { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
 .panel__empty { flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; text-align: center; }
-.panel__empty .panel__title { margin-top: auto; }
+.panel__empty .panel__ill { margin: auto 0 8px; }   /* мобильная: блок по центру, кнопка внизу */
 .panel__empty .btn { margin-top: auto; }
 .main-wrap--flex { display: flex; flex-direction: column; flex: 1; }
 
@@ -584,7 +584,9 @@ img { display: block; max-width: 100%; }
   .panel__body { gap: 28px; padding: 32px; }
   .panel__body > .btn, .panel__actions .btn, .panel__fields { max-width: 320px; align-self: center; }
   .panel__fields { width: 320px; }
-  .panel__empty { padding: 48px 32px 32px; }
+  .panel__empty { justify-content: center; padding: 48px 32px 32px; }
+  .panel__empty .panel__ill { margin: 0 0 8px; }
+  .panel__empty .btn { width: auto; margin-top: 16px; padding: 0 24px; }   /* десктоп: всё по центру, кнопка по тексту */
   .panel__actions--row { flex-direction: row; justify-content: center; gap: 8px; }
   .panel__actions--row .btn { width: auto; max-width: none; padding: 0 24px; }
   .prow { padding: 20px 32px; }

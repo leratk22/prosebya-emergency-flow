@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Отменить запись? · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="client" data-active="sessions">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" href="sessions.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <form class="panel__body" id="form">
+        <div class="panel__fields">
+          <div class="field field--area">
+            <div class="field__box"><div class="field__body">
+              <label class="field__label" for="reason">Причина отмены</label>
+              <textarea class="field__input field__input--area" id="reason" rows="3" placeholder=""></textarea>
+            </div></div>
+            <div class="field__helper">Необязательно — можно оставить поле пустым</div>
+          </div>
+        </div>
+        <div class="panel__actions panel__actions--row">
+          <a class="btn btn--secondary btn--l" href="sessions.html">Оставить запись</a>
+          <button class="btn btn--danger btn--l" type="submit">Отменить запись</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var list = PS.records(), rec = list.filter(function (r) { return r.id === +qs("id"); })[0];
+      if (!rec || !PS.canChange(rec)) { location.replace("sessions.html"); return; }   /* менее 6 часов до начала */
+      var s = PS.specialistById(rec.specialist);
+      document.getElementById("head").innerHTML = '<h1 class="panel__title">Отменить запись?</h1><p class="panel__sub">' +
+        PS.whenText(rec.day, rec.time) + " · " + rec.spec + " · " + s.name + "</p>";
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        PS.saveRecords(list.filter(function (r) { return r.id !== rec.id; }));
+        location.href = "sessions.html";
+      });
+    })();
+  </script>
+</body>
+</html>

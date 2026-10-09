@@ -3,29 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Подтверждение записи · Просебя</title>
+  <title>Проверьте запись · Просебя</title>
   <link rel="stylesheet" href="assets/app.css">
 </head>
-<body data-layout="app" data-active="">
-  <main class="main-wrap">
-    <a class="back" href="javascript:history.back()"><span data-icon="back"></span>Назад</a>
-    <section class="card card--summary">
-      <div class="summary">
-        <div class="summary__title">Подтверждение записи</div>
-        <div class="summary__body"><h1 class="title-l" id="name"></h1></div>
-        <div class="facts">
-          <div class="facts__item"><span class="facts__label">Дата</span><span class="facts__value" id="date"></span></div>
-          <div class="facts__divider"></div>
-          <div class="facts__item"><span class="facts__label">Время</span><span class="facts__value" id="time"></span></div>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" id="back" href="client.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <div class="panel__body">
+        <div class="sumbox" id="sum"></div>
+        <div class="panel__actions">
+          <label class="checkbox">
+            <input class="checkbox__input" type="checkbox" id="consent" checked>
+            <span class="checkbox__box" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="checkbox__label">Я даю согласие на обработку персональных данных</span>
+          </label>
+          <button class="btn btn--primary btn--l" type="button" id="submit">Записаться</button>
         </div>
-      </div>
-      <div class="actions">
-        <button class="btn btn--primary btn--l" type="button" id="submit">Записаться</button>
-        <label class="checkbox" style="padding:0">
-          <input class="checkbox__input" type="checkbox" id="consent" checked>
-          <span class="checkbox__box"></span>
-          <span class="checkbox__label">Я даю согласие на обработку персональных данных</span>
-        </label>
       </div>
     </section>
   </main>
@@ -33,24 +28,26 @@
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
-      document.querySelector(".checkbox__box").innerHTML = ICONS.check;
-      var id = +qs("id") || 2;
-      var s = SPECIALISTS.filter(function (x) { return x.id === id; })[0] || SPECIALISTS[1];
-      var day = qs("day") !== null ? +qs("day") : s.day;
-      var time = qs("time") || s.time;
-      document.getElementById("name").textContent = s.name;
-      document.getElementById("date").textContent = day === 0 ? "Сегодня" : day === 1 ? "Завтра" : PS.dateLabel(PS.addDays(PS.TODAY, day));
-      document.getElementById("time").textContent = time;
-
+      var spec = qs("spec") || "psychologist", id = +qs("id") || 2, day = +qs("day") || 0, time = qs("time") || "19:30";
+      if (qs("day") === "0") day = 0;
+      var s = PS.specialistById(id);
+      document.getElementById("back").href = "client.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+      document.getElementById("head").innerHTML = PS.stepper(5, 5, "Проверка") + '<h1 class="panel__title">Проверьте запись</h1><p class="panel__sub">Если всё верно, нажмите «Записаться»</p>';
+      var rows = [["Специальность", PS.specTitle(spec)], ["Специалист", s.name], ["Дата и время", PS.shortWhen(day, time)], ["Длительность", "30 минут"]];
+      document.getElementById("sum").innerHTML = rows.map(function (r) {
+        return '<div class="sumrow"><span class="sumrow__k">' + r[0] + '</span><span class="sumrow__v">' + r[1] + "</span></div>";
+      }).join("");
       var consent = document.getElementById("consent"), btn = document.getElementById("submit");
-      function refresh() { btn.disabled = !consent.checked; }
-      consent.addEventListener("change", refresh);
-      refresh();
+      if (qs("state") === "unchecked") consent.checked = false;   /* ?state=unchecked — кнопка недоступна */
+      function sync() { btn.disabled = !consent.checked; btn.classList.toggle("is-disabled", !consent.checked); }
+      consent.addEventListener("change", sync); sync();
       btn.addEventListener("click", function () {
-        if (btn.disabled) return;
-        location.href = "session.html?id=" + s.id + "&day=" + day + "&time=" + encodeURIComponent(time);
+        if (!consent.checked) return;
+        var list = PS.records();
+        list.push({ id: Date.now(), spec: PS.specTitle(spec), specialist: id, day: day, time: time });
+        PS.saveRecords(list);
+        location.href = "booked.html?id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
       });
-      if (qs("state") === "unchecked") { consent.checked = false; refresh(); }
     })();
   </script>
 </body>

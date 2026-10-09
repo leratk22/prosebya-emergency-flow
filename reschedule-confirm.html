@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Перенести запись? · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="client" data-active="sessions">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" id="back" href="reschedule.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <div class="panel__body">
+        <div class="sumbox" id="sum"></div>
+        <button class="btn btn--primary btn--l" type="button" id="submit">Перенести</button>
+      </div>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var list = PS.records(), rec = list.filter(function (r) { return r.id === +qs("id"); })[0];
+      if (!rec) { location.replace("sessions.html"); return; }
+      var day = +qs("day") || 0, time = qs("time") || "11:30", s = PS.specialistById(rec.specialist);
+      document.getElementById("back").href = "reschedule.html?id=" + rec.id;
+      document.getElementById("head").innerHTML = PS.stepper(2, 2, "Подтверждение") +
+        '<h1 class="panel__title">Перенести запись?</h1><p class="panel__sub">Старая запись пропадёт, новая появится в «Моих записях»</p>';
+      var rows = [["Специалист", s.name], ["Было", PS.whenText(rec.day, rec.time).replace(" в ", ", ")], ["Станет", PS.shortWhen(day, time)]];
+      document.getElementById("sum").innerHTML = rows.map(function (r) {
+        return '<div class="sumrow"><span class="sumrow__k">' + r[0] + '</span><span class="sumrow__v">' + r[1] + "</span></div>";
+      }).join("");
+      document.getElementById("submit").addEventListener("click", function () {
+        rec.day = day; rec.time = time; PS.saveRecords(list);
+        location.href = "rescheduled.html?id=" + rec.id;
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -31,8 +31,8 @@
   <script src="assets/app.js"></script>
   <script>
     (function () {
-      /* в макете верный код — 0 (подходят 0, 00, 000, 0000); любой другой — ошибка */
-      function isValid(v) { return /^0+$/.test(v); }
+      /* как в исходной системе: для любого номера верный код — 0000, любой другой — ошибка */
+      function isValid(v) { return v === "0000"; }
       var d = (qs("phone") || "9854567899").replace(/\D/g, "");
       document.getElementById("phone-label").textContent = "+7 (" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6, 8) + "-" + d.slice(8, 10);
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -46,7 +46,7 @@
 
       var input = document.getElementById("code"), field = document.getElementById("code-field");
       function check() {
-        if (isValid(input.value)) location.href = "loading.html?next=client.html";
+        if (isValid(input.value)) location.href = "loading.html?next=specialties.html";
         else { field.classList.add("is-error"); showToast("Неверный код"); }
       }
       input.addEventListener("input", function () {

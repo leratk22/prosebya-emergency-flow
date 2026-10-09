@@ -20,9 +20,10 @@
 
       if (!list.length) {
         panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1></div>' +
-          '<div class="panel__empty"><h2 class="panel__title">Предстоящих записей нет</h2>' +
+          '<div class="panel__empty"><img class="panel__ill" src="assets/illustration-session.png" alt="">' +
+          '<h2 class="panel__title">Предстоящих записей нет</h2>' +
           '<p class="panel__sub">Выберите специалиста и время — это займёт пару минут.</p>' +
-          '<a class="btn btn--primary btn--l" href="specialties.html" style="margin-top:auto">Записаться</a></div>';
+          '<a class="btn btn--primary btn--l" href="specialties.html">Записаться</a></div>';
         return;
       }
       panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1>' +

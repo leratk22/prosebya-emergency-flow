@@ -1,6 +1,6 @@
 /* Просебя · аварийный флоу · общая логика
    Страница задаёт раскладку атрибутами на <body>:
-     data-layout="guest" | "app" | "specialist"
+     data-layout="guest" | "client" | "app"
      data-active="sessions" | "support"   (подсветка пункта меню)
      data-user="Анастасия"                (имя в шапке)
    <main class="main-wrap"> оборачивается шапкой, меню, футером и мобильным меню. */
@@ -25,6 +25,10 @@
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     check:
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    chatPlus:
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10.476C4 6.353 7.587 3 12 3C16.413 3 20 6.353 20 10.476C20 15.551 15.374 19.014 11 21V18C6.847 17.794 4 14.496 4 10.476Z" fill="#344079" fill-opacity="0.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7.9V13.1M9.4 10.5H14.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    link:
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6.5 9.5L9.5 6.5M7 4.5L8.3 3.2C9.4 2.1 11.2 2.1 12.3 3.2C13.4 4.3 13.4 6.1 12.3 7.2L11 8.5M9 11.5L7.7 12.8C6.6 13.9 4.8 13.9 3.7 12.8C2.6 11.7 2.6 9.9 3.7 8.8L5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
     calendarSmall:
       '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.6" y="5" width="16.8" height="15.4" rx="2.3" stroke="currentColor" stroke-width="2"/><path d="M7.8 3.6v2.8M16.2 3.6v2.8M3.6 9.7h16.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
   };
@@ -33,8 +37,9 @@
   /* ---------- Данные ---------- */
   var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
   var WEEKDAYS = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
-  // «Сегодня» для макета: пятница, 9 октября 2026
+  // «Сегодня» для макета: пятница, 9 октября 2026, 14:07
   var TODAY = new Date(2026, 9, 9);
+  var NOW = new Date(2026, 9, 9, 14, 7);
 
   function addDays(d, n) { var r = new Date(d); r.setDate(r.getDate() + n); return r; }
   function dateLabel(d) { return d.getDate() + " " + MONTHS[d.getMonth()]; }
@@ -43,7 +48,7 @@
     var d = addDays(TODAY, offset);
     return { title: dateLabel(d), tag: offset === 0 ? "Сегодня" : offset === 1 ? "Завтра" : "" };
   }
-  window.PS = { MONTHS: MONTHS, WEEKDAYS: WEEKDAYS, TODAY: TODAY, addDays: addDays, dateLabel: dateLabel, dayLabel: dayLabel };
+  window.PS = { MONTHS: MONTHS, WEEKDAYS: WEEKDAYS, TODAY: TODAY, NOW: NOW, addDays: addDays, dateLabel: dateLabel, dayLabel: dayLabel };
 
   /* Специальности — как в макете «Список специальностей» */
   var SPECIALTIES = [
@@ -62,17 +67,17 @@
   window.SPECIALTIES = SPECIALTIES;
 
   var SPECIALISTS = [
-    { id: 1, name: "Кузнецова Анна Сергеевна", day: 0, time: "18:00" },
-    { id: 2, name: "Соколова Екатерина Владимировна", day: 0, time: "19:30" },
-    { id: 3, name: "Петров Дмитрий Олегович", day: 0, time: "20:30" },
-    { id: 4, name: "Иванов Максим Андреевич", day: 1, time: "10:00" },
-    { id: 5, name: "Смирнова Ольга Игоревна", day: 1, time: "11:30" },
-    { id: 6, name: "Попов Артём Евгеньевич", day: 1, time: "14:00" },
-    { id: 7, name: "Васильева Мария Павловна", day: 2, time: "09:30" },
-    { id: 8, name: "Морозов Илья Викторович", day: 3, time: "10:00" },
-    { id: 9, name: "Новикова Наталья Алексеевна", day: 4, time: "12:00" },
-    { id: 10, name: "Федоров Денис Станиславович", day: 5, time: "16:00" },
-    { id: 11, name: "Захарова Елена Романовна", day: 6, time: "11:00" }
+    { id: 1, with: "Анной Кузнецовой", name: "Кузнецова Анна Сергеевна", day: 0, time: "18:00" },
+    { id: 2, with: "Екатериной Соколовой", name: "Соколова Екатерина Владимировна", day: 0, time: "19:30" },
+    { id: 3, with: "Дмитрием Петровым", name: "Петров Дмитрий Олегович", day: 0, time: "20:30" },
+    { id: 4, with: "Максимом Ивановым", name: "Иванов Максим Андреевич", day: 1, time: "10:00" },
+    { id: 5, with: "Ольгой Смирновой", name: "Смирнова Ольга Игоревна", day: 1, time: "11:30" },
+    { id: 6, with: "Артёмом Поповым", name: "Попов Артём Евгеньевич", day: 1, time: "14:00" },
+    { id: 7, with: "Марией Васильевой", name: "Васильева Мария Павловна", day: 2, time: "09:30" },
+    { id: 8, with: "Ильёй Морозовым", name: "Морозов Илья Викторович", day: 3, time: "10:00" },
+    { id: 9, with: "Натальей Новиковой", name: "Новикова Наталья Алексеевна", day: 4, time: "12:00" },
+    { id: 10, with: "Денисом Федоровым", name: "Федоров Денис Станиславович", day: 5, time: "16:00" },
+    { id: 11, with: "Еленой Захаровой", name: "Захарова Елена Романовна", day: 6, time: "11:00" }
   ];
   window.SPECIALISTS = SPECIALISTS;
 
@@ -83,10 +88,10 @@
   window.whenLabel = whenLabel;
 
   /* Слоты на 14 дней: [утро, день, вечер, ночь]. Сегодня — только вечер и ночь, дальше больше. */
-  var COUNTS = [[0, 0, 2, 1], [3, 4, 3, 1], [3, 5, 3, 2], [4, 5, 4, 2], [4, 6, 4, 3], [4, 6, 5, 3], [5, 7, 5, 3],
-    [5, 7, 5, 4], [5, 8, 6, 4], [6, 8, 6, 4], [6, 8, 7, 4], [6, 8, 7, 4], [6, 8, 8, 4], [6, 8, 8, 4]];
+  var COUNTS = [[0, 0, 3, 2], [8, 9, 6, 3], [7, 9, 6, 3], [8, 10, 6, 3], [8, 10, 7, 3], [9, 10, 7, 3], [9, 11, 7, 4],
+    [9, 11, 7, 4], [10, 11, 8, 4], [10, 12, 8, 4], [10, 12, 8, 4], [10, 12, 8, 4], [11, 12, 8, 4], [11, 12, 8, 4]];
   var GROUPS = [
-    { key: "morning", title: "Утро", from: 9 * 60, to: 11 * 60 + 30 },
+    { key: "morning", title: "Утро", from: 6 * 60, to: 11 * 60 + 30 },
     { key: "day", title: "День", from: 12 * 60, to: 17 * 60 + 30 },
     { key: "evening", title: "Вечер", from: 18 * 60, to: 21 * 60 + 30 },
     { key: "night", title: "Ночь", from: 22 * 60, to: 23 * 60 + 30 }
@@ -109,12 +114,129 @@
   }
   window.slotsFor = slotsFor;
 
+
+  /* ---------- Записи клиента (демо-данные в localStorage, сброс: ?reset=1) ---------- */
+  var KEY = "ps_records";
+  function defaultRecords() {
+    return [
+      { id: 1, spec: "Психолог", specialist: 2, day: 0, time: "18:00" },
+      { id: 2, spec: "Психолог", specialist: 9, day: 4, time: "12:00" }
+    ];
+  }
+  function loadRecords() {
+    try {
+      if (new URLSearchParams(location.search).get("reset") === "1") localStorage.removeItem(KEY);
+      var raw = localStorage.getItem(KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* без хранилища работаем с демо-набором */ }
+    return defaultRecords();
+  }
+  function saveRecords(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { /* ignore */ } }
+  function specialistById(id) { return SPECIALISTS.filter(function (x) { return x.id === +id; })[0] || SPECIALISTS[1]; }
+  function specTitle(id) { var s = SPECIALTIES.filter(function (x) { return x.id === id; })[0]; return s ? s.title : "Психолог"; }
+  function startsAt(day, time) {
+    var d = addDays(TODAY, day), p = time.split(":");
+    d.setHours(+p[0], +p[1], 0, 0); return d;
+  }
+  /* перенос и отмена — не позднее чем за 6 часов до начала */
+  function canChange(rec) { return startsAt(rec.day, rec.time) - NOW >= 6 * 3600 * 1000; }
+  function whenText(day, time) {
+    var d = day === 0 ? "Сегодня" : day === 1 ? "Завтра" : dateLabel(addDays(TODAY, day));
+    return d + " в " + time;
+  }
+  function shortWhen(day, time) { return dateLabel(addDays(TODAY, day)) + ", " + time; }
+  function gcalUrl(day, time, who) {
+    function f(d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00"; }
+    var a = startsAt(day, time), b = new Date(a.getTime() + 30 * 60000);
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Сессия в Просебя · " + who) + "&dates=" + f(a) + "/" + f(b);
+  }
+  window.PS.records = loadRecords;
+  window.PS.saveRecords = saveRecords;
+  window.PS.specialistById = specialistById;
+  window.PS.specTitle = specTitle;
+  window.PS.canChange = canChange;
+  window.PS.whenText = whenText;
+  window.PS.shortWhen = shortWhen;
+  window.PS.gcalUrl = gcalUrl;
+
+  /* ---------- Степпер (steps-pagination из дизайн-системы): точки 6 px, активная 12×6 ---------- */
+  window.PS.stepper = function (n, total, label) {
+    var dots = "";
+    for (var i = 1; i <= total; i++) dots += '<i class="stepper__dot' + (i === n ? " is-active" : "") + '"></i>';
+    return '<div class="stepper"><div class="stepper__dots" aria-hidden="true">' + dots + '</div><p class="stepper__label">Шаг ' + n + " из " + total + " · " + label + "</p></div>";
+  };
+
+  /* ---------- Календарь + время (один тап — сразу дальше) ----------
+     mountDateTime(root, { day, onPick(dayIndex, time) }) ; доступны 14 дней начиная с сегодняшнего */
+  window.PS.mountDateTime = function (root, opts) {
+    var selected = opts.day != null ? opts.day : 1;
+    var view = { y: TODAY.getFullYear(), m: TODAY.getMonth() };
+    var WD = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    root.innerHTML = '<div class="dt"><div class="dt__cal"><div class="cal" data-cal></div><p class="text-s dt__note">Сессия длится 30 минут</p></div>' +
+      '<div class="dt__slots"><h2 class="dt__title" data-title></h2><div class="slots-scroll" data-scroll></div></div></div>';
+    var calEl = root.querySelector("[data-cal]"), scroll = root.querySelector("[data-scroll]"), title = root.querySelector("[data-title]");
+
+    function dayIndex(y, m, d) { return Math.round((new Date(y, m, d) - TODAY) / 86400000); }
+    function renderCal() {
+      var first = new Date(view.y, view.m, 1), lead = (first.getDay() + 6) % 7, days = new Date(view.y, view.m + 1, 0).getDate();
+      var atStart = view.y === TODAY.getFullYear() && view.m === TODAY.getMonth();
+      var h = '<div class="cal__head"><span class="cal__month">' + MONTHS_NOM[view.m] + " " + view.y + '</span><span class="cal__nav">' +
+        '<button type="button" class="cal__arrow" data-prev aria-label="Предыдущий месяц"' + (atStart ? " disabled" : "") + '><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+        '<button type="button" class="cal__arrow cal__arrow--next" data-next aria-label="Следующий месяц"' + (!atStart ? " disabled" : "") + '><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></span></div>';
+      h += '<div class="cal__grid cal__weekdays">' + WD.map(function (w) { return "<span>" + w + "</span>"; }).join("") + "</div>";
+      h += '<div class="cal__grid">';
+      for (var i = 0; i < lead; i++) h += "<span></span>";
+      for (var d = 1; d <= days; d++) {
+        var idx = dayIndex(view.y, view.m, d), ok = idx >= 0 && idx <= 13;
+        var cls = "cal__day" + (idx === 0 ? " is-today" : "") + (ok && idx === selected ? " is-selected" : "");
+        h += '<span class="cal__cell"><button type="button" class="' + cls + '" data-day="' + idx + '"' + (ok ? "" : " disabled") + ">" + d + "</button></span>";
+      }
+      calEl.innerHTML = h + "</div>";
+    }
+    function renderSlots() {
+      title.textContent = "Время · " + dateLabel(addDays(TODAY, selected));
+      scroll.innerHTML = slotsFor(selected).filter(function (g) { return g.times.length; }).map(function (g) {
+        return '<div class="tgroup"><div class="tgroup__cap">' + g.title + '</div><div class="tgrid">' +
+          g.times.map(function (t) { return '<button type="button" class="slot" data-time="' + t + '">' + t + "</button>"; }).join("") + "</div></div>";
+      }).join("");
+      scroll.scrollTop = 0; fade();
+    }
+    function fade() { scroll.classList.toggle("is-end", scroll.scrollTop + scroll.clientHeight >= scroll.scrollHeight - 2); scroll.classList.toggle("no-scroll", scroll.scrollHeight <= scroll.clientHeight + 2); }
+    scroll.addEventListener("scroll", fade);
+    calEl.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b || b.disabled) return;
+      if (b.hasAttribute("data-prev")) { view.m--; if (view.m < 0) { view.m = 11; view.y--; } renderCal(); return; }
+      if (b.hasAttribute("data-next")) { view.m++; if (view.m > 11) { view.m = 0; view.y++; } renderCal(); return; }
+      if (b.dataset.day != null) { selected = +b.dataset.day; renderCal(); renderSlots(); }
+    });
+    scroll.addEventListener("click", function (e) {
+      var b = e.target.closest(".slot"); if (!b) return;
+      b.setAttribute("aria-pressed", "true");
+      opts.onPick(selected, b.dataset.time);
+    });
+    renderCal(); renderSlots();
+  };
+  var MONTHS_NOM = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+
+  /* Кнопка «Скопировать ссылку на встречу»: после клика на пару секунд меняет подпись и иконку */
+  window.PS.bindCopy = function (root) {
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-copy]"); if (!b) return;
+      var link = b.dataset.copy, label = b.querySelector(".copy-link__label"), ico = b.querySelector(".copy-link__icon");
+      function done() {
+        b.classList.add("is-copied"); label.textContent = "Ссылка скопирована"; ico.innerHTML = ICONS.check;
+        clearTimeout(b.__t); b.__t = setTimeout(function () { b.classList.remove("is-copied"); label.textContent = "Скопировать ссылку на встречу"; ico.innerHTML = ICONS.link; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, done); else done();
+    });
+  };
+
   /* ---------- Каркас страницы ---------- */
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
 
   function navItems(active, extraClass) {
     var items = [
-      { id: "sessions", href: "sessions.html", icon: "calendar", label: "Мои сессии" },
+      { id: "sessions", href: "sessions.html", icon: "calendar", label: "Мои записи" },
       { id: "support", href: "mailto:service@prosebya.ru", icon: "chat", label: "Служба поддержки" }
     ];
     return items.map(function (i) {
@@ -127,9 +249,9 @@
     if (layout === "guest") return '<header class="site-header">' + logo + "</header>";
     var userBlock = '<div class="user"><span class="user__avatar">' + ICONS.user + '</span><span class="user__name">' + user +
       '</span><a class="user__logout" href="auth.html" aria-label="Выйти">' + ICONS.logout + "</a></div>";
-    if (layout === "specialist") {
-      // у специалиста меню нет: имя и выход видны всегда
-      return '<header class="site-header site-header--specialist">' + logo + userBlock.replace('class="user"', 'class="user user--always"') + "</header>";
+    if (layout === "client") {
+      return '<header class="site-header">' + logo +
+        '<button class="menu-btn" type="button" aria-label="Меню" aria-expanded="false" data-menu-open><span class="menu-btn__bars"></span></button></header>';
     }
     return '<header class="site-header">' + logo +
       '<button class="menu-btn" type="button" aria-label="Меню" aria-expanded="false" data-menu-open><span class="menu-btn__bars"></span></button>' +
@@ -153,7 +275,7 @@
     if (!main) return;
 
     var wrap = document.createElement("div");
-    wrap.className = "layout layout--" + (layout === "app" ? "app" : layout === "specialist" ? "specialist" : "guest");
+    wrap.className = "layout layout--" + (layout === "app" ? "app" : "guest");
     if (layout === "app") {
       var side = el('<aside class="sidebar"><nav class="nav" aria-label="Меню">' + navItems(active) + "</nav>" +
         '<a class="btn btn--primary btn--sm sidebar__cta" href="specialties.html">Записаться на сессию</a></aside>');
@@ -165,14 +287,26 @@
     body.insertBefore(el(headerHtml(layout, user)), wrap);
     body.appendChild(el(footerHtml()));
 
-    if (layout === "app") {
-      var drawer = el('<div class="drawer" role="dialog" aria-modal="true" aria-label="Меню АЗ">' +
-        '<div class="site-header"><a class="site-header__logo" href="index.html"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>' +
-        '<button class="menu-btn menu-close" type="button" aria-label="Закрыть меню" data-menu-close></button></div>' +
-        '<div class="drawer__user"><span class="user__avatar">' + ICONS.user + '</span><span class="drawer__name">' + user + "</span>" +
-        '<a class="user__logout" href="auth.html" aria-label="Выйти">' + ICONS.logout + "</a></div>" +
-        '<nav class="nav drawer__nav">' + navItems(active) + "</nav>" +
-        '<div class="drawer__cta"><a class="btn btn--primary btn--l" href="specialties.html">Записаться на сессию</a></div></div>');
+    if (layout === "app" || layout === "client") {
+      var drawerHtml;
+      if (layout === "client") {
+        /* мобильное меню клиента: только два пункта — строки с иконками */
+        drawerHtml = '<div class="drawer" role="dialog" aria-modal="true" aria-label="Меню">' +
+          '<div class="site-header"><a class="site-header__logo" href="index.html"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>' +
+          '<button class="menu-btn menu-close" type="button" aria-label="Закрыть меню" data-menu-close></button></div>' +
+          '<nav class="drawer__rows" aria-label="Меню">' +
+          '<a class="drawer__row' + (active === "sessions" ? " is-active" : "") + '" href="sessions.html">' + ICONS.calendar + "<span>Мои записи</span></a>" +
+          '<a class="drawer__row" href="specialties.html">' + ICONS.chatPlus + "<span>Записаться на сессию</span></a></nav></div>";
+      } else {
+        drawerHtml = '<div class="drawer" role="dialog" aria-modal="true" aria-label="Меню АЗ">' +
+          '<div class="site-header"><a class="site-header__logo" href="index.html"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>' +
+          '<button class="menu-btn menu-close" type="button" aria-label="Закрыть меню" data-menu-close></button></div>' +
+          '<div class="drawer__user"><span class="user__avatar">' + ICONS.user + '</span><span class="drawer__name">' + user + "</span>" +
+          '<a class="user__logout" href="auth.html" aria-label="Выйти">' + ICONS.logout + "</a></div>" +
+          '<nav class="nav drawer__nav">' + navItems(active) + "</nav>" +
+          '<div class="drawer__cta"><a class="btn btn--primary btn--l" href="specialties.html">Записаться на сессию</a></div></div>';
+      }
+      var drawer = el(drawerHtml);
       body.appendChild(drawer);
       var openBtn = document.querySelector("[data-menu-open]");
       function setOpen(v) { drawer.classList.toggle("is-open", v); openBtn.setAttribute("aria-expanded", String(v)); document.documentElement.style.overflow = v ? "hidden" : ""; }

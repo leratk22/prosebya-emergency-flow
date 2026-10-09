@@ -3,34 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Выберите специалиста · Просебя</title>
+  <title>Психолог · список специалистов · Просебя</title>
   <link rel="stylesheet" href="assets/app.css">
 </head>
-<body data-layout="client" data-active="">
-  <main class="main-wrap main-wrap--flex">
+<body data-layout="app" data-active="">
+  <main class="main-wrap">
     <a class="back" href="specialties.html"><span data-icon="back"></span>Назад</a>
-    <section class="panel">
-      <div class="panel__head" id="head"></div>
-      <div class="prows" id="list"></div>
-    </section>
+    <h1 class="title-xl page-title" id="title">Психолог</h1>
+    <div class="list" id="list" aria-live="polite"></div>
   </main>
   <script src="assets/app.js"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
-      var spec = qs("spec") || "psychologist";
-      var title = (SPECIALTIES.filter(function (s) { return s.id === spec; })[0] || SPECIALTIES[1]).title;
-      document.getElementById("head").innerHTML = PS.stepper(2, 5, "Специалист") + '<h1 class="panel__title">' + title + "</h1>";
       var list = document.getElementById("list");
-      var state = qs("state");   /* ?state=loading, ?state=error */
+      var spec = SPECIALTIES.filter(function (x) { return x.id === qs("spec"); })[0] || SPECIALTIES[1];
+      document.getElementById("title").textContent = spec.title;
+      document.title = spec.title + " · Просебя";
+      /* в макете специалисты показаны на примере одной специальности: список один для всех */
+      var state = qs("state");   /* ?state=loading — скелетон, ?state=error — 500 */
+
       if (state === "error") { location.replace("error.html"); return; }
       if (state === "loading") {
-        for (var i = 0; i < 6; i++) list.insertAdjacentHTML("beforeend", '<div class="prow"><div class="prow__text"><div class="skeleton" style="width:55%;height:20px"></div><div class="skeleton" style="width:90%;height:20px"></div></div></div>');
+        for (var i = 0; i < 6; i++) {
+          list.insertAdjacentHTML("beforeend", '<div class="list__row"><div class="list__row-text"><div class="skeleton" style="width:70%;height:20px"></div><div class="skeleton" style="width:45%;height:20px"></div></div></div>');
+        }
         return;
       }
+      /* специалисты уже отсортированы по ближайшему слоту */
       list.innerHTML = SPECIALISTS.map(function (s) {
-        return '<a class="prow" href="specialist.html?spec=' + spec + "&id=" + s.id + '">' +
-          '<div class="prow__text"><div class="prow__title">' + s.name + '</div><div class="prow__sub">' + whenLabel(s) + "</div></div>" + ICONS.chevron + "</a>";
+        return '<a class="list__row" href="specialist.html?id=' + s.id + "&spec=" + spec.id + '">' +
+          '<div class="list__row-text"><div class="list__row-title">' + s.name + '</div><div class="list__row-sub">' + whenLabel(s) + "</div></div>" +
+          '<span class="list__row-aside">' + ICONS.chevron + "</span></a>";
       }).join("");
     })();
   </script>

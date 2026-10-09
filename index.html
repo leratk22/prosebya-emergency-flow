@@ -9,37 +9,22 @@
 <body data-layout="guest">
   <main class="main-wrap">
     <div class="index" style="padding:0">
-      <div class="page-title"><h1 class="title-xl">Аварийный флоу</h1><p class="text-l">Вход, запись, перенос и отмена. Состояния — параметрами в адресе.</p></div>
+      <div class="page-title"><h1 class="title-xl">Аварийный флоу</h1><p class="text-l">Весь флоу клиента: от входа до записи. Состояния — параметрами в адресе.</p></div>
 
-      <section class="index__group"><h2 class="index__heading">0 · Вход и мои записи</h2>
-        <a class="index__link" href="auth.html"><span>Вход по телефону</span><small>?state=error</small></a>
-        <a class="index__link" href="sms.html"><span>Код из SMS</span><small>для любого номера код 0000 · ?state=wrong</small></a>
-        <a class="index__link" href="sessions.html?reset=1"><span>Мои записи</span><small>?state=empty · ?reset=1</small></a>
+      <section class="index__group"><h2 class="index__heading">Клиент · запись</h2>
+        <a class="index__link" href="auth.html"><span>1 · Вход по телефону</span><small>?state=error</small></a>
+        <a class="index__link" href="sms.html"><span>2 · Код из СМС</span><small>код 0 · ?state=wrong</small></a>
+        <a class="index__link" href="loading.html"><span>3 · Загрузка</span><small>?next=client.html</small></a>
+        <a class="index__link" href="client.html"><span>4 · Данные клиента</span><small>ошибки на blur</small></a>
+        <a class="index__link" href="specialties.html"><span>5 · Список специальностей</span><small>?state=loading · ?state=error</small></a>
+        <a class="index__link" href="specialists.html?spec=psychologist"><span>6 · Специалисты специальности</span><small>?state=loading · ?state=error</small></a>
+        <a class="index__link" href="specialist.html?id=2"><span>7 · Выбор даты и времени</span><small>?state=none · ?state=unavailable</small></a>
+        <a class="index__link" href="confirm.html?id=2&day=0&time=19:30"><span>8 · Подтверждение записи</span><small>?state=unchecked</small></a>
+        <a class="index__link" href="session.html?id=2&day=0&time=19:30"><span>9 · Запланированная сессия</span></a>
+        <a class="index__link" href="sessions.html"><span>10 · Мои сессии</span><small>есть отменённая</small></a>
+        <a class="index__link" href="error.html"><span>11 · Что-то пошло не так</span></a>
       </section>
 
-      <section class="index__group"><h2 class="index__heading">1 · Запись</h2>
-        <a class="index__link" href="specialties.html"><span>1 из 5 · Специальность</span><small>?state=loading · ?state=error</small></a>
-        <a class="index__link" href="specialists.html?spec=psychologist"><span>2 из 5 · Специалист</span><small>?state=loading · ?state=error</small></a>
-        <a class="index__link" href="specialist.html?spec=psychologist&id=2"><span>3 из 5 · Дата и время</span><small>?state=none · ?state=unavailable</small></a>
-        <a class="index__link" href="client.html?spec=psychologist&id=2&day=1&time=11:30"><span>4 из 5 · Ваши данные</span><small>?state=errors</small></a>
-        <a class="index__link" href="confirm.html?spec=psychologist&id=2&day=1&time=11:30"><span>5 из 5 · Проверка записи</span><small>?state=unchecked</small></a>
-        <a class="index__link" href="booked.html?id=2&day=1&time=11:30"><span>Вы записаны</span></a>
-      </section>
-
-      <section class="index__group"><h2 class="index__heading">2 · Перенос</h2>
-        <a class="index__link" href="reschedule.html?id=2"><span>1 из 2 · Новая дата и время</span><small>для записи менее чем за 6 часов — возврат в «Мои записи»</small></a>
-        <a class="index__link" href="reschedule-confirm.html?id=2&day=6&time=10:30"><span>2 из 2 · Подтверждение</span></a>
-        <a class="index__link" href="rescheduled.html?id=2"><span>Запись перенесена</span></a>
-      </section>
-
-      <section class="index__group"><h2 class="index__heading">3 · Отмена</h2>
-        <a class="index__link" href="cancel.html?id=2"><span>Отменить запись</span><small>причина необязательна</small></a>
-      </section>
-
-      <section class="index__group"><h2 class="index__heading">Служебные</h2>
-        <a class="index__link" href="loading.html"><span>Загрузка</span><small>?next=specialties.html</small></a>
-        <a class="index__link" href="error.html"><span>Что-то пошло не так</span></a>
-      </section>
     </div>
   </main>
   <script src="assets/app.js"></script>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Выберите специальность · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" href="sessions.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <div class="prows" id="list"></div>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      document.getElementById("head").innerHTML = PS.stepper(1, 5, "Специальность") + '<h1 class="panel__title">Выберите специальность</h1>';
+      var list = document.getElementById("list");
+      var state = qs("state");   /* ?state=loading — скелетон, ?state=error — 500 */
+      if (state === "error") { location.replace("error.html"); return; }
+      if (state === "loading") {
+        for (var i = 0; i < 6; i++) {
+          list.insertAdjacentHTML("beforeend", '<div class="prow"><div class="prow__text"><div class="skeleton" style="width:55%;height:20px"></div><div class="skeleton" style="width:90%;height:20px"></div></div></div>');
+        }
+        return;
+      }
+      list.innerHTML = SPECIALTIES.map(function (s) {
+        return '<a class="prow" href="specialists.html?spec=' + s.id + '">' +
+          '<div class="prow__text"><div class="prow__title">' + s.title + '</div><div class="prow__sub">' + s.desc + "</div></div>" + ICONS.chevron + "</a>";
+      }).join("");
+    })();
+  </script>
+</body>
+</html>

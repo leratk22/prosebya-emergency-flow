@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Выберите дату и время · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" id="back" href="specialists.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <div class="panel__body" id="body"></div>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var spec = qs("spec") || "psychologist", id = +qs("id") || 2;
+      document.getElementById("back").href = "specialists.html?spec=" + spec;
+      document.getElementById("head").innerHTML = PS.stepper(3, 5, "Дата и время") + '<h1 class="panel__title">Выберите дату и время</h1>';
+      var body = document.getElementById("body");
+      var state = qs("state");   /* ?state=none — нет мест, ?state=unavailable — время недоступно */
+      if (state === "none") {
+        body.innerHTML = '<div class="panel__center"><h2 class="panel__title">Нет свободных мест</h2><p class="panel__sub">Всё время занято или специалист в отпуске</p></div>';
+        return;
+      }
+      if (state === "unavailable") {
+        body.innerHTML = '<img class="panel__ill" src="assets/illustration-time.png" alt="" style="width:180px;height:180px;object-fit:contain">' +
+          '<div class="panel__center"><h2 class="panel__title">Время для записи недоступно</h2></div>' +
+          '<a class="btn btn--primary btn--l" href="specialist.html?spec=' + spec + "&id=" + id + '">Выбрать другое время</a>';
+        return;
+      }
+      PS.mountDateTime(body, { onPick: function (day, time) {
+        location.href = "client.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+      } });
+    })();
+  </script>
+</body>
+</html>

@@ -3,43 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Мои записи · Просебя</title>
+  <title>Мои сессии · Просебя</title>
   <link rel="stylesheet" href="assets/app.css">
 </head>
-<body data-layout="client" data-active="sessions">
-  <main class="main-wrap main-wrap--flex" style="padding-top:8px">
-    <section class="panel panel--tall" id="panel"></section>
+<body data-layout="app" data-active="sessions">
+  <main class="main-wrap">
+    <h1 class="title-xl page-title">Мои сессии</h1>
+    <div class="list" id="list"></div>
   </main>
   <script src="assets/app.js"></script>
   <script>
     (function () {
-      var panel = document.getElementById("panel");
-      var HINT = "Перенести или отменить можно не позднее чем за 6 часов до начала.";   /* одна и та же подпись в любом состоянии */
-      var list = PS.records().sort(function (a, b) { return a.day - b.day || (a.time < b.time ? -1 : 1); });
-      if (qs("state") === "empty") list = [];
-
-      if (!list.length) {
-        panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1></div>' +
-          '<div class="panel__empty"><h2 class="panel__title">Предстоящих записей нет</h2>' +
-          '<p class="panel__sub">Выберите специалиста и время — это займёт пару минут.</p>' +
-          '<a class="btn btn--primary btn--l" href="specialties.html" style="margin-top:auto">Записаться</a></div>';
-        return;
-      }
-      panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1>' +
-        '<a class="btn btn--primary" href="specialties.html">Записаться</a></div><div id="recs"></div>';
-      document.getElementById("recs").innerHTML = list.map(function (r) {
-        var s = PS.specialistById(r.specialist), ok = PS.canChange(r);
-        function act(label, href) {
-          return ok ? '<a class="btn btn--secondary btn--m" href="' + href + '">' + label + "</a>"
-                    : '<span class="btn btn--m is-disabled" aria-disabled="true">' + label + "</span>";
-        }
-        return '<article class="rec"><div class="rec__top"><div class="rec__text">' +
-          '<div class="rec__when">' + PS.whenText(r.day, r.time) + '</div><div class="rec__who">' + r.spec + " · " + s.name + "</div>" +
-          '<button type="button" class="copy-link" data-copy="https://meet.prosebya.ru/s/' + r.id + '"><span class="copy-link__icon">' + ICONS.link + '</span><span class="copy-link__label">Скопировать ссылку на встречу</span></button></div>' +
-          '<div class="rec__actions">' + act("Перенести", "reschedule.html?id=" + r.id) + act("Отменить", "cancel.html?id=" + r.id) + "</div></div>" +
-          '<p class="text-s">' + HINT + "</p></article>";
+      /* ближайшие сессии клиента; последняя отменена — без стрелки, с плашкой «Отменена» */
+      var sessions = [
+        { id: 2, label: "Сегодня 19:30", day: 0, time: "19:30" },
+        { id: 4, label: "Завтра 10:00", day: 1, time: "10:00" },
+        { id: 7, label: "11 октября 09:30", day: 2, time: "09:30" },
+        { id: 9, label: "13 октября 12:00", day: 4, time: "12:00", cancelled: true }
+      ];
+      document.getElementById("list").innerHTML = sessions.map(function (x) {
+        var s = SPECIALISTS.filter(function (y) { return y.id === x.id; })[0];
+        var text = '<div class="list__row-text"><div class="list__row-title">' + s.name + '</div><div class="list__row-sub">' + x.label + "</div></div>";
+        if (x.cancelled) return '<div class="list__row">' + text + '<span class="list__row-aside"><span class="badge">Отменена</span></span></div>';
+        return '<a class="list__row" href="session.html?id=' + x.id + "&day=" + x.day + "&time=" + encodeURIComponent(x.time) + '">' + text +
+          '<span class="list__row-aside">' + ICONS.chevron + "</span></a>";
       }).join("");
-      PS.bindCopy(panel);
     })();
   </script>
 </body>

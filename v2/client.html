@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Проверьте ваши данные · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" id="back" href="specialist.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <form class="panel__body" id="form" novalidate>
+        <div class="panel__fields">
+          <div class="field" data-field="first"><div class="field__box"><div class="field__body"><label class="field__label" for="first">Имя</label><input class="field__input" id="first" name="first" autocomplete="given-name" placeholder="Имя"></div></div><div class="field__helper"></div></div>
+          <div class="field" data-field="last"><div class="field__box"><div class="field__body"><label class="field__label" for="last">Фамилия</label><input class="field__input" id="last" name="last" autocomplete="family-name" placeholder="Фамилия"></div></div><div class="field__helper"></div></div>
+          <div class="field" data-field="company"><div class="field__box"><div class="field__body"><label class="field__label" for="company">Название компании</label><input class="field__input" id="company" name="company" autocomplete="organization" placeholder="Название компании"></div></div><div class="field__helper"></div></div>
+        </div>
+        <button class="btn btn--primary btn--l" type="submit" id="next">Далее</button>
+      </form>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var spec = qs("spec") || "psychologist", id = qs("id") || "2", day = qs("day") || "1", time = qs("time") || "11:30";
+      document.getElementById("back").href = "specialist.html?spec=" + spec + "&id=" + id;
+      document.getElementById("head").innerHTML = PS.stepper(4, 5, "Ваши данные") + '<h1 class="panel__title">Проверьте ваши данные</h1>';
+
+      /* персональные данные не подставляются: пользователь вводит их сам, «Далее» недоступна, пока всё не заполнено */
+      var rules = {
+        first: { test: function (v) { return v.trim().length > 0; }, msg: "Укажите имя" },
+        last: { test: function (v) { return v.trim().length > 0; }, msg: "Укажите фамилию" },
+        company: { test: function (v) { return v.trim().length > 0; }, msg: "Укажите название компании" }
+      };
+      var next = document.getElementById("next"), fields = {};
+      Object.keys(rules).forEach(function (k) { fields[k] = document.querySelector('[data-field="' + k + '"]'); });
+      function valid(k) { return rules[k].test(fields[k].querySelector("input").value); }
+      function show(k) { setFieldError(fields[k], valid(k) ? "" : rules[k].msg); }
+      function refresh() { var ok = Object.keys(rules).every(valid); next.disabled = !ok; next.classList.toggle("is-disabled", !ok); }
+      Object.keys(rules).forEach(function (k) {
+        var input = fields[k].querySelector("input");
+        input.addEventListener("blur", function () { show(k); refresh(); });
+        input.addEventListener("input", function () { if (fields[k].classList.contains("is-error")) show(k); refresh(); });
+      });
+      /* ?state=errors — как на макете: пользователь ввёл имя и фамилию, компанию оставил пустой */
+      if (qs("state") === "errors") {
+        fields.first.querySelector("input").value = "София";
+        fields.last.querySelector("input").value = "Сергеева";
+                show("company");
+      }
+      refresh();
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        Object.keys(rules).forEach(show);
+        if (!Object.keys(rules).every(valid)) return;
+        location.href = "confirm.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+      });
+    })();
+  </script>
+</body>
+</html>

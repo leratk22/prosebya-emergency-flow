@@ -321,9 +321,10 @@
 
   /* ---------- Утилиты для страниц ---------- */
   window.qs = function (name) { return new URLSearchParams(location.search).get(name); };
-  window.showToast = function (text) {
+  window.showToast = function (text, kind) {   /* kind: "info" | "success"; без него — ошибка */
     var t = document.querySelector(".toast");
     if (!t) { t = el('<div class="toast" role="alert"></div>'); document.body.appendChild(t); }
+    t.className = "toast" + (kind ? " toast--" + kind : "");
     t.textContent = text; t.classList.add("is-open");
     clearTimeout(window.__toast); window.__toast = setTimeout(function () { t.classList.remove("is-open"); }, 3000);
   };

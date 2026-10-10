@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход сотрудника · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css?v=2">
+  <link rel="stylesheet" href="assets/staff-auth.css?v=1">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <section class="card card--center">
+      <div class="card__head">
+        <h1 class="title-xl">Интерфейс управления</h1>
+        <p class="text-l sa-lead">Добро пожаловать! Войдите, чтобы управлять записями.</p>
+      </div>
+      <form class="controls controls--fields" id="login-form" novalidate>
+        <div class="field" data-field="username"><div class="field__box"><div class="field__body"><label class="field__label" for="username">Логин</label><input class="field__input" id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Логин" maxlength="255" required></div></div><div class="field__helper"></div></div>
+        <div class="field" data-field="password"><div class="field__box"><div class="field__body"><label class="field__label" for="password">Пароль</label><input class="field__input" id="password" name="password" type="password" autocomplete="current-password" placeholder="Пароль" maxlength="100" required></div><button class="field__icon-btn" type="button" data-eye="password" aria-label="Показать пароль"></button></div><div class="field__helper"></div></div>
+
+        <div class="altcha" id="altcha">
+          <label class="altcha__box"><span class="altcha__check"><input type="checkbox" id="altcha-input"><span class="altcha__mark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="altcha__label">Я не робот</span><span class="altcha__brand">ALTCHA</span></label>
+          <div class="altcha__hint" id="altcha-hint"></div>
+        </div>
+
+        <div class="sa-actions">
+          <button class="btn btn--primary btn--l" type="submit" id="submit" disabled>Войти</button>
+          <a class="sa-link" href="staff-recovery.html">Напоминание пароля</a>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="assets/app.js?v=2"></script>
+  <script src="assets/staff-auth.js?v=1"></script>
+  <script>
+    (function () {
+      var DEMO = { specialist: "staff-specialist.html", support: "staff-support.html", admin: "staff-admin.html" };   /* демо-вход: любой из логинов и пароль demo1234 */
+      var form = document.getElementById("login-form"), submit = document.getElementById("submit");
+      var fields = { username: SA.field("username"), password: SA.field("password") };
+      var altcha = document.getElementById("altcha"), altInput = document.getElementById("altcha-input"), altHint = document.getElementById("altcha-hint");
+      var captcha = qs("captcha") === "1";
+      if (captcha) altcha.classList.add("is-on");
+      SA.eyes(form);
+
+      var rules = {
+        username: function (v) { return v.trim() ? "" : "Введите логин"; },
+        password: function (v) { return v ? "" : "Введите пароль"; }
+      };
+      function value(k) { return fields[k].querySelector("input").value; }
+      function show(k) { setFieldError(fields[k], rules[k](value(k))); }
+      function valid() { return Object.keys(rules).every(function (k) { return !rules[k](value(k)); }); }
+      function refresh() { var ok = valid(); submit.disabled = !ok; submit.classList.toggle("is-disabled", !ok); }
+      Object.keys(rules).forEach(function (k) {
+        var el = fields[k].querySelector("input");
+        el.addEventListener("blur", function () { show(k); refresh(); });
+        el.addEventListener("input", function () { if (fields[k].classList.contains("is-error")) show(k); refresh(); });
+      });
+      altInput.addEventListener("change", function () { altcha.classList.remove("is-error"); altHint.textContent = ""; });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        Object.keys(rules).forEach(show);
+        if (!valid()) return;
+        if (captcha && !altInput.checked) { altcha.classList.add("is-error"); altHint.textContent = "Проверка не пройдена. Попробуйте ещё раз"; return; }
+        var u = value("username").trim().toLowerCase();
+        if (DEMO[u] && value("password") === "demo1234") { location.href = DEMO[u]; return; }
+        showToast("Неверный логин или пароль");
+        if (captcha) { altInput.checked = false; }
+      });
+
+      /* состояния для просмотра: ?state=error — неверные данные, ?state=required — не заполнены поля, ?state=logout — после выхода */
+      var st = qs("state");
+      if (st === "logout") showToast("Вы вышли из кабинета", "info");
+      if (st === "error") { document.getElementById("username").value = "ivanova"; document.getElementById("password").value = "wrong-pass"; showToast("Неверный логин или пароль"); }
+      if (st === "required") { show("username"); show("password"); }
+      if (st === "captcha") { altcha.classList.add("is-on"); captcha = true; document.getElementById("username").value = "ivanova"; document.getElementById("password").value = "wrong-pass"; altcha.classList.add("is-error"); altHint.textContent = "Проверка не пройдена. Попробуйте ещё раз"; }
+      refresh();
+    })();
+  </script>
+</body>
+</html>

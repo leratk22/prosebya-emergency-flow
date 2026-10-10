@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Новый пароль · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css?v=2">
+  <link rel="stylesheet" href="assets/staff-auth.css?v=1">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <section class="card card--center">
+      <!-- форма -->
+      <div id="reset-form-wrap" style="display:contents">
+        <div class="card__head">
+          <h1 class="title-xl">Новый пароль</h1>
+          <p class="text-l sa-lead">Введите новый пароль ниже.</p>
+        </div>
+        <form class="controls controls--fields" id="reset-form" novalidate>
+          <div class="field" data-field="password"><div class="field__box"><div class="field__body"><label class="field__label" for="password">Новый пароль</label><input class="field__input" id="password" name="password" type="password" autocomplete="new-password" placeholder="Новый пароль" maxlength="100"></div><button class="field__icon-btn" type="button" data-eye="password" aria-label="Показать пароль"></button></div><div class="field__helper">Не менее 7 символов</div></div>
+          <div class="field" data-field="password_confirmation"><div class="field__box"><div class="field__body"><label class="field__label" for="password-confirmation">Повтор пароля</label><input class="field__input" id="password-confirmation" name="password_confirmation" type="password" autocomplete="new-password" placeholder="Повтор пароля" maxlength="100"></div><button class="field__icon-btn" type="button" data-eye="password-confirmation" aria-label="Показать пароль"></button></div><div class="field__helper"></div></div>
+          <div class="sa-actions">
+            <button class="btn btn--primary btn--l" type="submit" id="submit" disabled>Сбросить пароль</button>
+            <a class="sa-link" href="staff-login.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Вернуться на страницу входа</a>
+          </div>
+        </form>
+      </div>
+      <!-- ссылка недействительна -->
+      <div id="reset-invalid" hidden style="display:contents">
+        <div class="card__head"><h1 class="title-xl">Ссылка недействительна</h1></div>
+        <div class="controls">
+          <div class="sa-result">
+            <img class="sa-result__ill" src="assets/illustration-time.png" alt="" width="180" height="180">
+            <p class="sa-result__text">Ссылка для сброса пароля недействительна или устарела. Пожалуйста, запросите новую.</p>
+          </div>
+          <div class="sa-actions" style="margin-top:0">
+            <a class="btn btn--primary btn--l" href="staff-recovery.html">Запросить новую ссылку</a>
+            <a class="sa-link" href="staff-login.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Вернуться на страницу входа</a>
+          </div>
+        </div>
+      </div>
+      <!-- пароль изменён -->
+      <div id="reset-done" hidden style="display:contents">
+        <div class="card__head"><h1 class="title-xl">Пароль изменён</h1></div>
+        <div class="controls">
+          <div class="sa-result">
+            <img class="sa-result__ill" src="assets/illustration-calm.png" alt="" width="180" height="180">
+            <p class="sa-result__text">Ваш пароль успешно сброшен. Вы будете перенаправлены на страницу входа.</p>
+          </div>
+          <div class="sa-actions" style="margin-top:0"><a class="btn btn--primary btn--l" href="staff-login.html">Войти</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/app.js?v=2"></script>
+  <script src="assets/staff-auth.js?v=1"></script>
+  <script>
+    (function () {
+      /* ссылка из письма: ?token=demo — рабочая; любой другой токен или его отсутствие — «недействительна»; ?state=done / errors — для просмотра */
+      var form = document.getElementById("reset-form"), submit = document.getElementById("submit");
+      var fields = { password: SA.field("password"), password_confirmation: SA.field("password_confirmation") };
+      var st = qs("state"), token = qs("token");
+      SA.eyes(form);
+      function view(id) { ["reset-form-wrap", "reset-invalid", "reset-done"].forEach(function (x) { document.getElementById(x).hidden = x !== id; }); }
+      var rules = {
+        password: function (v) { return !v ? "Придумайте пароль" : v.length >= 7 ? "" : "Пароль должен быть не короче 7 символов"; },
+        password_confirmation: function (v) { return !v ? "Повторите пароль" : v === document.getElementById("password").value ? "" : "Пароли не совпадают"; }
+      };
+      function value(k) { return fields[k].querySelector("input").value; }
+      function show(k) { setFieldError(fields[k], rules[k](value(k))); }
+      function valid() { return Object.keys(rules).every(function (k) { return !rules[k](value(k)); }); }
+      function refresh() { var ok = valid(); submit.disabled = !ok; submit.classList.toggle("is-disabled", !ok); }
+      Object.keys(rules).forEach(function (k) {
+        var el = fields[k].querySelector("input");
+        el.addEventListener("blur", function () { show(k); if (k === "password" && value("password_confirmation")) show("password_confirmation"); refresh(); });
+        el.addEventListener("input", function () { if (fields[k].classList.contains("is-error")) show(k); refresh(); });
+      });
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        Object.keys(rules).forEach(show);
+        if (!valid()) return;
+        view("reset-done");
+        setTimeout(function () { location.href = "staff-login.html"; }, 3000);   /* «Вы будете перенаправлены на страницу входа» */
+      });
+      if (st === "done") view("reset-done");
+      else if (st === "invalid" || (st !== "errors" && token !== "demo")) view("reset-invalid");
+      if (st === "errors") { document.getElementById("password").value = "abcd"; document.getElementById("password-confirmation").value = "abcde"; Object.keys(rules).forEach(show); }
+      refresh();
+    })();
+  </script>
+</body>
+</html>

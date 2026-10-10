@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Аварийный флоу · экраны · Просебя</title>
-  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/app.css?v=2">
 </head>
 <body data-layout="guest">
   <main class="main-wrap">
@@ -60,12 +60,18 @@
         <a class="index__link" href="specialist-join.html"><span>Регистрация специалиста</span><small>?state=errors · ?state=open (список специальностей) · ?demo=many (в списке больше пунктов)</small></a>
       </section>
 
+      <section class="index__group"><h2 class="index__heading">Сотрудники · Вход и пароль</h2>
+        <a class="index__link" href="staff-login.html"><span>Вход сотрудника</span><small>демо-вход: логин specialist / support / admin, пароль demo1234 · ?state=error · ?state=required · ?state=logout · ?captcha=1 · ?state=captcha</small></a>
+        <a class="index__link" href="staff-recovery.html"><span>Напоминание пароля</span><small>«найденные» логины: specialist, support, admin · ?state=error · ?state=sent · ?captcha=1</small></a>
+        <a class="index__link" href="staff-reset.html?token=demo"><span>Новый пароль (ссылка из письма)</span><small>?token=demo — рабочая ссылка · без токена — «Ссылка недействительна» · ?state=errors · ?state=done</small></a>
+      </section>
+
       <section class="index__group"><h2 class="index__heading">Служебные</h2>
         <a class="index__link" href="loading.html"><span>Загрузка</span><small>?next=sessions.html</small></a>
         <a class="index__link" href="error.html"><span>Что-то пошло не так</span></a>
       </section>
     </div>
   </main>
-  <script src="assets/app.js"></script>
+  <script src="assets/app.js?v=2"></script>
 </body>
 </html>

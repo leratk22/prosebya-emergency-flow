@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Напоминание пароля · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css?v=2">
+  <link rel="stylesheet" href="assets/staff-auth.css?v=1">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <section class="card card--center">
+      <!-- форма -->
+      <div id="recovery-form-wrap" style="display:contents">
+        <div class="card__head">
+          <h1 class="title-xl">Напоминание пароля</h1>
+          <p class="text-l sa-lead">Введите имя пользователя и адрес электронной почты, чтобы получить ссылку для сброса пароля.</p>
+        </div>
+        <form class="controls controls--fields" id="recovery-form" novalidate>
+          <div class="field" data-field="username"><div class="field__box"><div class="field__body"><label class="field__label" for="username">Логин</label><input class="field__input" id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Логин" maxlength="255"></div></div><div class="field__helper"></div></div>
+          <div class="field" data-field="email"><div class="field__box"><div class="field__body"><label class="field__label" for="email">Эл. почта</label><input class="field__input" id="email" name="email" type="email" autocomplete="email" placeholder="Эл. почта" maxlength="256"></div></div><div class="field__helper"></div></div>
+
+          <div class="altcha" id="altcha">
+            <label class="altcha__box"><span class="altcha__check"><input type="checkbox" id="altcha-input"><span class="altcha__mark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span><span class="altcha__label">Я не робот</span><span class="altcha__brand">ALTCHA</span></label>
+            <div class="altcha__hint" id="altcha-hint"></div>
+          </div>
+
+          <div class="sa-actions">
+            <button class="btn btn--primary btn--l" type="submit" id="submit" disabled>Отправить ссылку для сброса</button>
+            <a class="sa-link" href="staff-login.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Вернуться на страницу входа</a>
+          </div>
+        </form>
+      </div>
+      <!-- ссылка отправлена -->
+      <div id="recovery-sent" hidden style="display:contents">
+        <div class="card__head"><h1 class="title-xl">Проверьте почту</h1></div>
+        <div class="controls">
+          <div class="sa-result">
+            <img class="sa-result__ill" src="assets/illustration-done.png" alt="" width="180" height="180">
+            <p class="sa-result__text">Если аккаунт с указанными данными существует, ссылка для сброса пароля отправлена на вашу электронную почту. Ссылка действует 1 час.</p>
+          </div>
+          <div class="sa-actions" style="margin-top:0"><a class="sa-link" href="staff-login.html"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Вернуться на страницу входа</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/app.js?v=2"></script>
+  <script src="assets/staff-auth.js?v=1"></script>
+  <script>
+    (function () {
+      /* демо: «найденные» аккаунты — specialist, support, admin; ответ сервера одинаковый, пока пара неверна — ошибка */
+      var KNOWN = ["specialist", "support", "admin"];
+      var form = document.getElementById("recovery-form"), submit = document.getElementById("submit");
+      var fields = { username: SA.field("username"), email: SA.field("email") };
+      var altcha = document.getElementById("altcha"), altInput = document.getElementById("altcha-input"), altHint = document.getElementById("altcha-hint");
+      var captcha = qs("captcha") === "1";
+      if (captcha) altcha.classList.add("is-on");
+      var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      function value(k) { return fields[k].querySelector("input").value.trim(); }
+      /* в исходной системе клиентских проверок нет; здесь кнопка недоступна, пока поля пусты или почта некорректна */
+      function valid() { return !!value("username") && EMAIL.test(value("email")); }
+      function refresh() { var ok = valid(); submit.disabled = !ok; submit.classList.toggle("is-disabled", !ok); }
+      ["username", "email"].forEach(function (k) {
+        var el = fields[k].querySelector("input");
+        el.addEventListener("input", refresh);
+        el.addEventListener("blur", function () { if (k === "email" && el.value && !EMAIL.test(el.value.trim())) setFieldError(fields.email, "Укажите корректную эл. почту"); else setFieldError(fields[k], ""); });
+        el.addEventListener("input", function () { setFieldError(fields[k], ""); });
+      });
+      altInput.addEventListener("change", function () { altcha.classList.remove("is-error"); altHint.textContent = ""; });
+      function sent() { document.getElementById("recovery-form-wrap").hidden = true; document.getElementById("recovery-sent").hidden = false; }
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!valid()) return;
+        if (captcha && !altInput.checked) { altcha.classList.add("is-error"); altHint.textContent = "Проверка не пройдена. Попробуйте ещё раз"; return; }
+        submit.disabled = true; submit.textContent = "Отправляем…";
+        setTimeout(function () {
+          submit.textContent = "Отправить ссылку для сброса";
+          if (KNOWN.indexOf(value("username").toLowerCase()) === -1) { showToast("Не получилось отправить ссылку"); refresh(); return; }
+          sent();
+        }, 600);
+      });
+      /* состояния: ?state=error — ошибка отправки, ?state=sent — ссылка отправлена */
+      var st = qs("state");
+      if (st === "error") { document.getElementById("username").value = "ivanova"; document.getElementById("email").value = "maria@example.ru"; showToast("Не получилось отправить ссылку"); }
+      if (st === "sent") sent();
+      refresh();
+    })();
+  </script>
+</body>
+</html>

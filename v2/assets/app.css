@@ -361,6 +361,8 @@ img { display: block; max-width: 100%; }
   font-size: var(--text-label); line-height: var(--leading-body-l); font-weight: var(--font-weight-semibold);
 }
 .toast.is-open { display: flex; }
+.toast--info { background: var(--color-bg-accent); }
+.toast--success { background: var(--color-bg-positive); }
 
 /* ---------- Лоадер ---------- */
 .loader { flex: 1; display: grid; place-items: center; min-height: 360px; }
@@ -577,7 +579,7 @@ img { display: block; max-width: 100%; }
   .facts { width: 360px; margin: 0 auto 32px; }
   .card--summary .actions { align-items: center; }
   .card--summary .actions .btn { width: 320px; }
-  .toast { top: 12px; }
+  .toast { top: 12px; max-width: 788px; }   /* на десктопе — по ширине белой карточки */
   .drawer { display: none !important; }
   .list__row { padding: 16px 24px; }
   .main-wrap--tight { padding-left: 16px; padding-right: 16px; }

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вы записаны · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css?v=2">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <section class="panel panel--tall">
+      <div class="panel__body panel__body--grow" style="padding-top:40px;padding-bottom:16px">
+        <img class="panel__ill" src="assets/illustration-session.png" alt="">
+        <div class="panel__center" style="max-width:440px;align-self:center">
+          <h1 class="panel__title">Вы записаны</h1>
+          <p class="panel__sub" id="text"></p>
+        </div>
+        <div class="panel__actions">
+          <a class="btn btn--primary btn--l" id="gcal" target="_blank" rel="noopener" href="#">Добавить в Google Календарь</a>
+          <a class="btn btn--secondary btn--l" href="sessions.html">Перейти к моей записи</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/app.js?v=2"></script>
+  <script>
+    (function () {
+      var s = PS.specialistById(+qs("id") || 2), day = +qs("day") || 0, time = qs("time") || "19:30";
+      document.getElementById("text").textContent = "Сессия с " + s.with + " — " + PS.dateLabel(PS.addDays(PS.TODAY, day)) + " в " + time +
+        ". Письмо с деталями отправлено на почту. Если его нет, загляните в «Спам».";
+      document.getElementById("gcal").href = PS.gcalUrl(day, time, s.name);
+    })();
+  </script>
+</body>
+</html>

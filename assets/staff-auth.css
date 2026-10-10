@@ -1,12 +1,8 @@
 /* Просебя · вход сотрудников, напоминание и сброс пароля · дополнения к app.css (карточка, поля, кнопки, тост — оттуда) */
 
-.sa-actions { display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 12px; }
-.sa-link {
-  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-  font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold); color: var(--color-fg-accent);
-}
-.sa-link:hover { text-decoration: underline; }
-.sa-link svg { flex-shrink: 0; }
+.sa-actions { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 12px; }
+/* ссылки «Напоминание пароля» и «Вернуться на страницу входа» — третичные кнопки (.btn--tertiary в app.css) */
+.btn--tertiary svg { flex-shrink: 0; }
 .sa-lead { max-width: 520px; }
 
 /* Показ пароля */

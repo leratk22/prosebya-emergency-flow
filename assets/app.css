@@ -177,6 +177,8 @@ img { display: block; max-width: 100%; }
 .btn--primary { background: var(--color-bg-accent-brand); color: var(--color-fg-primary); }
 .btn--primary:hover { background: var(--color-bg-accent-brand-pressed); }
 .btn--secondary { background: transparent; border-color: var(--color-border-button-secondary); color: var(--color-fg-accent); }
+.btn--tertiary { background: transparent; color: var(--color-fg-accent); }
+.btn--tertiary:hover { background: var(--color-bg-pressed); }
 .btn--l { height: 48px; font-size: var(--text-label); line-height: var(--leading-body-l); }
 .btn--inline { width: auto; }
 .btn--sm { width: 166px; height: 40px; font-size: var(--text-caption); line-height: var(--leading-caption); }

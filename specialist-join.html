@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Регистрация специалиста · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/join.css?v=1">
+</head>
+<body data-layout="guest">
+  <main class="main-wrap">
+    <section class="card card--center card--join">
+      <div class="card__head">
+        <h1 class="title-xl">Регистрация специалиста</h1>
+        <p class="text-l join__lead">После регистрации вы сможете открыть слоты в календаре. Клиенты увидят их, когда администратор проверит ваш профиль.</p>
+      </div>
+
+      <form class="controls controls--fields" id="join-form" novalidate>
+        <div class="join__row">
+          <div class="field" data-field="last_name"><div class="field__box"><div class="field__body"><label class="field__label" for="last-name">Фамилия</label><input class="field__input" id="last-name" name="last_name" autocomplete="family-name" placeholder="Фамилия" maxlength="256" required></div></div><div class="field__helper"></div></div>
+          <div class="field" data-field="first_name"><div class="field__box"><div class="field__body"><label class="field__label" for="first-name">Имя</label><input class="field__input" id="first-name" name="first_name" autocomplete="given-name" placeholder="Имя" maxlength="256" required></div></div><div class="field__helper"></div></div>
+        </div>
+
+        <div class="field" data-field="email"><div class="field__box"><div class="field__body"><label class="field__label" for="email">Эл. почта</label><input class="field__input" id="email" name="email" type="email" autocomplete="email" placeholder="Эл. почта" maxlength="256" required></div></div><div class="field__helper"></div></div>
+
+        <div class="field field--phone" data-field="phone_number">
+          <div class="field__box"><div class="field__body">
+            <label class="field__label" for="phone-number">Телефон</label>
+            <div class="field__row"><span class="field__prefix">+7</span><input class="field__input" id="phone-number" name="phone_number" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="900 000-00-00" maxlength="15" required></div>
+          </div></div>
+          <div class="field__helper"></div>
+        </div>
+
+        <!-- Специальность: выпадающий список с поиском (когда пунктов много) -->
+        <div class="field field--select" data-field="service">
+          <div class="field__box" id="service-box" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-controls="service-list">
+            <div class="field__body">
+              <label class="field__label" for="service-view">Специальность</label>
+              <input class="field__input" id="service-view" name="service_view" placeholder="Специальность" readonly tabindex="-1" autocomplete="off">
+            </div>
+            <svg class="field__caret" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <input type="hidden" name="service" id="service-value">
+          <div class="combo" id="service-popup">
+            <label class="combo__search" id="service-search-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="service-search" type="search" placeholder="Найти специальность" autocomplete="off" aria-label="Найти специальность"></label>
+            <ul class="combo__list" id="service-list" role="listbox" aria-label="Специальность"></ul>
+          </div>
+          <div class="field__helper"></div>
+        </div>
+
+        <div class="field" data-field="username"><div class="field__box"><div class="field__body"><label class="field__label" for="username">Логин</label><input class="field__input" id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Логин" maxlength="255" required></div></div><div class="field__helper">Латинские буквы, цифры и символы _ @ . -, не короче 3 символов</div></div>
+
+        <div class="join__row">
+          <div class="field" data-field="password"><div class="field__box"><div class="field__body"><label class="field__label" for="password">Пароль</label><input class="field__input" id="password" name="password" type="password" autocomplete="new-password" placeholder="Пароль" minlength="7" maxlength="100" required></div><button class="field__icon-btn" type="button" data-eye="password" aria-label="Показать пароль"></button></div><div class="field__helper">Не менее 7 символов</div></div>
+          <div class="field" data-field="password_confirmation"><div class="field__box"><div class="field__body"><label class="field__label" for="password-confirmation">Повтор пароля</label><input class="field__input" id="password-confirmation" name="password_confirmation" type="password" autocomplete="new-password" placeholder="Повтор пароля" maxlength="100" required></div><button class="field__icon-btn" type="button" data-eye="password-confirmation" aria-label="Показать пароль"></button></div><div class="field__helper"></div></div>
+        </div>
+
+        <div class="join__actions">
+          <button class="btn btn--primary btn--l" type="submit" id="submit" disabled>Зарегистрироваться</button>
+          <p class="join__login">Уже есть аккаунт? <a href="auth.html">Войти</a></p>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+  <script src="assets/join.js?v=1"></script>
+</body>
+</html>

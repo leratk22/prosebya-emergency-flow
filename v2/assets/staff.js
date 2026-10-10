@@ -118,12 +118,22 @@
   /* Меню пользователя (десктоп) и мобильное меню */
   var um = $("[data-user-menu]"), umBtn = $(".suser__btn", um);
   function setUser(on) { um.classList.toggle("is-open", on); umBtn.setAttribute("aria-expanded", on ? "true" : "false"); }
-  umBtn.addEventListener("click", function (e) { e.stopPropagation(); setUser(!um.classList.contains("is-open")); });
+  umBtn.addEventListener("click", function (e) { e.stopPropagation(); dds.forEach(function (o) { setDd(o, false); }); setUser(!um.classList.contains("is-open")); });
+  /* Выпадающие разделы шапки (десктоп) и раскрывающиеся пункты мобильного меню (только админ) */
+  var dds = $$("[data-dd]"), accs = $$("[data-acc]");
+  function setDd(g, on) { g.classList.toggle("is-open", on); $("button", g).setAttribute("aria-expanded", on ? "true" : "false"); }
+  dds.forEach(function (g) {
+    $("button", g).addEventListener("click", function (e) {
+      e.stopPropagation(); var on = !g.classList.contains("is-open");
+      dds.forEach(function (o) { setDd(o, false); }); setUser(false); setSplit(false); setDd(g, on);
+    });
+  });
+  accs.forEach(function (g) { $("button", g).addEventListener("click", function () { setDd(g, !g.classList.contains("is-open")); }); });
   var drawer = $("[data-drawer]");
   $("[data-open-menu]").addEventListener("click", function () { drawer.classList.add("is-open"); });
   $("[data-close-menu]").addEventListener("click", function () { drawer.classList.remove("is-open"); });
-  document.addEventListener("click", function () { setSplit(false); setUser(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setSplit(false); setUser(false); drawer.classList.remove("is-open"); } });
+  document.addEventListener("click", function () { setSplit(false); setUser(false); dds.forEach(function (o) { setDd(o, false); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setSplit(false); setUser(false); dds.forEach(function (o) { setDd(o, false); }); drawer.classList.remove("is-open"); } });
 
   /* Переключатель «Запись по слотам» есть в двух местах (заголовок на десктопе, плашка на мобильном) — держим их в согласии */
   var toggles = $$("[data-slot-toggle]");
@@ -136,4 +146,9 @@
   var q = new URLSearchParams(location.search);
   if (q.get("menu") === "1") { if (window.matchMedia("(min-width: 1024px)").matches) setUser(true); else drawer.classList.add("is-open"); }
   if (q.get("period") === "1") setSplit(true);
+  var sub = q.get("submenu");   // ?submenu=specialties | users — раскрыть раздел (и мобильное меню)
+  if (sub) {
+    if (window.matchMedia("(min-width: 1024px)").matches) dds.forEach(function (g) { setDd(g, g.getAttribute("data-dd") === sub); });
+    else { drawer.classList.add("is-open"); accs.forEach(function (g) { setDd(g, g.getAttribute("data-acc") === sub); }); }
+  }
 })();

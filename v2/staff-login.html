@@ -38,7 +38,18 @@
   <script src="assets/staff-auth.js?v=1"></script>
   <script>
     (function () {
-      var DEMO = { specialist: "staff-specialist.html", support: "staff-support.html", admin: "staff-admin.html" };   /* демо-вход: любой из логинов и пароль demo1234 */
+      /* демо-вход: пароли в репозитории не хранятся, только соль и SHA-256 от «соль:логин:пароль»; страница открывается по https или с localhost */
+      var DEMO = {
+        admin: { to: "staff-admin.html", hash: "ceca23b26534e2819fdbe952c6a668251541dd6315c1e20189d3c289e26d3873" },
+        spec: { to: "staff-specialist.html", hash: "64ddb86521bbc16142626009e423262b733930b6de6b43566c6076776022f3d6" },
+        support: { to: "staff-support.html", hash: "a7151e2dfdc283aac4e256a15ac91ce88d9682a5d3953dc207ba1a99f4618415" }
+      };
+      function sha256(text) {
+        if (!window.crypto || !crypto.subtle) return Promise.resolve("");
+        return crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)).then(function (buf) {
+          return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+        });
+      }
       var form = document.getElementById("login-form"), submit = document.getElementById("submit");
       var fields = { username: SA.field("username"), password: SA.field("password") };
       var altcha = document.getElementById("altcha"), altInput = document.getElementById("altcha-input"), altHint = document.getElementById("altcha-hint");
@@ -67,9 +78,11 @@
         if (!valid()) return;
         if (captcha && !altInput.checked) { altcha.classList.add("is-error"); altHint.textContent = "Проверка не пройдена. Попробуйте ещё раз"; return; }
         var u = value("username").trim().toLowerCase();
-        if (DEMO[u] && value("password") === "demo1234") { location.href = DEMO[u]; return; }
-        showToast("Неверный логин или пароль");
-        if (captcha) { altInput.checked = false; }
+        sha256("prosebya-demo-v1:" + u + ":" + value("password")).then(function (h) {
+          if (DEMO[u] && h && h === DEMO[u].hash) { location.href = DEMO[u].to; return; }
+          showToast("Неверный логин или пароль");
+          if (captcha) { altInput.checked = false; }
+        });
       });
 
       /* состояния для просмотра: ?state=error — неверные данные, ?state=required — не заполнены поля, ?state=logout — после выхода */

@@ -52,8 +52,8 @@
   <script src="assets/staff-auth.js?v=1"></script>
   <script>
     (function () {
-      /* демо: «найденные» аккаунты — specialist, support, admin; ответ сервера одинаковый, пока пара неверна — ошибка */
-      var KNOWN = ["specialist", "support", "admin"];
+      /* демо: «найденные» аккаунты — spec, support, admin; ответ сервера одинаковый, пока пара неверна — ошибка */
+      var KNOWN = ["spec", "support", "admin"];
       var form = document.getElementById("recovery-form"), submit = document.getElementById("submit");
       var fields = { username: SA.field("username"), email: SA.field("email") };
       var altcha = document.getElementById("altcha"), altInput = document.getElementById("altcha-input"), altHint = document.getElementById("altcha-hint");

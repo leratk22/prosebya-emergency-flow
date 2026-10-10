@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Календарь поддержки · Просебя</title>
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/staff.css">
+</head>
+<body class="staff" data-role="support">
+  <header class="shead">
+    <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+    <nav class="shead__nav snav" aria-label="Разделы"><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="snav__item is-active" href="staff-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="shead__user suser" data-user-menu>
+      <button class="suser__btn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="suser__avatar"><svg class="si si--16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Тест Поддержка</span><svg class="si si--caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="suser__menu" role="menu"><a class="suser__row" role="menuitem" href="auth.html"><svg class="si si--20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a></div>
+    </div>
+    <button class="shead__burger" type="button" aria-label="Меню" data-open-menu><svg class="si si--20" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+  </header>
+
+  <div class="sdrawer" data-drawer>
+    <div class="shead">
+      <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+      <button class="shead__burger" type="button" aria-label="Закрыть меню" data-close-menu><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+    </div>
+    <nav class="sdrawer__nav" aria-label="Разделы"><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="sdrawer__row is-active" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="sdrawer__account">
+      <div class="sdrawer__row"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Тест Поддержка</span></div>
+      <a class="sdrawer__row" href="auth.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a>
+    </div>
+  </div>
+
+  <main class="smain">
+    
+    <div class="stitle"><h1>Календарь</h1><p>Клик по пустой ячейке открывает слот, по открытому слоту — создаёт сессию. Протягивание открывает или закрывает несколько слотов, клик по сессии открывает её карточку.</p></div>
+    
+    
+
+    <section class="ctrl" aria-label="Параметры календаря">
+      <div class="ctrl__filters">
+        <label class="select select--spec"><span class="select__label">Специальность</span><select><option>Service</option></select><svg class="select__caret" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></label>
+        <label class="select select--who"><span class="select__label">Специалист</span><select><option>Тест Специалист</option></select><svg class="select__caret" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></label>
+      </div>
+      
+      <div class="ctrl__sep"></div>
+      <div class="ctrl__week">
+        <div class="weeksw"><button class="weeksw__step" type="button" aria-label="Предыдущая неделя" data-week="-1"><svg class="si si--20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12 5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="weeksw__now" type="button" data-week="0">Текущая неделя</button><button class="weeksw__step" type="button" aria-label="Следующая неделя" data-week="1"><svg class="si si--20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        <span class="range" data-range>05.10 – 11.10.2026</span>
+      </div>
+      <div class="ctrl__spacer"></div>
+      <div class="ctrl__copy">
+        <div class="split" data-split>
+          <button class="split__action" type="button" data-copy><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 3.5v-.5A1.5 1.5 0 0 0 9 1.5H3A1.5 1.5 0 0 0 1.5 3v6A1.5 1.5 0 0 0 3 10.5h.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Скопировать неделю на</span></button>
+          <div class="split__period">
+            <button class="split__toggle" type="button" aria-haspopup="listbox" aria-expanded="false"><span data-period-label>1 нед.</span><svg class="si si--16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <ul class="pmenu" role="listbox" aria-label="Период копирования">
+              <li class="pmenu__opt" role="option" tabindex="0" data-weeks="1" aria-selected="true"><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>1 нед.</span></li>
+              <li class="pmenu__opt" role="option" tabindex="0" data-weeks="2" aria-selected="false"><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>2 нед.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="ctrl__sep ctrl__sep--d"></div>
+      <button class="btn-danger" type="button" data-clear><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6.5 13.5h6M3.2 9.8l5.6-5.6a1.2 1.2 0 0 1 1.7 0l2.3 2.3a1.2 1.2 0 0 1 0 1.7L8.3 13H5.4L3.2 10.8a1.2 1.2 0 0 1 0-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Очистить неделю</span></button>
+    </section>
+
+    <div class="legend">
+      <div class="legend__chips">
+        <span class="legend__chip"><i class="legend__sw legend__sw--open"></i>открыт для записи</span>
+        <span class="legend__chip"><i class="legend__sw legend__sw--session"></i>сессия</span>
+        <span class="legend__chip"><i class="legend__sw legend__sw--na"></i>недоступен</span>
+        <span class="legend__chip"><i class="legend__sw legend__sw--free"></i>свободное время</span>
+      </div>
+      <div class="legend__tail"><i class="legend__bar"></i><span>слоты можно открыть на 14 дн. вперёд</span><span class="legend__dot">·</span><span class="legend__tz">время специалиста: UTC+3 (Europe/Moscow)</span></div>
+    </div>
+
+    <div class="wgrid" data-grid><div class="wgrid__scroll"><div class="wgrid__inner"></div></div></div>
+  </main>
+
+  <div class="stoast" role="status" aria-live="polite" data-toast></div>
+  <script src="assets/staff.js"></script>
+</body>
+</html>

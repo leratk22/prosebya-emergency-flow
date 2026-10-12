@@ -545,7 +545,7 @@ img { display: block; max-width: 100%; }
 .btn .btn__ico svg { width: 16px; height: 16px; }
 
 /* Кнопки записи: основная и вторичная в столбик (на телефоне во всю ширину), третичные с иконками ниже */
-.rec__call { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.rec__call { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
 .rec__call .btn, .rec__call .copy-link { width: 100%; }
 .rec__actions .btn { gap: 6px; padding: 0 12px; }
 .copy-link {

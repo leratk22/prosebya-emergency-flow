@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Клиенты · Просебя</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css?v=2">
+  <link rel="stylesheet" href="assets/staff.css?v=5">
+  <link rel="stylesheet" href="assets/staff-forms.css?v=3">
+</head>
+<body class="staff" data-role="support">
+  <header class="shead">
+    <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+    <nav class="shead__nav snav" aria-label="Разделы"><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="snav__item is-active" href="staff-clients-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="snav__item" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="shead__user suser" data-user-menu>
+      <button class="suser__btn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="suser__avatar"><svg class="si si--16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="suser__name">Тест Поддержка</span><svg class="si si--caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="suser__menu" role="menu"><a class="suser__row" role="menuitem" href="staff-login.html?state=logout"><svg class="si si--20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a></div>
+    </div>
+    <button class="shead__burger" type="button" aria-label="Меню" data-open-menu><svg class="si si--20" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+  </header>
+
+  <div class="sdrawer" data-drawer>
+    <div class="shead">
+      <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+      <button class="shead__burger" type="button" aria-label="Закрыть меню" data-close-menu><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+    </div>
+    <nav class="sdrawer__nav" aria-label="Разделы"><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="sdrawer__row is-active" href="staff-clients-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="sdrawer__row" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="sdrawer__account">
+      <div class="sdrawer__row"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Тест Поддержка</span></div>
+      <a class="sdrawer__row" href="staff-login.html?state=logout"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a>
+    </div>
+  </div>
+
+  <main class="fmain">
+    <div class="fwrap">
+    <div class="ptitle">
+      <div class="ptitle__text"><h1>Клиенты</h1><p>Всего 124 клиента.<span class="ptitle__more"> Найдите клиента по имени, телефону или почте.</span></p></div>
+      <a class="btn btn--primary btn--l btn--add" href="staff-client-support.html?new=1"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Добавить клиента</span></a>
+    </div>
+
+    <div class="cfilters" role="search"><label class="csearch"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="var(--color-fg-muted)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 13l4 4" stroke="var(--color-fg-muted)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><input type="search" data-search aria-label="Поиск клиента" placeholder="Поиск по имени, телефону или почте" autocomplete="off"></label></div>
+
+    <section class="clist" aria-label="Список клиентов">
+      <a class="crow" href="staff-client-support.html?id=0" data-q="тестовый фёдор  +7 999 716-06-35"><span class="crow__text"><span class="crow__name">Тестовый Фёдор</span><span class="crow__meta"><span>Почта не указана</span><span>+7 999 716-06-35</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=1" data-q="lera tkacheva leratk22@gmail.com +7 960 990-01-11"><span class="crow__text"><span class="crow__name">Lera Tkacheva</span><span class="crow__meta"><span>leratk22@gmail.com</span><span>+7 960 990-01-11</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=2" data-q="аня куликова akulikova@prosebya.ru +7 981 806-04-41"><span class="crow__text"><span class="crow__name">Аня Куликова</span><span class="crow__meta"><span>akulikova@prosebya.ru</span><span>+7 981 806-04-41</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=3" data-q="lefhl afasdf  +7 963 234-34-34"><span class="crow__text"><span class="crow__name">Lefhl Afasdf</span><span class="crow__meta"><span>Почта не указана</span><span>+7 963 234-34-34</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=4" data-q="настя чурсина  +7 987 439-21-03"><span class="crow__text"><span class="crow__name">Настя Чурсина</span><span class="crow__meta"><span>Почта не указана</span><span>+7 987 439-21-03</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=5" data-q="софия сергеева  +7 916 975-65-50"><span class="crow__text"><span class="crow__name">София Сергеева</span><span class="crow__meta"><span>Почта не указана</span><span>+7 916 975-65-50</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=6" data-q="анастас чурсин  +7 927 200-72-57"><span class="crow__text"><span class="crow__name">Анастас Чурсин</span><span class="crow__meta"><span>Почта не указана</span><span>+7 927 200-72-57</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="crow" href="staff-client-support.html?id=7" data-q="аня пользователева  +7 900 651-75-66"><span class="crow__text"><span class="crow__name">Аня Пользователева</span><span class="crow__meta"><span>Почта не указана</span><span>+7 900 651-75-66</span></span></span><svg class="crow__chev" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 5l5 5-5 5" stroke="var(--color-fg-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <p class="clist__empty" data-empty hidden>Никого не нашли. Проверьте имя, телефон или почту.</p>
+      <div class="clist__foot"><span data-count>Показано 8 из 124</span><button class="clist__more" type="button" data-more>Показать ещё</button></div>
+    </section>
+    </div>
+  </main>
+
+  <div class="stoast" role="status" aria-live="polite" data-toast></div>
+  <script src="assets/staff-nav.js?v=1"></script>
+  <script src="assets/staff-forms.js?v=1"></script>
+</body>
+</html>

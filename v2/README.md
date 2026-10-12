@@ -22,7 +22,7 @@ python3 -m http.server 4317
 | `loading.html` | Только лоадер | `?next=sessions.html` — переход после паузы |
 | `sessions.html` | Мои записи: только предстоящие; «Перейти в звонок» (основная), «Скопировать ссылку на встречу» (вторичная), «Перенести» и «Отменить» (третичные с иконками) | `?state=empty` — записей нет, `?reset=1` — вернуть демо-записи |
 | `specialties.html` | Запись, шаг 1 из 5 — специальность | `?state=loading`, `?state=error` |
-| `specialists.html?spec=psychologist` | Шаг 2 из 5 — специалист | `?state=loading`, `?state=error` |
+| `specialists.html?spec=psychologist` | Шаг 2 из 5 — специалист | `?state=loading`, `?state=error`, `?state=none` — нет свободных мест |
 | `specialist.html?spec=psychologist&id=2` | Шаг 3 из 5 — календарь и время (список скроллится, один тап — дальше) | `?state=none`, `?state=unavailable` |
 | `client.html` | Шаг 4 из 5 — «Проверьте ваши данные» (имя, фамилия, компания — вводятся вручную, телефон не спрашиваем: вход идёт по нему), ошибки под полями | `?state=errors` |
 | `confirm.html` | Шаг 5 из 5 — проверка записи и согласие | `?state=unchecked` — кнопка недоступна |

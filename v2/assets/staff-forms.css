@@ -1,0 +1,170 @@
+/* Просебя · кабинет сотрудников · списки и формы (клиенты, правка клиента, правка пользователя)
+   Работает поверх app.css (поля, кнопки) и staff.css (шапка, меню, выбор из списка, переключатель).
+   Макеты: Paper, страница «Сценарии · копии скриншотов», экраны «Клиенты», «Новый клиент», «Клиент · правка», «Специалист · правка». */
+
+.fmain { display: flex; flex-direction: column; gap: 16px; padding: 16px 16px 24px; }
+.fwrap { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 1280px; margin: 0 auto; }
+
+/* Ссылка «назад» над формой */
+.fback { display: inline-flex; align-items: center; align-self: flex-start; gap: 8px; height: 24px; color: var(--color-fg-accent); font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold); }
+.fback:hover { text-decoration: underline; }
+.fback svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ---------- Заголовок страницы и кнопки ---------- */
+.ptitle { display: flex; flex-direction: column; gap: 12px; }
+.ptitle__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ptitle h1 { font-size: var(--text-title-l); line-height: var(--leading-title-l); letter-spacing: var(--tracking-title-l); font-weight: var(--font-weight-semibold); }
+.ptitle p { font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-secondary); }
+.ptitle__more { display: none; }
+.btn--add { gap: 8px; width: 100%; }
+.btn--add svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ---------- Панель поиска ---------- */
+.cfilters { display: flex; padding: 12px; background: var(--color-bg-primary); border: 1px solid var(--color-border-secondary); border-radius: var(--radius-m); }
+.csearch { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; height: 48px; padding: 0 12px; border-radius: var(--radius-s); background: var(--color-bg-tertiary); }
+.csearch:focus-within { outline: 2px solid var(--color-border-accent); outline-offset: 1px; }
+.csearch svg { width: 20px; height: 20px; flex-shrink: 0; }
+.csearch input { flex: 1; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; font-size: var(--text-label); line-height: var(--leading-body-l); }
+.csearch input::placeholder { color: var(--color-fg-tertiary); opacity: 1; }
+
+/* ---------- Список клиентов ---------- */
+.fcard, .clist, .recs {
+  background: var(--color-bg-primary); border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-l); box-shadow: var(--shadow-card);
+}
+.clist { display: flex; flex-direction: column; overflow: hidden; }
+.crow { display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 12px 16px; border-bottom: 1px solid var(--color-border-secondary); }
+.crow:hover { background: var(--color-bg-tertiary); }
+.crow[hidden] { display: none; }
+.crow__text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.crow__name { font-size: var(--text-label); line-height: var(--leading-body-l); font-weight: var(--font-weight-semibold); }
+.crow__meta { display: flex; flex-direction: column; font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-tertiary); }
+.crow__meta span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.crow__chev { width: 20px; height: 20px; flex-shrink: 0; }
+.clist__empty { padding: 32px 16px; text-align: center; color: var(--color-fg-tertiary); }
+.clist__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.clist__more { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 0 12px; border: 0; border-radius: var(--radius-full); background: transparent; color: var(--color-fg-accent); font-size: var(--text-body); font-weight: var(--font-weight-semibold); }
+.clist__more:hover { background: var(--color-bg-pressed); }
+
+/* ---------- Форма ---------- */
+.fform { display: flex; flex-direction: column; gap: 24px; padding: 16px; background: var(--color-bg-primary); border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-l); box-shadow: var(--shadow-card); }
+.fgrid, .fcol { display: contents; }
+.fsec { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.fsec--spec { order: 5; }
+.fsec__title { font-size: 16px; line-height: 20px; font-weight: var(--font-weight-semibold); }
+.frow { display: flex; flex-direction: column; gap: 12px; }
+.frow > * { flex: 1; min-width: 0; }
+.fform .field__input { text-overflow: ellipsis; }
+.field--notes .field__box { align-items: flex-start; min-height: 96px; padding-block: 14px; }
+.field--notes .field__input { min-height: 56px; resize: none; }
+.fhint { font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+
+/* Шапка карточки: имя + действие, линия под ней */
+.fhead { display: flex; flex-direction: column; gap: 16px; }
+.fhead__row { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.fhead__text { display: flex; flex-direction: column; min-width: 0; }
+.fhead h1 { font-size: var(--text-title-l); line-height: var(--leading-title-l); letter-spacing: var(--tracking-title-l); font-weight: var(--font-weight-semibold); overflow-wrap: anywhere; }
+.fhead p { font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-secondary); }
+.fhead__line { height: 1px; background: var(--color-border-secondary); }
+
+/* Контурные кнопки-«таблетки» со ссылкой */
+.fpill { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; height: 40px; padding: 0 16px; border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-full); background: transparent; color: var(--color-fg-accent); font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold); white-space: nowrap; }
+.fpill:hover { background: var(--color-bg-tertiary); }
+.fpill svg { width: 16px; height: 16px; flex-shrink: 0; }
+.fpill--s { gap: 6px; height: 32px; padding: 0 12px; }
+.fpill.is-copied { color: var(--color-fg-positive); }
+
+/* Специальности: чипы */
+.fchips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fchip { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px 0 14px; border-radius: var(--radius-full); background: var(--color-bg-secondary); color: var(--color-fg-accent); font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-medium); }
+.fchip button { display: grid; place-items: center; width: 16px; height: 16px; padding: 0; border: 0; background: transparent; color: inherit; }
+.fchip svg { width: 12px; height: 12px; }
+
+/* Выбор из списка внутри формы: высота 52 на любой ширине */
+.fform .select, .fsec .select { flex: 1 1 0; width: auto; height: 52px; }
+.fsec--spec .select { flex: 0 0 auto; width: 100%; }
+
+/* Переключатели */
+.fform .toggle { flex-direction: row; justify-content: flex-start; gap: 12px; }
+.fform .toggle__text { gap: 4px; }
+.fform .toggle__title { font-size: var(--text-label); line-height: var(--leading-body-l); }
+.fform .toggle__hint { font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-secondary); }
+
+/* Кнопки формы */
+.factions { display: flex; flex-direction: column; gap: 8px; order: 9; }
+.factions .btn { width: 100%; }
+.factions__spacer { display: none; }
+.btn-danger[hidden] { display: none; }
+.btn-danger--l { height: 48px; font-size: var(--text-label); line-height: var(--leading-body-l); }
+
+/* Правка клиента: одна карточка с блоками + записи */
+.cgrid { display: flex; flex-direction: column; gap: 16px; }
+.fsub { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+/* ---------- Записи клиента ---------- */
+.recs { display: flex; flex-direction: column; gap: 4px; padding: 16px; }
+.recs__title { display: flex; align-items: baseline; gap: 8px; padding-bottom: 4px; font-size: 16px; line-height: 20px; font-weight: var(--font-weight-semibold); }
+.recs__title span { font-size: var(--text-body); font-weight: var(--font-weight-regular); color: var(--color-fg-tertiary); }
+.crec { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--color-border-secondary); }
+.crec:first-of-type { border-top: 0; }
+.crec__text { display: flex; flex-direction: column; flex: 1; min-width: 0; font-size: var(--text-body); line-height: var(--leading-body); }
+.crec__text b { font-weight: var(--font-weight-semibold); }
+.crec__text small { font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.crec.is-past .crec__text, .crec.is-past .crec__text b { color: var(--color-fg-tertiary); }
+.crec__edit { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: var(--radius-full); color: var(--color-fg-accent); }
+.crec__edit:hover { background: var(--color-bg-tertiary); }
+.crec__edit svg { width: 16px; height: 16px; }
+.recs__empty { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 24px 0 8px; text-align: center; }
+.recs__icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 8px; border-radius: var(--radius-full); background: var(--color-bg-tertiary); color: var(--color-fg-accent); }
+.recs__empty b { font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold); }
+.recs__empty span { max-width: 260px; font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-secondary); }
+
+/* ---------- Десктоп ---------- */
+@media (min-width: 1024px) {
+  .fmain { gap: 20px; padding: 24px 32px 56px; }
+  .fwrap { gap: 20px; }
+
+  .ptitle { flex-direction: row; align-items: flex-end; gap: 32px; }
+  .ptitle__text { flex: 1; }
+  .ptitle h1 { font-size: var(--text-title-xl); line-height: var(--leading-title-xl); letter-spacing: var(--tracking-title-xl); }
+  .ptitle__more { display: inline; }
+  .btn--add { flex-shrink: 0; width: auto; height: 40px; padding: 0 16px; }
+
+  .crow { padding: 0 24px; }
+  .crow__meta { flex-direction: row; }
+  .crow__meta span + span::before { content: " · "; white-space: pre; }
+  .clist__foot { padding: 12px 24px; }
+
+  /* форма: пять отдельных карточек вместо одной */
+  .fform { gap: 20px; padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+  .fgrid { display: flex; align-items: flex-start; gap: 24px; }
+  .fcol { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .fcol--main { flex: 1; }
+  .fcol--side { flex: 0 0 460px; }
+  .fcol--wide { flex: 0 0 420px; }
+  .fsec { width: 100%; padding: 24px; background: var(--color-bg-primary); border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-l); box-shadow: var(--shadow-card); }
+  .fsec--spec { order: 0; }
+  .frow { flex-direction: row; gap: 16px; }
+  .fhead__row { flex-direction: row; align-items: center; gap: 16px; }
+  .fhead__row .fhead__text { flex: 1; }
+  .fhead__row .fpill { align-self: center; }
+  .fsec--params { gap: 16px; }
+
+  .factions { flex-direction: row; align-items: center; gap: 8px; }
+  .factions .btn { width: auto; min-width: 100px; padding: 0 24px; }
+  .factions .btn--primary { width: 200px; }
+  .factions .btn--tertiary { padding: 0 12px; }
+
+  /* правка клиента: действия внутри левой карточки */
+  .fsec .factions { order: 0; margin-top: 12px; }
+  .factions__spacer { display: block; flex: 1; }
+  .factions .btn-danger { width: auto; }
+  .btn-danger--l { height: 40px; font-size: var(--text-body); line-height: var(--leading-body); }
+
+  .recs { padding: 24px; }
+  .recs__empty { padding: 32px 0 24px; }
+
+  .cgrid { flex-direction: row; align-items: flex-start; gap: 24px; }
+  .fform--one { flex: 1; min-width: 0; gap: 24px; padding: 24px; background: var(--color-bg-primary); border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-l); box-shadow: var(--shadow-card); }
+  .fform--one .factions { margin-top: 8px; }
+  .cgrid .recs { flex: 0 0 420px; }
+}

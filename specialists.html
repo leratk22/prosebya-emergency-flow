@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=4">
+  <link rel="stylesheet" href="assets/app.css?v=5">
 </head>
 <body data-layout="client" data-active="">
   <main class="main-wrap main-wrap--flex">
@@ -26,8 +26,15 @@
       var title = (SPECIALTIES.filter(function (s) { return s.id === spec; })[0] || SPECIALTIES[1]).title;
       document.getElementById("head").innerHTML = PS.stepper(2, 5, "Специалист") + '<h1 class="panel__title">' + title + "</h1>";
       var list = document.getElementById("list");
-      var state = qs("state");   /* ?state=loading, ?state=error */
+      var state = qs("state");   /* ?state=loading, ?state=error, ?state=none */
       if (state === "error") { location.replace("error.html"); return; }
+      if (state === "none") {   /* нет свободного времени ни у одного специалиста */
+        list.outerHTML = '<div class="panel__empty panel__empty--flow"><img class="panel__ill" src="assets/illustration-time.png" alt="">' +
+          '<h2 class="panel__title">Свободных мест нет</h2>' +
+          '<p class="panel__sub">Сейчас ни у одного специалиста нет свободного времени. Загляните позже или выберите другую специальность.</p>' +
+          '<a class="btn btn--primary btn--l" href="specialties.html">Выбрать другую специальность</a></div>';
+        return;
+      }
       if (state === "loading") {
         for (var i = 0; i < 6; i++) list.insertAdjacentHTML("beforeend", '<div class="prow"><div class="prow__text"><div class="skeleton" style="width:55%;height:20px"></div><div class="skeleton" style="width:90%;height:20px"></div></div></div>');
         return;

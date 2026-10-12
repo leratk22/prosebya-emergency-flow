@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=2">
+  <link rel="stylesheet" href="assets/app.css?v=3">
 </head>
 <body data-layout="client" data-active="sessions">
   <main class="main-wrap main-wrap--flex" style="padding-top:8px">
@@ -34,14 +34,21 @@
         '<a class="btn btn--primary" href="specialties.html">Записаться</a></div><div id="recs"></div>';
       document.getElementById("recs").innerHTML = list.map(function (r) {
         var s = PS.specialistById(r.specialist), ok = PS.canChange(r);
-        function act(label, href) {
-          return ok ? '<a class="btn btn--secondary btn--m" href="' + href + '">' + label + "</a>"
-                    : '<span class="btn btn--m is-disabled" aria-disabled="true">' + label + "</span>";
+        var ICO = {
+          move: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 2v2.5M10.5 2v2.5M2.5 7h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+          cancel: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>'
+        };
+        function act(label, href, ico) {
+          var inner = '<span class="btn__ico">' + ico + "</span><span>" + label + "</span>";
+          return ok ? '<a class="btn btn--tertiary btn--m" href="' + href + '">' + inner + "</a>"
+                    : '<span class="btn btn--tertiary btn--m is-disabled" aria-disabled="true">' + inner + "</span>";
         }
+        var meet = "https://meet.prosebya.ru/s/" + r.id;
         return '<article class="rec"><div class="rec__top"><div class="rec__text">' +
           '<div class="rec__when">' + PS.whenText(r.day, r.time) + '</div><div class="rec__who">' + r.spec + " · " + s.name + "</div>" +
-          '<button type="button" class="copy-link" data-copy="https://meet.prosebya.ru/s/' + r.id + '"><span class="copy-link__icon">' + ICONS.link + '</span><span class="copy-link__label">Скопировать ссылку на встречу</span></button></div>' +
-          '<div class="rec__actions">' + act("Перенести", "reschedule.html?id=" + r.id) + act("Отменить", "cancel.html?id=" + r.id) + "</div></div>" +
+          '<div class="rec__call"><a class="btn btn--primary" href="' + meet + '" target="_blank" rel="noopener">Перейти в звонок</a>' +
+          '<button type="button" class="copy-link" data-copy="' + meet + '"><span class="copy-link__icon">' + ICONS.link + '</span><span class="copy-link__label">Скопировать ссылку на встречу</span></button></div></div>' +
+          '<div class="rec__actions">' + act("Перенести", "reschedule.html?id=" + r.id, ICO.move) + act("Отменить", "cancel.html?id=" + r.id, ICO.cancel) + "</div></div>" +
           '<p class="text-s">' + HINT + "</p></article>";
       }).join("");
       PS.bindCopy(panel);

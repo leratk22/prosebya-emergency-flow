@@ -540,12 +540,20 @@ img { display: block; max-width: 100%; }
 .rec__actions .btn { flex: 1 1 0; min-width: 0; width: auto; }
 .btn--m { height: 40px; padding: 0 16px; }
 .btn.is-disabled { pointer-events: none; }
+.btn--tertiary.is-disabled { background: transparent; color: var(--color-fg-muted); }
+.btn__ico { display: grid; place-items: center; flex-shrink: 0; }
+.btn .btn__ico svg { width: 16px; height: 16px; }
+
+/* Кнопки записи: основная и вторичная в столбик (на телефоне во всю ширину), третичные с иконками ниже */
+.rec__call { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.rec__call .btn, .rec__call .copy-link { width: 100%; }
+.rec__actions .btn { gap: 6px; padding: 0 12px; }
 .copy-link {
-  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; height: 32px; margin-top: 8px; padding: 0 10px;
-  background: var(--color-bg-tertiary); border: 0; border-radius: var(--radius-s); color: var(--color-fg-accent);
-  font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 44px; padding: 0 16px;
+  background: transparent; border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-full); color: var(--color-fg-accent);
+  font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold); white-space: nowrap;
 }
-.copy-link:hover { background: var(--color-bg-secondary); }
+.copy-link:hover { background: var(--color-bg-tertiary); }
 .copy-link__icon { display: grid; place-items: center; }
 .copy-link.is-copied { color: var(--color-fg-positive); }
 
@@ -607,6 +615,8 @@ img { display: block; max-width: 100%; }
   .rec { padding: 28px 32px; }
   .rec__top { flex-direction: row; align-items: flex-start; }
   .rec__actions .btn { flex: none; }
+  .rec__call { flex-direction: row; align-items: center; }
+  .rec__call .btn, .rec__call .copy-link { width: auto; height: 40px; }
   .dt { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; }
   .dt__cal { width: 336px; flex-shrink: 0; gap: 12px; }
   .dt__slots { width: 296px; flex-shrink: 0; }

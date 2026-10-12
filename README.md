@@ -20,7 +20,7 @@ python3 -m http.server 4317
 | `auth.html` | Вход по телефону | `?state=error` — ошибка номера |
 | `sms.html` | Код из SMS: для любого номера верный код `0000` (как в исходной системе) | `?state=wrong` — неверный код |
 | `loading.html` | Только лоадер | `?next=sessions.html` — переход после паузы |
-| `sessions.html` | Мои записи: только предстоящие, «Перенести», «Отменить», копирование ссылки на встречу | `?state=empty` — записей нет, `?reset=1` — вернуть демо-записи |
+| `sessions.html` | Мои записи: только предстоящие; «Перейти в звонок» (основная), «Скопировать ссылку на встречу» (вторичная), «Перенести» и «Отменить» (третичные с иконками) | `?state=empty` — записей нет, `?reset=1` — вернуть демо-записи |
 | `specialties.html` | Запись, шаг 1 из 5 — специальность | `?state=loading`, `?state=error` |
 | `specialists.html?spec=psychologist` | Шаг 2 из 5 — специалист | `?state=loading`, `?state=error` |
 | `specialist.html?spec=psychologist&id=2` | Шаг 3 из 5 — календарь и время (список скроллится, один тап — дальше) | `?state=none`, `?state=unavailable` |

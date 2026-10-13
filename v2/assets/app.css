@@ -540,16 +540,8 @@ img { display: block; max-width: 100%; }
 .cal__day.is-today { border-color: var(--color-border-secondary); }
 .cal__day.is-selected { background: var(--color-bg-accent-brand); border-color: var(--color-bg-accent-brand); font-weight: var(--font-weight-semibold); }
 
-/* Список времени скроллится в заданной высоте */
-.slots-scroll {
-  position: relative; display: flex; flex-direction: column; gap: 16px; height: 272px; overflow-y: auto; padding-right: 8px;
-  scrollbar-width: thin; scrollbar-color: var(--color-border-primary) transparent;
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
-}
-.slots-scroll.is-end, .slots-scroll.no-scroll { -webkit-mask-image: none; mask-image: none; }
-.slots-scroll::-webkit-scrollbar { width: 4px; }
-.slots-scroll::-webkit-scrollbar-thumb { background: var(--color-border-primary); border-radius: var(--radius-full); }
+/* Список времени: на телефоне показывается целиком (без скролла внутри страницы), на десктопе скроллится в заданной высоте */
+.slots-scroll { position: relative; display: flex; flex-direction: column; gap: 16px; }
 .tgroup { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
 .tgroup__cap { font-size: var(--text-caption); line-height: var(--leading-caption); font-weight: var(--font-weight-medium); letter-spacing: 1.2px; text-transform: uppercase; color: var(--color-fg-tertiary); }
 .tgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
@@ -651,7 +643,15 @@ img { display: block; max-width: 100%; }
   .dt { flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; }
   .dt__cal { width: 336px; flex-shrink: 0; gap: 12px; }
   .dt__slots { width: 296px; flex-shrink: 0; }
-  .slots-scroll { height: 288px; }
+  .slots-scroll {
+    height: 288px; overflow-y: auto; padding-right: 8px;
+    scrollbar-width: thin; scrollbar-color: var(--color-border-primary) transparent;
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+  }
+  .slots-scroll.is-end, .slots-scroll.no-scroll { -webkit-mask-image: none; mask-image: none; }
+  .slots-scroll::-webkit-scrollbar { width: 4px; }
+  .slots-scroll::-webkit-scrollbar-thumb { background: var(--color-border-primary); border-radius: var(--radius-full); }
   .cal__day { width: 44px; height: 44px; }
   .site-footer { padding: 48px 32px; }
   .site-footer__inner { padding: 0 16px; }

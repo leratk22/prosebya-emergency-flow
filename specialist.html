@@ -32,7 +32,7 @@
       var sp = PS.specialistById(id);
       document.title = sp.name + " · Просебя";
       document.getElementById("head").innerHTML = PS.stepper(3, 5, "Дата и время") + '<h1 class="panel__title">' + sp.name + "</h1>" +
-        '<p class="panel__meta"><span class="panel__rating">' + ICONS.star + sp.rating + "</span><span>" + PS.specTitle(spec) + " · стаж " + sp.years + " " + yearsWord(sp.years) + "</span></p>";
+        '<p class="panel__meta"><span class="panel__rating">' + ICONS.star + sp.rating + "</span><span>" + "Специалист · стаж " + sp.years + " " + yearsWord(sp.years) + "</span></p>";
       function yearsWord(n) { var m = n % 100, k = n % 10; return m > 10 && m < 15 ? "лет" : k === 1 ? "год" : k > 1 && k < 5 ? "года" : "лет"; }
 
       /* Вкладки «Дата и время» / «Обо мне»: заполненное описание или заглушка (?about=none — принудительно пусто, ?tab=about — открыть «Обо мне») */
@@ -42,7 +42,7 @@
         about.innerHTML = info.p.map(function (t) { return "<p>" + t + "</p>"; }).join("") + '<h2 class="about__h">' + info.h + "</h2>" + info.q.map(function (t) { return "<p>" + t + "</p>"; }).join("");
       } else {
         about.innerHTML = '<div class="panel__empty panel__empty--flow about__empty"><img class="panel__ill" src="assets/illustration-calm.png" alt="">' +
-          '<h2 class="panel__title">Психолог пока не рассказал о себе</h2>' +
+          '<h2 class="panel__title">Специалист пока не рассказал о себе</h2>' +
           '<p class="panel__sub">Описание появится здесь позже. Вы можете выбрать удобное время — на сессии специалист познакомится с вами.</p>' +
           '<button class="btn btn--secondary" type="button" data-tab="time">Выбрать дату и время</button></div>';
       }

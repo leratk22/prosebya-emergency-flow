@@ -481,7 +481,6 @@ img { display: block; max-width: 100%; }
 .panel__body[hidden] { display: none; }
 .about { gap: 12px; padding: 20px 16px 32px; }
 .about p { font-size: var(--text-label); line-height: var(--leading-body-l); color: var(--color-fg-secondary); }
-.about__h { padding-top: 12px; font-size: var(--text-title-m); line-height: var(--leading-title-m); letter-spacing: var(--tracking-title-m); font-weight: var(--font-weight-semibold); }
 .about__empty { padding: 16px 0 8px; }
 .about__empty .panel__ill { width: 112px; height: 112px; }
 .about__empty .btn { height: 44px; padding: 0 24px; }

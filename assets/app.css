@@ -466,6 +466,26 @@ img { display: block; max-width: 100%; }
 .panel__empty--flow .btn { height: auto; min-height: 48px; padding: 12px 24px; white-space: normal; }   /* на очень узком экране подпись переносится, а не вылезает за кнопку */
 .panel__empty--flow .panel__sub { max-width: 560px; }
 .main-wrap--flex { display: flex; flex-direction: column; flex: 1; }
+/* Шаг «Дата и время»: шапка специалиста, вкладки, «Обо мне» */
+.panel__meta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px 16px; font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-medium); color: var(--color-fg-secondary); }
+.panel__rating { display: inline-flex; align-items: center; gap: 6px; }
+.panel__rating svg { width: 16px; height: 16px; color: var(--color-fg-accent); }
+.tabs { display: flex; border-bottom: 1px solid var(--color-border-secondary); }
+.tabs__tab {
+  flex: 1; height: 56px; padding: 0 8px; background: transparent; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  font-family: inherit; font-size: var(--text-label); line-height: var(--leading-body-l); font-weight: var(--font-weight-medium); color: var(--color-fg-tertiary);
+}
+.tabs__tab:hover { color: var(--color-fg-primary); }
+.tabs__tab.is-active { color: var(--color-fg-accent); font-weight: var(--font-weight-semibold); border-bottom-color: var(--color-border-accent); }
+.tabs__tab:focus-visible { outline-offset: -2px; border-radius: var(--radius-s); }
+.panel__body[hidden] { display: none; }
+.about { gap: 12px; padding: 20px 16px 32px; }
+.about p { font-size: var(--text-label); line-height: var(--leading-body-l); color: var(--color-fg-secondary); }
+.about__h { padding-top: 12px; font-size: var(--text-title-m); line-height: var(--leading-title-m); letter-spacing: var(--tracking-title-m); font-weight: var(--font-weight-semibold); }
+.about__empty { padding: 16px 0 8px; }
+.about__empty .panel__ill { width: 112px; height: 112px; }
+.about__empty .btn { height: 44px; padding: 0 24px; }
+
 
 /* Степпер: steps-pagination из дизайн-системы */
 .stepper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
@@ -608,6 +628,9 @@ img { display: block; max-width: 100%; }
   .panel__title { font-size: var(--text-title-xl); line-height: var(--leading-title-xl); letter-spacing: var(--tracking-title-xl); }
   .panel__sub { font-size: var(--text-label); line-height: var(--leading-body-l); }
   .panel__body { gap: 28px; padding: 32px; }
+  .about { padding: 28px 32px 40px; }
+  .about__empty { padding: 24px 0 16px; }
+  .about__empty .btn { width: auto; }
   .panel__body > .btn, .panel__actions .btn, .panel__fields { max-width: 320px; align-self: center; }
   .panel__fields { width: 320px; }
   .panel__empty { justify-content: center; padding: 48px 32px 32px; }

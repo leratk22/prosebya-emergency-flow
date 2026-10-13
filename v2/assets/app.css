@@ -481,9 +481,10 @@ img { display: block; max-width: 100%; }
 .panel__body[hidden] { display: none; }
 .about { gap: 12px; padding: 20px 16px 32px; }
 .about p { font-size: var(--text-label); line-height: var(--leading-body-l); color: var(--color-fg-secondary); }
-.about__empty { padding: 16px 0 8px; }
-.about__empty .panel__ill { width: 112px; height: 112px; }
-.about__empty .btn { height: 44px; padding: 0 24px; }
+.about--empty { padding: 0; }
+.about__empty { gap: 16px; padding: 32px 24px; }   /* одинаковые отступы: по бокам 24, между всеми элементами 16 */
+.about__empty .panel__ill { width: 112px; height: 112px; margin: 0; }
+.about__empty .btn { width: 100%; height: 44px; margin-top: 0; padding: 0 24px; }
 
 
 /* Степпер: steps-pagination из дизайн-системы */
@@ -628,7 +629,7 @@ img { display: block; max-width: 100%; }
   .panel__sub { font-size: var(--text-label); line-height: var(--leading-body-l); }
   .panel__body { gap: 28px; padding: 32px; }
   .about { padding: 28px 32px 40px; }
-  .about__empty { padding: 24px 0 16px; }
+  .about__empty { padding: 48px 32px; }
   .about__empty .btn { width: auto; }
   .panel__body > .btn, .panel__actions .btn, .panel__fields { max-width: 320px; align-self: center; }
   .panel__fields { width: 320px; }

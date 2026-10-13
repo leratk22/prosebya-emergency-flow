@@ -32,7 +32,7 @@
       var sp = PS.specialistById(id);
       document.title = sp.name + " · Просебя";
       document.getElementById("head").innerHTML = PS.stepper(3, 5, "Дата и время") + '<h1 class="panel__title">' + sp.name + "</h1>" +
-        '<p class="panel__meta"><span class="panel__rating">' + ICONS.star + sp.rating + "</span><span>" + "Специалист · стаж " + sp.years + " " + yearsWord(sp.years) + "</span></p>";
+        '<p class="panel__meta"><span class="panel__rating">' + ICONS.star + sp.rating + "</span><span>" + PS.specTitle(spec) + " · стаж " + sp.years + " " + yearsWord(sp.years) + "</span></p>";
       function yearsWord(n) { var m = n % 100, k = n % 10; return m > 10 && m < 15 ? "лет" : k === 1 ? "год" : k > 1 && k < 5 ? "года" : "лет"; }
 
       /* Вкладки «Дата и время» / «Обо мне»: заполненное описание или заглушка (?about=none — принудительно пусто, ?tab=about — открыть «Обо мне») */

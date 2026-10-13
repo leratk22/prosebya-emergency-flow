@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=6">
+  <link rel="stylesheet" href="assets/app.css?v=7">
 </head>
 <body data-layout="client" data-active="">
   <main class="main-wrap main-wrap--flex">
@@ -28,7 +28,7 @@
       </div>
     </section>
   </main>
-  <script src="assets/app.js?v=2"></script>
+  <script src="assets/app.js?v=3"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -37,7 +37,7 @@
       var s = PS.specialistById(id);
       document.getElementById("back").href = "client.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
       document.getElementById("head").innerHTML = PS.stepper(5, 5, "Проверка") + '<h1 class="panel__title">Проверьте запись</h1><p class="panel__sub">Если всё верно, нажмите «Записаться»</p>';
-      var rows = [["Специальность", PS.specTitle(spec)], ["Специалист", s.name], ["Дата и время", PS.shortWhen(day, time)], ["Длительность", "30 минут"]];
+      var rows = [["Специальность", PS.specTitle(spec)], ["Специалист", s.name], ["Дата и время", PS.shortWhen(day, time)]];
       document.getElementById("sum").innerHTML = rows.map(function (r) {
         return '<div class="sumrow"><span class="sumrow__k">' + r[0] + '</span><span class="sumrow__v">' + r[1] + "</span></div>";
       }).join("");

@@ -29,6 +29,8 @@
       '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10.476C4 6.353 7.587 3 12 3C16.413 3 20 6.353 20 10.476C20 15.551 15.374 19.014 11 21V18C6.847 17.794 4 14.496 4 10.476Z" fill="#344079" fill-opacity="0.1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7.9V13.1M9.4 10.5H14.6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     link:
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6.5 9.5L9.5 6.5M7 4.5L8.3 3.2C9.4 2.1 11.2 2.1 12.3 3.2C13.4 4.3 13.4 6.1 12.3 7.2L11 8.5M9 11.5L7.7 12.8C6.6 13.9 4.8 13.9 3.7 12.8C2.6 11.7 2.6 9.9 3.7 8.8L5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    star:
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.8z"/></svg>',
     calendarSmall:
       '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.6" y="5" width="16.8" height="15.4" rx="2.3" stroke="currentColor" stroke-width="2"/><path d="M7.8 3.6v2.8M16.2 3.6v2.8M3.6 9.7h16.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
   };
@@ -79,6 +81,19 @@
     { id: 10, with: "Денисом Федоровым", name: "Федоров Денис Станиславович", day: 5, time: "16:00" },
     { id: 11, with: "Еленой Захаровой", name: "Захарова Елена Романовна", day: 6, time: "11:00" }
   ];
+  /* Профиль для шага «Дата и время»: рейтинг, стаж и «Обо мне» (у части специалистов описание не заполнено — тогда заглушка) */
+  var ABOUT = [
+    { p: ["Я — психолог и семейный психотерапевт. Провожу индивидуальные консультации, работаю с семейными парами и родителями с детьми.",
+          "Помогаю клиентам найти опору, когда «земля уходит из-под ног», и достичь таких перемен в жизни, чтобы стало легче и качественнее жить."],
+      h: "С чем ко мне обращаются",
+      q: ["Ко мне обращаются люди с острыми эмоциональными состояниями: потерей работы или изменой партнёра. Я работаю с теми, кто не может решиться на смену работы или отказывается от сложных творческих задач. Ко мне приходят, когда постоянно что-то тревожит, ничего не радует, страшно летать или случаются приступы паники.",
+          "Применяю в работе системный подход: рассматриваю проблему человека как часть его взаимоотношений с окружением."] }
+  ];
+  SPECIALISTS.forEach(function (s) {
+    s.rating = (4.5 + (s.id % 5) / 10).toFixed(1);
+    s.years = 4 + s.id;
+    s.about = s.id <= 3 || s.id === 9 ? ABOUT[0] : null;
+  });
   window.SPECIALISTS = SPECIALISTS;
 
   function whenLabel(s) {
@@ -172,7 +187,7 @@
     var selected = opts.day != null ? opts.day : 1;
     var view = { y: TODAY.getFullYear(), m: TODAY.getMonth() };
     var WD = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-    root.innerHTML = '<div class="dt"><div class="dt__cal"><div class="cal" data-cal></div><p class="text-s dt__note">Сессия длится 30 минут</p></div>' +
+    root.innerHTML = '<div class="dt"><div class="dt__cal"><div class="cal" data-cal></div></div>' +
       '<div class="dt__slots"><h2 class="dt__title" data-title></h2><div class="slots-scroll" data-scroll></div></div></div>';
     var calEl = root.querySelector("[data-cal]"), scroll = root.querySelector("[data-scroll]"), title = root.querySelector("[data-title]");
 

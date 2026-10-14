@@ -18,11 +18,11 @@
       <div class="prows" id="list"></div>
     </section>
   </main>
-  <script src="assets/app.js?v=8"></script>
+  <script src="assets/app.js?v=9"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
-      document.getElementById("head").innerHTML = PS.stepper(1, 5, "Специальность") + '<h1 class="panel__title">Выберите специальность</h1>';
+      document.getElementById("head").innerHTML = PS.stepper(1, PS.flowSteps(), "Специальность") + '<h1 class="panel__title">Выберите специальность</h1>';
       var list = document.getElementById("list");
       var state = qs("state");   /* ?state=loading — скелетон, ?state=error — 500 */
       if (state === "error") { location.replace("error.html"); return; }

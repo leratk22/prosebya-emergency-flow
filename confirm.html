@@ -28,15 +28,16 @@
       </div>
     </section>
   </main>
-  <script src="assets/app.js?v=8"></script>
+  <script src="assets/app.js?v=9"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
       var spec = qs("spec") || "psychologist", id = +qs("id") || 2, day = +qs("day") || 0, time = qs("time") || "19:30";
       if (qs("day") === "0") day = 0;
       var s = PS.specialistById(id);
-      document.getElementById("back").href = "client.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
-      document.getElementById("head").innerHTML = PS.stepper(5, 5, "Проверка") + '<h1 class="panel__title">Проверьте запись</h1><p class="panel__sub">Если всё верно, нажмите «Записаться»</p>';
+      var steps = PS.flowSteps();   /* 5 шагов у клиента без записей (есть «Ваши данные»), иначе 4 */
+      document.getElementById("back").href = (steps === 5 ? "client.html" : "specialist.html") + "?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+      document.getElementById("head").innerHTML = PS.stepper(steps, steps, "Проверка") + '<h1 class="panel__title">Проверьте запись</h1><p class="panel__sub">Если всё верно, нажмите «Записаться»</p>';
       var rows = [["Специальность", PS.specTitle(spec)], ["Специалист", s.name], ["Дата и время", PS.shortWhen(day, time)]];
       document.getElementById("sum").innerHTML = rows.map(function (r) {
         return '<div class="sumrow"><span class="sumrow__k">' + r[0] + '</span><span class="sumrow__v">' + r[1] + "</span></div>";

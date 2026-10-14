@@ -144,6 +144,7 @@
   }
   /* прошедшие записи — только история, не хранятся и не меняются (две из них отменены) */
   function pastRecords() {
+    try { if (localStorage.getItem(NEWKEY) === "1") return []; } catch (e) { /* ignore */ }
     return [
       { id: 101, spec: "Психолог", specialist: 1, day: -3, time: "12:00" },
       { id: 102, spec: "Психолог", specialist: 7, day: -7, time: "18:30", status: "cancelled" },
@@ -151,9 +152,13 @@
       { id: 104, spec: "Психолог", specialist: 3, day: -19, time: "19:30", status: "cancelled" }
     ];
   }
+  /* ?reset=1 — вернуть демо-записи; ?new=1 — клиент без единой записи (нет ни предстоящих, ни прошедших) */
+  var NEWKEY = "ps_new_client";
   function loadRecords() {
     try {
-      if (new URLSearchParams(location.search).get("reset") === "1") localStorage.removeItem(KEY);
+      var q = new URLSearchParams(location.search);
+      if (q.get("reset") === "1") { localStorage.removeItem(KEY); localStorage.removeItem(NEWKEY); }
+      if (q.get("new") === "1") { localStorage.setItem(KEY, "[]"); localStorage.setItem(NEWKEY, "1"); }
       var raw = localStorage.getItem(KEY);
       if (raw) return JSON.parse(raw);
     } catch (e) { /* без хранилища работаем с демо-набором */ }
@@ -180,6 +185,9 @@
   }
   window.PS.records = loadRecords;
   window.PS.pastRecords = pastRecords;
+  /* шаг «Ваши данные» нужен только клиенту, у которого ещё не было ни одной записи (отменённые и прошедшие тоже считаются) */
+  window.PS.isNewClient = function () { return loadRecords().length === 0 && pastRecords().length === 0; };
+  window.PS.flowSteps = function () { return window.PS.isNewClient() ? 5 : 4; };
   window.PS.saveRecords = saveRecords;
   window.PS.specialistById = specialistById;
   window.PS.specTitle = specTitle;

@@ -23,7 +23,7 @@
       <div class="panel__body about" id="about" role="tabpanel" aria-labelledby="tab-about" hidden></div>
     </section>
   </main>
-  <script src="assets/app.js?v=8"></script>
+  <script src="assets/app.js?v=9"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -31,7 +31,7 @@
       document.getElementById("back").href = "specialists.html?spec=" + spec;
       var sp = PS.specialistById(id);
       document.title = sp.name + " · Просебя";
-      document.getElementById("head").innerHTML = PS.stepper(3, 5, "Дата и время") + PS.photo(sp.id, 124) + '<h1 class="panel__title">' + sp.name + "</h1>" +
+      document.getElementById("head").innerHTML = PS.stepper(3, PS.flowSteps(), "Дата и время") + PS.photo(sp.id, 124) + '<h1 class="panel__title">' + sp.name + "</h1>" +
         '<p class="panel__meta"><span class="panel__rating">' + ICONS.star + sp.rating + "</span><span>" + PS.specTitle(spec) + " · стаж " + sp.years + " " + yearsWord(sp.years) + "</span></p>";
       function yearsWord(n) { var m = n % 100, k = n % 10; return m > 10 && m < 15 ? "лет" : k === 1 ? "год" : k > 1 && k < 5 ? "года" : "лет"; }
 
@@ -76,7 +76,8 @@
         return;
       }
       PS.mountDateTime(body, { onPick: function (day, time) {
-        location.href = "client.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+        /* «Ваши данные» — только если это первая запись клиента; иначе сразу проверка */
+        location.href = (PS.isNewClient() ? "client.html" : "confirm.html") + "?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
       } });
     })();
   </script>

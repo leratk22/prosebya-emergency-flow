@@ -133,11 +133,21 @@
 
 
   /* ---------- Записи клиента (демо-данные в localStorage, сброс: ?reset=1) ---------- */
-  var KEY = "ps_records";
+  var KEY = "ps_records_v2";
   function defaultRecords() {
     return [
       { id: 1, spec: "Психолог", specialist: 2, day: 0, time: "18:00" },
-      { id: 2, spec: "Психолог", specialist: 9, day: 4, time: "12:00" }
+      { id: 2, spec: "Психолог", specialist: 9, day: 4, time: "12:00" },
+      { id: 3, spec: "Психолог", specialist: 6, day: 6, time: "14:00", status: "cancelled" }   /* отменена — без кнопок, с плашкой */
+    ];
+  }
+  /* прошедшие записи — только история, не хранятся и не меняются (две из них отменены) */
+  function pastRecords() {
+    return [
+      { id: 101, spec: "Психолог", specialist: 1, day: -3, time: "12:00" },
+      { id: 102, spec: "Психолог", specialist: 7, day: -7, time: "18:30", status: "cancelled" },
+      { id: 103, spec: "Психолог", specialist: 8, day: -11, time: "11:00" },
+      { id: 104, spec: "Психолог", specialist: 3, day: -19, time: "19:30", status: "cancelled" }
     ];
   }
   function loadRecords() {
@@ -168,6 +178,7 @@
     return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Сессия в Просебя · " + who) + "&dates=" + f(a) + "/" + f(b);
   }
   window.PS.records = loadRecords;
+  window.PS.pastRecords = pastRecords;
   window.PS.saveRecords = saveRecords;
   window.PS.specialistById = specialistById;
   window.PS.specTitle = specTitle;

@@ -510,6 +510,12 @@ img { display: block; max-width: 100%; }
 .prow .avatar { margin-right: 8px; }
 .panel__head .avatar { margin: 4px 0; }
 .rec__head { display: flex; align-items: center; gap: 16px; }
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px; align-self: flex-start; margin-top: 4px; padding: 4px 8px; border-radius: var(--radius-full);
+  background: rgba(52, 64, 121, 0.1); color: rgba(34, 38, 59, 0.6);   /* плашка статуса из макета ЛК (badge, 12/16 medium) */
+  font-size: 12px; line-height: 16px; font-weight: var(--font-weight-medium);
+}
+.status-badge svg { width: 16px; height: 16px; flex-shrink: 0; }
 .rec__headtext { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .prow__sub--muted { color: var(--color-fg-tertiary); }   /* описание специальности — светлее названия */
 

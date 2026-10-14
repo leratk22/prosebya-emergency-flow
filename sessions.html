@@ -8,50 +8,80 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=12">
+  <link rel="stylesheet" href="assets/app.css?v=13">
 </head>
 <body data-layout="client" data-active="sessions">
   <main class="main-wrap main-wrap--flex" style="padding-top:8px">
     <section class="panel panel--tall" id="panel"></section>
   </main>
-  <script src="assets/app.js?v=6"></script>
+  <script src="assets/app.js?v=7"></script>
   <script>
     (function () {
       var panel = document.getElementById("panel");
       var HINT = "Перенести или отменить можно не позднее чем за 6 часов до начала.";   /* одна и та же подпись в любом состоянии */
-      var list = PS.records().sort(function (a, b) { return a.day - b.day || (a.time < b.time ? -1 : 1); });
-      if (qs("state") === "empty") list = [];
+      var empty = qs("state") === "empty";   /* ?state=empty — записей нет совсем, ?tab=past — открыть «Прошедшие» */
+      var byDate = function (a, b) { return a.day - b.day || (a.time < b.time ? -1 : 1); };
+      var upcoming = empty ? [] : PS.records().sort(byDate);
+      var past = empty ? [] : PS.pastRecords().sort(function (a, b) { return -byDate(a, b); });
 
-      if (!list.length) {
-        panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1></div>' +
-          '<div class="panel__empty"><img class="panel__ill" src="assets/illustration-session.png" alt="">' +
-          '<h2 class="panel__title">Предстоящих записей нет</h2>' +
-          '<p class="panel__sub">Выберите специалиста и время — это займёт пару минут.</p>' +
-          '<a class="btn btn--primary btn--l" href="specialties.html">Записаться</a></div>';
-        return;
+      var ICO = {
+        move: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 2v2.5M10.5 2v2.5M2.5 7h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+        cancel: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>'
+      };
+      function head(r) {   /* фото, дата и время, специальность · имя, у отменённой — плашка */
+        var s = PS.specialistById(r.specialist);
+        return '<div class="rec__head">' + PS.photo(s.id, 80) + '<div class="rec__headtext">' +
+          '<div class="rec__when">' + PS.whenText(r.day, r.time) + '</div><div class="rec__who">' + r.spec + " · " + s.name + "</div>" +
+          (r.status === "cancelled" ? '<span class="status-badge">' + ICONS.cross + "Отменена</span>" : "") + "</div></div>";
       }
-      panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1>' +
-        '<a class="btn btn--primary" href="specialties.html">Записаться</a></div><div id="recs"></div>';
-      document.getElementById("recs").innerHTML = list.map(function (r) {
-        var s = PS.specialistById(r.specialist), ok = PS.canChange(r);
-        var ICO = {
-          move: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 2v2.5M10.5 2v2.5M2.5 7h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
-          cancel: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>'
-        };
+      function plain(r) { return '<article class="rec">' + head(r) + "</article>"; }   /* без кнопок: прошедшая или отменённая */
+      function active(r) {
+        var ok = PS.canChange(r);
         function act(label, href, ico) {
           var inner = '<span class="btn__ico">' + ico + "</span><span>" + label + "</span>";
           return ok ? '<a class="btn btn--tertiary btn--m" href="' + href + '">' + inner + "</a>"
                     : '<span class="btn btn--tertiary btn--m is-disabled" aria-disabled="true">' + inner + "</span>";
         }
         var meet = "https://meet.prosebya.ru/s/" + r.id;
-        return '<article class="rec"><div class="rec__top"><div class="rec__text">' +
-          '<div class="rec__head">' + PS.photo(s.id, 80) + '<div class="rec__headtext"><div class="rec__when">' + PS.whenText(r.day, r.time) + '</div><div class="rec__who">' + r.spec + " · " + s.name + "</div></div></div>" +
+        return '<article class="rec"><div class="rec__top"><div class="rec__text">' + head(r) +
           '<div class="rec__call"><a class="btn btn--primary" href="' + meet + '" target="_blank" rel="noopener">Перейти в звонок</a>' +
           '<button type="button" class="copy-link" data-copy="' + meet + '"><span class="copy-link__icon">' + ICONS.link + '</span><span class="copy-link__label">Скопировать ссылку на встречу</span></button></div></div>' +
           '<div class="rec__actions">' + act("Перенести", "reschedule.html?id=" + r.id, ICO.move) + act("Отменить", "cancel.html?id=" + r.id, ICO.cancel) + "</div></div>" +
           '<p class="text-s">' + HINT + "</p></article>";
-      }).join("");
+      }
+      var upHtml = upcoming.length
+        ? upcoming.map(function (r) { return r.status === "cancelled" ? plain(r) : active(r); }).join("")
+        : '<div class="panel__empty"><img class="panel__ill" src="assets/illustration-session.png" alt="">' +
+          '<h2 class="panel__title">Предстоящих записей нет</h2>' +
+          '<p class="panel__sub">Выберите специалиста и время — это займёт пару минут.</p>' +
+          '<a class="btn btn--primary btn--l" href="specialties.html">Записаться</a></div>';
+      var pastHtml = past.length ? past.map(plain).join("")
+        : '<div class="panel__empty"><h2 class="panel__title">Прошедших записей нет</h2><p class="panel__sub">Здесь появятся завершённые и отменённые сессии.</p></div>';
+
+      panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1>' +
+        (upcoming.length ? '<a class="btn btn--primary" href="specialties.html">Записаться</a>' : "") + "</div>" +
+        '<div class="tabs" role="tablist" aria-label="Мои записи">' +
+        '<button class="tabs__tab is-active" type="button" role="tab" id="tab-up" aria-selected="true" aria-controls="recs-up" data-tab="up">Предстоящие</button>' +
+        '<button class="tabs__tab" type="button" role="tab" id="tab-past" aria-selected="false" aria-controls="recs-past" tabindex="-1" data-tab="past">Прошедшие</button></div>' +
+        '<div id="recs-up" role="tabpanel" aria-labelledby="tab-up">' + upHtml + "</div>" +
+        '<div id="recs-past" role="tabpanel" aria-labelledby="tab-past" hidden>' + pastHtml + "</div>";
       PS.bindCopy(panel);
+
+      var tabs = [].slice.call(panel.querySelectorAll("[role=tab]"));
+      function openTab(name, focus) {
+        document.getElementById("recs-up").hidden = name !== "up"; document.getElementById("recs-past").hidden = name !== "past";
+        tabs.forEach(function (t) {
+          var on = t.dataset.tab === name;
+          t.classList.toggle("is-active", on); t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1;
+          if (on && focus) t.focus();
+        });
+      }
+      tabs.forEach(function (t) { t.addEventListener("click", function () { openTab(t.dataset.tab); }); });
+      panel.querySelector(".tabs").addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        openTab(document.getElementById("tab-up").classList.contains("is-active") ? "past" : "up", true);
+      });
+      if (qs("tab") === "past") openTab("past");
     })();
   </script>
 </body>

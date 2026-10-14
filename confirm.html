@@ -19,16 +19,16 @@
         <div class="sumbox" id="sum"></div>
         <div class="panel__actions">
           <label class="checkbox">
-            <input class="checkbox__input" type="checkbox" id="consent" checked>
+            <input class="checkbox__input" type="checkbox" id="consent">
             <span class="checkbox__box" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="checkbox__label">Я даю согласие на обработку персональных данных</span>
+            <span class="checkbox__label">Я принимаю условия <a href="https://sessions.prosebya.ru/legal/offer" target="_blank" rel="noopener">Оферты</a></span>
           </label>
           <button class="btn btn--primary btn--l" type="button" id="submit">Записаться</button>
         </div>
       </div>
     </section>
   </main>
-  <script src="assets/app.js?v=10"></script>
+  <script src="assets/app.js?v=12"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -45,7 +45,7 @@
         return '<div class="sumrow"><span class="sumrow__k">' + r[0] + '</span><span class="sumrow__v">' + r[1] + "</span></div>";
       }).join("");
       var consent = document.getElementById("consent"), btn = document.getElementById("submit");
-      if (qs("state") === "unchecked") consent.checked = false;   /* ?state=unchecked — кнопка недоступна */
+      if (qs("state") === "checked") consent.checked = true;   /* по умолчанию условия не приняты и кнопка недоступна; ?state=checked — приняты */
       function sync() { btn.disabled = !consent.checked; btn.classList.toggle("is-disabled", !consent.checked); }
       consent.addEventListener("change", sync); sync();
       btn.addEventListener("click", function () {

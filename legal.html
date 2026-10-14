@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Юридические документы · Просебя</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css?v=14">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" id="back" href="javascript:history.back()"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head"><h1 class="panel__title">Юридические документы</h1></div>
+      <div class="prows" id="list"></div>
+    </section>
+  </main>
+  <script src="assets/app.js?v=12"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      /* полные тексты лежат на sessions.prosebya.ru — открываем их в новой вкладке, чтобы не потерять место в записи */
+      var DOCS = [
+        ["policy", "Политика в отношении обработки персональных данных"],
+        ["consent", "Согласие на обработку персональных данных"],
+        ["terms", "Пользовательское соглашение"],
+        ["offer", "Оферта на оказание услуг"]
+      ];
+      document.getElementById("list").innerHTML = DOCS.map(function (d) {
+        return '<a class="prow" href="https://sessions.prosebya.ru/legal/' + d[0] + '" target="_blank" rel="noopener">' +
+          '<div class="prow__text"><div class="prow__title">' + d[1] + "</div></div>" + ICONS.chevron + "</a>";
+      }).join("");
+    })();
+  </script>
+</body>
+</html>

@@ -171,6 +171,12 @@
   window.PS.saveRecords = saveRecords;
   window.PS.specialistById = specialistById;
   window.PS.specTitle = specTitle;
+  /* Фото специалиста: круглый аватар. Исходники — квадраты 311×311 и 80×80, PNG 3x (933 и 240 px) → assets/photos/{id}.jpg и {id}-s.jpg.
+     До 80 px берём маленький файл, для 124 px (страница специалиста) — большой. */
+  window.PS.photo = function (id, size) {
+    var file = size > 80 ? id : id + "-s";
+    return '<img class="avatar avatar--' + size + '" src="assets/photos/' + file + '.jpg" width="' + size + '" height="' + size + '" alt="" decoding="async">';
+  };
   window.PS.canChange = canChange;
   window.PS.whenText = whenText;
   window.PS.shortWhen = shortWhen;

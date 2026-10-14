@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=11">
+  <link rel="stylesheet" href="assets/app.css?v=12">
 </head>
 <body data-layout="client" data-active="">
   <main class="main-wrap main-wrap--flex">
@@ -18,7 +18,7 @@
       <div class="prows" id="list"></div>
     </section>
   </main>
-  <script src="assets/app.js?v=5"></script>
+  <script src="assets/app.js?v=6"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -40,7 +40,7 @@
         return;
       }
       list.innerHTML = SPECIALISTS.map(function (s) {
-        return '<a class="prow" href="specialist.html?spec=' + spec + "&id=" + s.id + '">' +
+        return '<a class="prow" href="specialist.html?spec=' + spec + "&id=" + s.id + '">' + PS.photo(s.id, 56) +
           '<div class="prow__text"><div class="prow__title">' + s.name + '</div><div class="prow__sub">' + whenLabel(s) + "</div></div>" + ICONS.chevron + "</a>";
       }).join("");
     })();

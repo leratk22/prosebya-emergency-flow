@@ -502,6 +502,15 @@ img { display: block; max-width: 100%; }
 .prow__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .prow__title { font-size: var(--text-label); line-height: var(--leading-title-s); font-weight: var(--font-weight-semibold); }
 .prow__sub { font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-secondary); }
+/* фото специалиста (круг; размеры из макетов ЛК: 80 — карточки, 124 — страница специалиста; 56 — компактная строка списка) */
+.avatar { display: block; flex-shrink: 0; border-radius: 50%; object-fit: cover; background: #D2DAE7; }
+.avatar--56 { width: 56px; height: 56px; }
+.avatar--80 { width: 80px; height: 80px; }
+.avatar--124 { width: 124px; height: 124px; }
+.prow .avatar { margin-right: 8px; }
+.panel__head .avatar { margin: 4px 0; }
+.rec__head { display: flex; align-items: center; gap: 16px; }
+.rec__headtext { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .prow__sub--muted { color: var(--color-fg-tertiary); }   /* описание специальности — светлее названия */
 
 /* Сводка: специальность, специалист, дата и время */

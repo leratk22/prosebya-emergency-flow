@@ -30,8 +30,7 @@
   <script>
     (function () {
       var s = PS.specialistById(+qs("id") || 2), day = +qs("day") || 0, time = qs("time") || "19:30";
-      document.getElementById("text").textContent = "Сессия с " + s.with + " — " + PS.dateLabel(PS.addDays(PS.TODAY, day)) + " в " + time +
-        ". Письмо с деталями отправлено на почту. Если его нет, загляните в «Спам».";
+      document.getElementById("text").textContent = "Сессия с " + s.with + " — " + PS.dateLabel(PS.addDays(PS.TODAY, day)) + " в " + time + ".";
       document.getElementById("gcal").href = PS.gcalUrl(day, time, s.name);
     })();
   </script>

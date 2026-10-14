@@ -56,7 +56,7 @@
           '<p class="panel__sub">Выберите специалиста и время — это займёт пару минут.</p>' +
           '<a class="btn btn--primary btn--l" href="specialties.html">Записаться</a></div>';
       var pastHtml = past.length ? past.map(plain).join("")
-        : '<div class="panel__empty"><h2 class="panel__title">Прошедших записей нет</h2><p class="panel__sub">Здесь появятся завершённые и отменённые сессии.</p></div>';
+        : '<div class="panel__empty"><h2 class="panel__title">Прошедших записей нет</h2><p class="panel__sub">Здесь появятся ваши прошедшие сессии.</p></div>';
 
       panel.innerHTML = '<div class="panel__head panel__head--row"><h1 class="panel__title">Мои записи</h1>' +
         (upcoming.length ? '<a class="btn btn--primary" href="specialties.html">Записаться</a>' : "") + "</div>" +

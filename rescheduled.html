@@ -31,8 +31,7 @@
     (function () {
       var rec = PS.records().filter(function (r) { return r.id === +qs("id"); })[0] || { day: 1, time: "11:30", specialist: 2 };
       var s = PS.specialistById(rec.specialist);
-      document.getElementById("text").textContent = "Новое время — " + PS.dateLabel(PS.addDays(PS.TODAY, rec.day)) + " в " + rec.time +
-        ". Старая запись удалена, письмо с новой датой отправлено на почту.";
+      document.getElementById("text").textContent = "Новое время — " + PS.dateLabel(PS.addDays(PS.TODAY, rec.day)) + " в " + rec.time + ". Старая запись удалена.";
       document.getElementById("gcal").href = PS.gcalUrl(rec.day, rec.time, s.name);
     })();
   </script>

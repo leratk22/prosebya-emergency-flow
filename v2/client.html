@@ -25,7 +25,7 @@
       </form>
     </section>
   </main>
-  <script src="assets/app.js?v=9"></script>
+  <script src="assets/app.js?v=10"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -41,16 +41,22 @@
         last: { test: function (v) { return v.trim().length > 0; }, msg: "Укажите фамилию" },
         promo: { test: function (v) { return v.trim().length > 0; }, msg: "Укажите промокод" }   /* обязателен; на сервере проверяется отдельно */
       };
+      var INVALID = "Промокод не найден";   /* промокод может быть не уникальным, поэтому «уже использован» не пишем */
       var next = document.getElementById("next"), fields = {};
       Object.keys(rules).forEach(function (k) { fields[k] = document.querySelector('[data-field="' + k + '"]'); });
       function valid(k) { return rules[k].test(fields[k].querySelector("input").value); }
-      function show(k) { setFieldError(fields[k], valid(k) ? "" : rules[k].msg); }
+      var rejected = "";   /* промокод, который «сервер» уже отклонил: ошибка остаётся, пока значение не изменят */
+      function show(k) {
+        var v = fields[k].querySelector("input").value;
+        setFieldError(fields[k], !valid(k) ? rules[k].msg : (k === "promo" && v === rejected ? INVALID : ""));
+      }
       function refresh() { var ok = Object.keys(rules).every(valid); next.disabled = !ok; next.classList.toggle("is-disabled", !ok); }
       Object.keys(rules).forEach(function (k) {
         var input = fields[k].querySelector("input");
         input.addEventListener("blur", function () { show(k); refresh(); });
         input.addEventListener("input", function () { if (fields[k].classList.contains("is-error")) show(k); refresh(); });
       });
+      /* ?state=invalid — введён неверный промокод */
       /* ?state=errors — как на макете: пользователь ввёл имя и фамилию, промокод оставил пустым */
       if (qs("state") === "errors") {
         fields.first.querySelector("input").value = "София";
@@ -58,11 +64,26 @@
                 show("promo");
       }
       refresh();
+      /* ?state=invalid — имя и фамилия введены, промокод неверный */
+      if (qs("state") === "invalid") {
+        fields.first.querySelector("input").value = "София";
+        fields.last.querySelector("input").value = "Сергеева";
+        fields.promo.querySelector("input").value = "SPRING2026";
+        rejected = "SPRING2026"; show("promo");
+        refresh();
+      }
       document.getElementById("form").addEventListener("submit", function (e) {
         e.preventDefault();
         Object.keys(rules).forEach(show);
-        if (!Object.keys(rules).every(valid)) return;
-        location.href = "confirm.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+        if (!Object.keys(rules).every(valid)) return;   /* промокод пустой — записаться нельзя */
+        var input = fields.promo.querySelector("input");
+        next.disabled = true; next.textContent = "Проверяем…";
+        setTimeout(function () {   /* «сервер» проверяет промокод */
+          next.textContent = "Далее";
+          if (!PS.checkPromo(input.value)) { rejected = input.value; next.disabled = false; show("promo"); input.focus(); return; }
+          PS.setPromoOk();
+          location.href = "confirm.html?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+        }, 600);
       });
     })();
   </script>

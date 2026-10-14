@@ -95,6 +95,7 @@
     s.rating = (4.5 + (s.id % 5) / 10).toFixed(1);
     s.years = 4 + s.id;
     s.about = s.id <= 3 || s.id === 9 ? ABOUT[0] : null;
+    s.nophoto = s.id === 6;   /* у одного специалиста фото нет — показываем пустое состояние аватара */
   });
   window.SPECIALISTS = SPECIALISTS;
 
@@ -185,6 +186,10 @@
   /* Фото специалиста: круглый аватар. Исходники — квадраты 311×311 и 80×80, PNG 3x (933 и 240 px) → assets/photos/{id}.jpg и {id}-s.jpg.
      До 80 px берём маленький файл, для 124 px (страница специалиста) — большой. */
   window.PS.photo = function (id, size) {
+    if (specialistById(id).nophoto) {   /* нет фото — пустое состояние компонента avatar (Empty=Yes): серый круг 5% и «улыбка» */
+      return '<span class="avatar avatar--' + size + ' avatar--empty" role="img" aria-label="Нет фото"><svg viewBox="0 0 80 80" fill="none" aria-hidden="true">' +
+        '<path d="M23.332 38C31.3758 51.3334 49.1919 51.3332 56.6654 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>';
+    }
     var file = size > 80 ? id : id + "-s";
     return '<img class="avatar avatar--' + size + '" src="assets/photos/' + file + '.jpg" width="' + size + '" height="' + size + '" alt="" decoding="async">';
   };

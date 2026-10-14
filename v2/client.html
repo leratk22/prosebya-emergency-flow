@@ -21,11 +21,18 @@
           <div class="field" data-field="last"><div class="field__box"><div class="field__body"><label class="field__label" for="last">Фамилия</label><input class="field__input" id="last" name="last" autocomplete="family-name" placeholder="Фамилия"></div></div><div class="field__helper"></div></div>
           <div class="field" data-field="promo"><div class="field__box"><div class="field__body"><label class="field__label" for="promo">Промокод</label><input class="field__input" id="promo" name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Промокод"></div></div><div class="field__helper"></div></div>
         </div>
-        <button class="btn btn--primary btn--l" type="submit" id="next">Далее</button>
+        <div class="panel__actions">
+          <label class="checkbox">
+            <input class="checkbox__input" type="checkbox" id="consent" name="consent">
+            <span class="checkbox__box" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="checkbox__label">Я даю согласие на обработку <a href="https://sessions.prosebya.ru/legal/consent" target="_blank" rel="noopener">персональных данных</a></span>
+          </label>
+          <button class="btn btn--primary btn--l" type="submit" id="next">Далее</button>
+        </div>
       </form>
     </section>
   </main>
-  <script src="assets/app.js?v=10"></script>
+  <script src="assets/app.js?v=12"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
@@ -50,7 +57,9 @@
         var v = fields[k].querySelector("input").value;
         setFieldError(fields[k], !valid(k) ? rules[k].msg : (k === "promo" && v === rejected ? INVALID : ""));
       }
-      function refresh() { var ok = Object.keys(rules).every(valid); next.disabled = !ok; next.classList.toggle("is-disabled", !ok); }
+      var consent = document.getElementById("consent");   /* согласие на обработку ПДн — без него «Далее» недоступна */
+      function refresh() { var ok = Object.keys(rules).every(valid) && consent.checked; next.disabled = !ok; next.classList.toggle("is-disabled", !ok); }
+      consent.addEventListener("change", refresh);
       Object.keys(rules).forEach(function (k) {
         var input = fields[k].querySelector("input");
         input.addEventListener("blur", function () { show(k); refresh(); });
@@ -69,13 +78,13 @@
         fields.first.querySelector("input").value = "София";
         fields.last.querySelector("input").value = "Сергеева";
         fields.promo.querySelector("input").value = "SPRING2026";
-        rejected = "SPRING2026"; show("promo");
+        consent.checked = true; rejected = "SPRING2026"; show("promo");
         refresh();
       }
       document.getElementById("form").addEventListener("submit", function (e) {
         e.preventDefault();
         Object.keys(rules).forEach(show);
-        if (!Object.keys(rules).every(valid)) return;   /* промокод пустой — записаться нельзя */
+        if (!Object.keys(rules).every(valid) || !consent.checked) return;   /* промокод пустой или нет согласия — записаться нельзя */
         var input = fields.promo.querySelector("input");
         next.disabled = true; next.textContent = "Проверяем…";
         setTimeout(function () {   /* «сервер» проверяет промокод */

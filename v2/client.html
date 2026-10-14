@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Проверьте ваши данные · Просебя</title>
+  <title>Укажите ваши данные · Просебя</title>
   <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
@@ -33,7 +33,7 @@
       /* Экран нужен только клиенту без единой записи. Остальным — сразу проверка; ?template=1 открывает макет в любом случае (для индекса) */
       if (!qs("template") && !PS.isNewClient()) { location.replace("confirm.html" + location.search); return; }
       document.getElementById("back").href = "specialist.html?spec=" + spec + "&id=" + id;
-      document.getElementById("head").innerHTML = PS.stepper(4, 5, "Ваши данные") + '<h1 class="panel__title">Проверьте ваши данные</h1>';
+      document.getElementById("head").innerHTML = PS.stepper(4, 5, "Ваши данные") + '<h1 class="panel__title">Укажите ваши данные</h1>';
 
       /* персональные данные не подставляются: пользователь вводит их сам, «Далее» недоступна, пока всё не заполнено */
       var rules = {

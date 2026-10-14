@@ -187,6 +187,12 @@
   window.PS.pastRecords = pastRecords;
   /* шаг «Ваши данные» нужен только клиенту, у которого ещё не было ни одной записи (отменённые и прошедшие тоже считаются) */
   window.PS.isNewClient = function () { return loadRecords().length === 0 && pastRecords().length === 0; };
+  /* Промокод первой записи: валиден один — PROSEBYA26 (регистр не важен). Без подтверждённого промокода записаться нельзя */
+  var PROMO = "PROSEBYA26", PROMOKEY = "ps_promo_ok";
+  window.PS.PROMO = PROMO;
+  window.PS.checkPromo = function (v) { return String(v || "").trim().toUpperCase() === PROMO; };
+  window.PS.setPromoOk = function () { try { sessionStorage.setItem(PROMOKEY, "1"); } catch (e) { /* ignore */ } };
+  window.PS.promoOk = function () { try { return sessionStorage.getItem(PROMOKEY) === "1"; } catch (e) { return false; } };
   window.PS.flowSteps = function () { return window.PS.isNewClient() ? 5 : 4; };
   window.PS.saveRecords = saveRecords;
   window.PS.specialistById = specialistById;

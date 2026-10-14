@@ -28,12 +28,14 @@
       </div>
     </section>
   </main>
-  <script src="assets/app.js?v=9"></script>
+  <script src="assets/app.js?v=10"></script>
   <script>
     (function () {
       document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
       var spec = qs("spec") || "psychologist", id = +qs("id") || 2, day = +qs("day") || 0, time = qs("time") || "19:30";
       if (qs("day") === "0") day = 0;
+      /* первая запись без подтверждённого промокода невозможна (кроме просмотра макета: ?template=1) */
+      if (!qs("template") && PS.isNewClient() && !PS.promoOk()) { location.replace("client.html" + location.search); return; }
       var s = PS.specialistById(id);
       var steps = PS.flowSteps();   /* 5 шагов у клиента без записей (есть «Ваши данные»), иначе 4 */
       document.getElementById("back").href = (steps === 5 ? "client.html" : "specialist.html") + "?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);

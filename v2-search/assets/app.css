@@ -387,13 +387,7 @@ img { display: block; max-width: 100%; }
 }
 .psearch__clear[hidden] { display: none; }
 .psearch__clear svg { width: 10px; height: 10px; }
-.psearch__hint { margin: 8px 0 0; padding: 0 16px; font-size: var(--text-body); line-height: 20px; color: var(--color-fg-tertiary); }
 .prows { position: relative; }
-.prows.is-loading > * { opacity: 0.35; pointer-events: none; }   /* идёт поиск: список приглушён, поверх спиннер */
-.prows.is-loading::after {
-  content: ""; position: absolute; left: 50%; top: 50%; width: 32px; height: 32px; margin: -16px 0 0 -16px; border-radius: 50%;
-  border: 3px solid var(--color-bg-accent-brand); border-right-color: transparent; border-bottom-color: transparent; animation: spin 0.9s linear infinite;
-}
 .prow--skeleton:hover { background: transparent; }
 /* «Никого не нашли» — тот же шаблон, что у остальных пустых состояний (иллюстрация, заголовок), внутри белой карточки */
 .search-empty[hidden] { display: none; }

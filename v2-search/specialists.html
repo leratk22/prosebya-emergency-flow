@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=18">
+  <link rel="stylesheet" href="assets/app.css?v=19">
 </head>
 <body data-layout="client" data-active="">
   <main class="main-wrap main-wrap--flex">
@@ -18,10 +18,9 @@
       <div class="psearch" id="search">
         <label class="psearch__box">
           <svg class="psearch__ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.75"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
-          <input class="psearch__input" id="q" type="search" placeholder="Поиск по фамилии и имени" aria-label="Поиск по фамилии и имени" aria-describedby="q-hint" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+          <input class="psearch__input" id="q" type="search" placeholder="Поиск специалиста" aria-label="Поиск специалиста" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
           <button class="psearch__clear" id="q-clear" type="button" aria-label="Очистить поиск" hidden><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         </label>
-        <p class="psearch__hint" id="q-hint">Введите не менее 3 символов</p>
       </div>
       <div class="prows" id="list" aria-live="polite"></div>
       <div class="panel__empty panel__empty--flow search-empty" id="search-empty" hidden><img class="panel__ill" src="assets/illustration-search-empty.png" alt=""><h2 class="panel__title">Мы никого не нашли по вашему запросу</h2></div>
@@ -52,9 +51,10 @@
         return;
       }
 
-      /* Поиск по фамилии и имени: от 3 символов; пока идёт поиск — спиннер поверх приглушённого списка; ничего нет — заглушка под карточкой.
+      /* Поиск по списку специалистов — как в календаре специалиста: по любой части ФИО, от первой же буквы, результат обновляется сразу по мере ввода
+         (без кнопки «Найти», без порога по длине, без задержки). Слова запроса — любые подстроки полного ФИО, в любом порядке; регистр и «ё/е» не важны.
          ?q=... — открыть сразу с запросом (для просмотра состояний) */
-      var q = document.getElementById("q"), clear = document.getElementById("q-clear"), empty = document.getElementById("search-empty"), timer = null;
+      var q = document.getElementById("q"), clear = document.getElementById("q-clear"), empty = document.getElementById("search-empty");
       function norm(t) { return String(t).toLowerCase().replace(/ё/g, "е"); }
       function rowsHtml(items) {
         return items.map(function (s) {
@@ -62,40 +62,21 @@
             '<div class="prow__text"><div class="prow__title">' + s.name + '</div><div class="prow__sub">' + whenLabel(s) + "</div></div>" + ICONS.chevron + "</a>";
         }).join("");
       }
-      /* Ищем по фамилии и имени: слова запроса — это начала слов («Иван» найдёт Иванов и Иван), в любом порядке.
-         Отчество участвует, только если введено три слова и больше (полное ФИО), — иначе «Иван» находил бы и всех «…Иванович». */
       function matches(query) {
         var words = norm(query).split(/\s+/).filter(Boolean);
-        return SPECIALISTS.filter(function (s) {
-          var parts = norm(s.name).split(" ").slice(0, words.length >= 3 ? 3 : 2);
-          function assign(i, used) {
-            if (i === words.length) return true;
-            for (var k = 0; k < parts.length; k++) if (used.indexOf(k) === -1 && parts[k].indexOf(words[i]) === 0 && assign(i + 1, used.concat(k))) return true;
-            return false;
-          }
-          return assign(0, []);
-        });
+        return SPECIALISTS.filter(function (s) { var n = norm(s.name); return words.every(function (w) { return n.indexOf(w) !== -1; }); });
       }
       function render() {
-        var v = q.value.trim(), found = v.length >= 3 ? matches(v) : SPECIALISTS;   /* до 3 символов список не фильтруется */
-        list.classList.remove("is-loading");
+        clear.hidden = !q.value;
+        var found = matches(q.value);   /* пустой запрос — все специалисты */
         list.innerHTML = rowsHtml(found);
         list.hidden = !found.length; empty.hidden = !!found.length;
       }
-      function onInput(immediate) {
-        clearTimeout(timer);
-        clear.hidden = !q.value;
-        if (q.value.trim().length < 3) { render(); return; }
-        empty.hidden = true; list.hidden = false;
-        if (immediate) { render(); return; }
-        list.classList.add("is-loading");
-        timer = setTimeout(render, 500);   /* «сервер» отвечает не мгновенно */
-      }
-      q.addEventListener("input", function () { onInput(false); });
-      q.addEventListener("keydown", function (e) { if (e.key === "Escape" && q.value) { q.value = ""; onInput(true); } });
-      clear.addEventListener("click", function () { q.value = ""; onInput(true); q.focus(); });
+      q.addEventListener("input", render);
+      q.addEventListener("keydown", function (e) { if (e.key === "Escape" && q.value) { q.value = ""; render(); } });
+      clear.addEventListener("click", function () { q.value = ""; render(); q.focus(); });
       if (qs("q")) q.value = qs("q");
-      onInput(true);
+      render();
     })();
   </script>
 </body>

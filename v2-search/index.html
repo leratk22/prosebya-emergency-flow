@@ -8,12 +8,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/app.css?v=18">
+  <link rel="stylesheet" href="assets/app.css?v=19">
 </head>
 <body data-layout="guest">
   <main class="main-wrap">
     <div class="index" style="padding:0">
-      <div class="page-title"><h1 class="title-xl">Аварийный флоу · итерация с поиском</h1><p class="text-l" style="margin-bottom:8px"><b>Это отдельная итерация.</b> От основного прототипа (<a href="../v2/index.html" style="color:var(--color-fg-accent);text-decoration:underline">v2</a>) отличается только страницей выбора специалиста: на ней добавлен поиск по фамилии и имени. Всё остальное совпадает с v2.</p><p class="text-l">Вход, запись, перенос и отмена. Состояния — параметрами в адресе.</p></div>
+      <div class="page-title"><h1 class="title-xl">Аварийный флоу · итерация с поиском</h1><p class="text-l" style="margin-bottom:8px"><b>Это отдельная итерация.</b> От основного прототипа (<a href="../v2/index.html" style="color:var(--color-fg-accent);text-decoration:underline">v2</a>) отличается только страницей выбора специалиста: на ней добавлен поиск специалиста (по любой части ФИО). Всё остальное совпадает с v2.</p><p class="text-l">Вход, запись, перенос и отмена. Состояния — параметрами в адресе.</p></div>
 
       <section class="index__group"><h2 class="index__heading">0 · Вход и мои записи</h2>
         <a class="index__link" href="auth.html"><span>Вход по телефону</span><small>?state=error</small></a>
@@ -26,7 +26,7 @@
         <a class="index__link" href="specialties.html?reset=1"><span>Запись · клиент с историей</span><small>4 шага, без «Ваших данных» (по умолчанию)</small></a>
         <a class="index__link" href="specialties.html?new=1"><span>Запись · первая запись клиента</span><small>5 шагов, с «Вашими данными»; ?new=1 — нет ни одной записи, ?reset=1 — вернуть</small></a>
         <a class="index__link" href="specialties.html?new=1"><span>1 из 5 · Специальность</span><small>?state=loading · ?state=error</small></a>
-        <a class="index__link" href="specialists.html?spec=psychologist&new=1"><span>2 из 5 · Специалист</span><small>есть поиск по фамилии и имени · ?state=loading · ?state=error · ?state=none · ?q=Ольга (найден) · ?q=Лдлотрим (никого нет)</small></a>
+        <a class="index__link" href="specialists.html?spec=psychologist&new=1"><span>2 из 5 · Специалист</span><small>есть поиск специалиста (по любой части ФИО, сразу при вводе) · ?state=loading · ?state=error · ?state=none · ?q=Ольга (найден) · ?q=Лдлотрим (никого нет)</small></a>
         <a class="index__link" href="specialist.html?spec=psychologist&id=2&new=1"><span>3 из 5 · Дата и время</span><small>?state=none · ?state=unavailable</small></a>
         <a class="index__link" href="specialist.html?spec=psychologist&id=2&tab=about&new=1"><span>3 из 5 · Обо мне</span><small>вкладка с описанием специалиста</small></a>
         <a class="index__link" href="specialist.html?spec=psychologist&id=5&tab=about&new=1"><span>3 из 5 · Обо мне не заполнено</span><small>заглушка, если специалист ничего о себе не рассказал</small></a>

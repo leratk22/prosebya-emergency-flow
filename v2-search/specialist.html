@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Выберите дату и время · Просебя</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css?v=18">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" id="back" href="specialists.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <div class="tabs" role="tablist" aria-label="Специалист">
+        <button class="tabs__tab is-active" type="button" role="tab" id="tab-time" aria-selected="true" aria-controls="body" data-tab="time">Дата и время</button>
+        <button class="tabs__tab" type="button" role="tab" id="tab-about" aria-selected="false" aria-controls="about" tabindex="-1" data-tab="about">Обо мне</button>
+      </div>
+      <div class="panel__body" id="body" role="tabpanel" aria-labelledby="tab-time"></div>
+      <div class="panel__body about" id="about" role="tabpanel" aria-labelledby="tab-about" hidden></div>
+    </section>
+  </main>
+  <script src="assets/app.js?v=12"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var spec = qs("spec") || "psychologist", id = +qs("id") || 2;
+      document.getElementById("back").href = "specialists.html?spec=" + spec;
+      var sp = PS.specialistById(id);
+      document.title = sp.name + " · Просебя";
+      document.getElementById("head").innerHTML = PS.stepper(3, PS.flowSteps(), "Дата и время") + PS.photo(sp.id, 124) + '<h1 class="panel__title">' + sp.name + "</h1>" +
+        '<p class="panel__meta"><span class="panel__rating">' + ICONS.star + sp.rating + "</span><span>" + PS.specTitle(spec) + " · стаж " + sp.years + " " + yearsWord(sp.years) + "</span></p>";
+      function yearsWord(n) { var m = n % 100, k = n % 10; return m > 10 && m < 15 ? "лет" : k === 1 ? "год" : k > 1 && k < 5 ? "года" : "лет"; }
+
+      /* Вкладки «Дата и время» / «Обо мне»: заполненное описание или заглушка (?about=none — принудительно пусто, ?tab=about — открыть «Обо мне») */
+      var about = document.getElementById("about"), tabs = [].slice.call(document.querySelectorAll("[data-tab]"));
+      var info = qs("about") === "none" ? null : sp.about;
+      if (info) {
+        about.innerHTML = info.map(function (t) { return "<p>" + t + "</p>"; }).join("");
+      } else {
+        about.classList.add("about--empty");
+        about.innerHTML = '<div class="panel__empty panel__empty--flow about__empty"><img class="panel__ill" src="assets/illustration-calm.png" alt="">' +
+          '<h2 class="panel__title">Специалист пока не рассказал о себе</h2>' +
+          '<p class="panel__sub">Описание появится здесь позже. Вы можете выбрать удобное время — на сессии специалист познакомится с вами.</p>' +
+          '<button class="btn btn--secondary" type="button" data-tab="time">Выбрать дату и время</button></div>';
+      }
+      function openTab(name, focus) {
+        document.getElementById("body").hidden = name !== "time"; about.hidden = name !== "about";
+        tabs.forEach(function (t) {
+          if (!t.getAttribute("role")) return;
+          var on = t.dataset.tab === name;
+          t.classList.toggle("is-active", on); t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1;
+          if (on && focus) t.focus();
+        });
+      }
+      about.addEventListener("click", function (e) { if (e.target.closest("[data-tab=time]")) openTab("time"); });
+      tabs.forEach(function (t) { if (t.getAttribute("role")) t.addEventListener("click", function () { openTab(t.dataset.tab); }); });
+      document.querySelector(".tabs").addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        openTab(document.getElementById("tab-time").classList.contains("is-active") ? "about" : "time", true);
+      });
+      if (qs("tab") === "about") openTab("about");
+      var body = document.getElementById("body");
+      var state = qs("state");   /* ?state=none — нет мест, ?state=unavailable — время недоступно */
+      if (state === "none") {
+        body.innerHTML = '<div class="panel__center"><h2 class="panel__title">Нет свободных мест</h2><p class="panel__sub">Всё время занято или специалист в отпуске</p></div>';
+        return;
+      }
+      if (state === "unavailable") {
+        body.innerHTML = '<img class="panel__ill" src="assets/illustration-time.png" alt="" style="width:180px;height:180px;object-fit:contain">' +
+          '<div class="panel__center"><h2 class="panel__title">Время для записи недоступно</h2></div>' +
+          '<a class="btn btn--primary btn--l" href="specialist.html?spec=' + spec + "&id=" + id + '">Выбрать другое время</a>';
+        return;
+      }
+      PS.mountDateTime(body, { onPick: function (day, time) {
+        /* «Ваши данные» — только если это первая запись клиента; иначе сразу проверка */
+        location.href = (PS.isNewClient() ? "client.html" : "confirm.html") + "?spec=" + spec + "&id=" + id + "&day=" + day + "&time=" + encodeURIComponent(time);
+      } });
+    })();
+  </script>
+</body>
+</html>

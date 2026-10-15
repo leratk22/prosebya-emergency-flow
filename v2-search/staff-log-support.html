@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Журнал действий · Просебя</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css?v=18">
+  <link rel="stylesheet" href="assets/staff.css?v=5">
+  <link rel="stylesheet" href="assets/staff-forms.css?v=3">
+  <link rel="stylesheet" href="assets/staff-log.css?v=3">
+</head>
+<body class="staff" data-role="support">
+  <header class="shead">
+    <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+    <nav class="shead__nav snav" aria-label="Разделы"><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="snav__item" href="staff-clients-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="snav__item is-active" href="staff-log-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="snav__item" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="shead__user suser" data-user-menu>
+      <button class="suser__btn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="suser__avatar"><svg class="si si--16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="suser__name">Тест Поддержка</span><svg class="si si--caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="suser__menu" role="menu"><a class="suser__row" role="menuitem" href="staff-login.html?state=logout"><svg class="si si--20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a></div>
+    </div>
+    <button class="shead__burger" type="button" aria-label="Меню" data-open-menu><svg class="si si--20" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+  </header>
+
+  <div class="sdrawer" data-drawer>
+    <div class="shead">
+      <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+      <button class="shead__burger" type="button" aria-label="Закрыть меню" data-close-menu><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+    </div>
+    <nav class="sdrawer__nav" aria-label="Разделы"><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="sdrawer__row" href="staff-clients-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="sdrawer__row is-active" href="staff-log-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="sdrawer__row" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="sdrawer__account">
+      <div class="sdrawer__row"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Тест Поддержка</span></div>
+      <a class="sdrawer__row" href="staff-login.html?state=logout"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a>
+    </div>
+  </div>
+
+  <main class="fmain">
+    <div class="fwrap">
+    <div class="ptitle ptitle--tabs">
+      <div class="ptitle__text"><h1>Журнал действий</h1><p><span class="ptitle__short">Кто, что и когда изменял.</span><span class="ptitle__more">Кто, что и когда изменял: записи, очистки слотов, клиентов, графики.</span></p></div>
+      <nav class="ltabs" aria-label="Раздел"><a class="ltabs__tab is-active" href="staff-log-support.html" aria-current="page">Журнал действий</a><a class="ltabs__tab" href="staff-sms-support.html">SMS-коды</a></nav>
+    </div>
+
+    <form class="lfilters" data-log-filters novalidate>
+      <label class="select lf__obj"><span class="select__label">Объект</span><select><option selected>Все</option><option>Слоты</option><option>Записи</option><option>Клиенты</option></select><svg class="select__caret" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="width:20px;height:20px;margin-top:-10px;right:12px"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></label>
+      <label class="select lf__who"><span class="select__label">Кто</span><select><option selected>Все</option><option>Admin Admin</option><option>Тест Поддержка</option><option>Тест Специалист</option><option>Клиент +7 960 990-01-11</option></select><svg class="select__caret" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="width:20px;height:20px;margin-top:-10px;right:12px"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></label>
+      <div class="lf__dates">
+        <label class="select"><span class="select__label">С</span><input type="text" inputmode="numeric" placeholder="дд.мм.гггг" data-from autocomplete="off"><svg class="select__ico" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="14" height="12.5" rx="2" stroke="var(--color-fg-muted)" stroke-width="1.6"/><path d="M6.5 3v3M13.5 3v3M3 8.5h14" stroke="var(--color-fg-muted)" stroke-width="1.6" stroke-linecap="round"/></svg></label>
+        <label class="select"><span class="select__label">По</span><input type="text" inputmode="numeric" placeholder="дд.мм.гггг" data-to autocomplete="off"><svg class="select__ico" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="14" height="12.5" rx="2" stroke="var(--color-fg-muted)" stroke-width="1.6"/><path d="M6.5 3v3M13.5 3v3M3 8.5h14" stroke="var(--color-fg-muted)" stroke-width="1.6" stroke-linecap="round"/></svg></label>
+      </div>
+      <span class="lf__spacer"></span>
+      <button class="btn btn--primary btn--l lf__go" type="submit">Показать</button>
+      <button class="btn btn--tertiary btn--l lf__reset" type="reset">Сбросить</button>
+    </form>
+
+    <section class="ltable ltable--log" aria-label="Журнал действий">
+      <div class="ltable__head" aria-hidden="true"><span>Дата</span><span>Кто</span><span>Действие</span><span>Изменения</span><span>Событие</span></div>
+      <article class="lrow" data-type="slots" data-who="Admin Admin" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:21:55</span></div>
+        <div class="lrow__who"><b>Admin Admin</b><span>администратор</span></div>
+        <div class="lrow__title">Слоты · Светлана Кундюкова</div>
+        
+        <dl class="lrow__chg"><div><dt>Открыты:</dt><dd class="lv">14.10 04:00</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--pos">создание</span></div>
+      </article>
+      <article class="lrow" data-type="slots" data-who="Admin Admin" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:21:53</span></div>
+        <div class="lrow__who"><b>Admin Admin</b><span>администратор</span></div>
+        <div class="lrow__title">Слоты · Светлана Кундюкова</div>
+        
+        <dl class="lrow__chg"><div><dt>Открыты:</dt><dd class="lv">09.10 08:30</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--pos">создание</span></div>
+      </article>
+      <article class="lrow" data-type="rec" data-who="Тест Поддержка" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:21:35</span></div>
+        <div class="lrow__who"><b>Тест Поддержка</b><span>поддержка</span></div>
+        <div class="lrow__title">Запись №64</div>
+        <a class="lrow__link" href="#">История и SMS</a>
+        <dl class="lrow__chg"><div><dt>Начало:</dt><dd>14.10.2026 09:00</dd></div><div><dt>Окончание:</dt><dd>16.10.2026 02:00 → 14.10.2026 09:30</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--acc">изменение</span></div>
+      </article>
+      <article class="lrow" data-type="rec" data-who="Тест Специалист" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:21:06</span></div>
+        <div class="lrow__who"><b>Тест Специалист</b><span>специалист</span></div>
+        <div class="lrow__title">Запись №65</div>
+        <a class="lrow__link" href="#">История и SMS</a>
+        <dl class="lrow__chg"><div><dt>Начало:</dt><dd>14.10.2026 12:00</dd></div><div><dt>Окончание:</dt><dd>14.10.2026 12:30</dd></div><div><dt>Специалист:</dt><dd>Анастасия Понаморёва</dd></div><div><dt>Специальность:</dt><dd>Психолог</dd></div><div><dt>Клиент:</dt><dd>№28</dd></div><div><dt>Статус:</dt><dd>Забронировано</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--pos">создание</span></div>
+      </article>
+      <article class="lrow" data-type="client" data-who="Тест Специалист" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:21:00</span></div>
+        <div class="lrow__who"><b>Тест Специалист</b><span>специалист</span></div>
+        <div class="lrow__title">Клиент №28</div>
+        <a class="lrow__link" href="#">История и SMS</a>
+        <dl class="lrow__chg"><div><dt>Имя:</dt><dd>–</dd></div><div><dt>Фамилия:</dt><dd>–</dd></div><div><dt>Телефон:</dt><dd>+7 987 439-21-03</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--pos">создание</span></div>
+      </article>
+      <article class="lrow" data-type="slots" data-who="Тест Специалист" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:17:57</span></div>
+        <div class="lrow__who"><b>Тест Специалист</b><span>специалист</span></div>
+        <div class="lrow__title">Слоты · Тест Специалист</div>
+        
+        <dl class="lrow__chg"><div><dt>Открыты:</dt><dd>14.10 06:00, 14.10 06:30, 14.10 07:00, 14.10 07:30 и ещё 23</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--pos">создание</span></div>
+      </article>
+      <article class="lrow" data-type="rec" data-who="Клиент +7 960 990-01-11" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>13:08:08</span></div>
+        <div class="lrow__who"><b>Клиент +7 960 990-01-11</b><span>клиент</span></div>
+        <div class="lrow__title">Запись №62</div>
+        <a class="lrow__link" href="#">История и SMS</a>
+        <dl class="lrow__chg"><div><dt>Начало:</dt><dd>12.10.2026 09:30</dd></div><div><dt>Окончание:</dt><dd>12.10.2026 10:00</dd></div><div><dt>Статус:</dt><dd>Забронировано</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--neg">удаление</span></div>
+      </article>
+      <article class="lrow" data-type="rec" data-who="Admin Admin" data-date="2026-10-12">
+        <div class="lrow__date"><b>12.10.2026</b><span>12:56:25</span></div>
+        <div class="lrow__who"><b>Admin Admin</b><span>администратор</span></div>
+        <div class="lrow__title">Запись №33</div>
+        <a class="lrow__link" href="#">История и SMS</a>
+        <dl class="lrow__chg"><div><dt>Статус:</dt><dd>Забронировано → Отменено</dd></div></dl>
+        <div class="lrow__ev"><span class="evchip evchip--acc">изменение</span></div>
+      </article>
+      <p class="clist__empty" data-empty hidden>Записей не нашли. Измените фильтры.</p>
+      <div class="clist__foot"><span data-count>Показано 8 записей</span><button class="clist__more" type="button" data-more>Показать ещё</button></div>
+    </section>
+    </div>
+  </main>
+
+  <div class="stoast" role="status" aria-live="polite" data-toast></div>
+  <script src="assets/staff-nav.js?v=1"></script>
+  <script src="assets/staff-log.js?v=1"></script>
+</body>
+</html>

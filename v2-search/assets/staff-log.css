@@ -1,0 +1,137 @@
+/* Просебя · кабинет сотрудников · «Журнал действий» и «SMS-коды» (поддержка, админ)
+   Работает поверх app.css, staff.css и staff-forms.css (панель, список, подвал «Показать ещё»).
+   Макеты: Paper, экраны «Журнал действий» и «SMS-коды», десктоп и мобильная версия. */
+
+/* ---------- Заголовок и вкладки ---------- */
+.ptitle--tabs { gap: 12px; }
+.ptitle__short { display: inline; }
+.ltabs { display: inline-flex; align-items: center; align-self: flex-start; gap: 4px; }
+.ltabs__tab { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: var(--radius-full); color: var(--color-fg-tertiary); font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-medium); white-space: nowrap; }
+.ltabs__tab:hover { background: var(--color-bg-pressed); }
+.ltabs__tab.is-active { background: var(--color-bg-secondary); color: var(--color-fg-accent); font-weight: var(--font-weight-semibold); }
+
+/* ---------- Фильтры ---------- */
+.lfilters { display: flex; flex-direction: column; gap: 12px; padding: 12px; background: var(--color-bg-primary); border: 1px solid var(--color-border-secondary); border-radius: var(--radius-m); }
+.lfilters .select { flex: 0 0 auto; width: 100%; height: 52px; }
+.select input { appearance: none; -webkit-appearance: none; width: 100%; height: 100%; padding: 18px 28px 0 0; border: 0; outline: 0; background: transparent; font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-medium); color: var(--color-fg-primary); }
+.select input::placeholder { color: var(--color-fg-tertiary); opacity: 1; font-weight: var(--font-weight-regular); }
+.select__ico { position: absolute; right: 12px; top: 50%; width: 20px; height: 20px; margin-top: -10px; pointer-events: none; }
+.lf__dates { display: flex; gap: 8px; }
+.lf__dates .select { flex: 1 1 0; width: auto; min-width: 0; }
+.lf__spacer { display: none; }
+.lfilters .btn { width: 100%; }
+.lf__go { order: 8; }
+.lf__reset { order: 9; }
+
+/* ---------- Таблица (на телефоне — карточки) ---------- */
+.ltable { display: flex; flex-direction: column; overflow: hidden; background: var(--color-bg-primary); border: 1px solid var(--color-border-button-secondary); border-radius: var(--radius-l); box-shadow: var(--shadow-card); }
+.ltable__head { display: none; }
+.ltable .clist__empty[hidden] { display: none; }
+.lrow { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "date ev" "title title" "who who" "chg chg" "link link"; align-items: center; padding: 16px; border-bottom: 1px solid var(--color-border-secondary); }
+.lrow[hidden] { display: none; }
+.lrow > * { min-width: 0; }
+.lrow__date { grid-area: date; display: flex; gap: 4px; font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.lrow__date b { font-weight: var(--font-weight-regular); }
+.lrow__ev { grid-area: ev; display: flex; justify-content: flex-end; }
+.lrow__title { grid-area: title; margin-top: 8px; font-size: var(--text-label); line-height: var(--leading-body-l); font-weight: var(--font-weight-semibold); }
+.lrow__who { grid-area: who; margin-top: 4px; font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.lrow__who b { font-weight: var(--font-weight-regular); }
+.lrow__who span::before { content: " · "; white-space: pre; }
+.lrow__chg { grid-area: chg; display: flex; flex-direction: column; gap: 4px; margin: 8px 0 0; }
+.lrow__chg > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+.lrow__chg dt { font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.lrow__chg dd { margin: 0; font-size: var(--text-label); line-height: var(--leading-body-l); overflow-wrap: anywhere; }
+.lrow__chg dd.lv { padding: 0 10px; border-radius: var(--radius-xs); background: var(--color-bg-tertiary); font-size: var(--text-body); line-height: 24px; }
+.lrow__link { grid-area: link; justify-self: start; margin-top: 12px; font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-semibold); color: var(--color-fg-accent); }
+.lrow__link:hover { text-decoration: underline; }
+
+/* Плашка события: полупрозрачная заливка, без обводки */
+.evchip { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: var(--radius-full); font-size: var(--text-caption); line-height: var(--leading-caption); font-weight: var(--font-weight-medium); white-space: nowrap; }
+.evchip::before { content: ""; width: 6px; height: 6px; border-radius: var(--radius-full); background: currentColor; }
+.evchip { color: var(--color-fg-primary); }
+.evchip--pos { background: rgba(117, 159, 69, 0.16); }
+.evchip--pos::before { color: var(--color-fg-positive); }
+.evchip--acc { background: rgba(52, 64, 121, 0.1); }
+.evchip--acc::before { color: var(--color-fg-accent); }
+.evchip--neg { background: rgba(241, 93, 86, 0.12); }
+.evchip--neg::before { color: var(--color-fg-negative); }
+
+/* ---------- SMS-коды: карточка на телефоне ---------- */
+.srow { grid-template-columns: 1fr auto; grid-template-areas: "phone code" "date date" "sms sms" "try try" "login login" "ip ip"; row-gap: 4px; }
+.srow__date { grid-area: date; }
+.srow__phone { grid-area: phone; font-size: var(--text-label); line-height: var(--leading-body-l); font-weight: var(--font-weight-semibold); }
+.srow__code { grid-area: code; display: flex; justify-content: flex-end; }
+.srow__sms { grid-area: sms; margin-top: 4px; }
+.srow__try { grid-area: try; }
+.srow__login { grid-area: login; }
+.srow__ip { grid-area: ip; }
+.srow [data-label] { display: flex; align-items: baseline; gap: 8px; font-size: var(--text-body); line-height: var(--leading-body); }
+.srow [data-label]::before { content: attr(data-label); font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.srow__login b { font-weight: var(--font-weight-regular); }
+.srow__login span { display: none; }
+.srow__login b + span { display: inline; }
+.srow__login b + span::before { content: " "; }
+.srow__try.is-zero { color: var(--color-fg-tertiary); }
+.dash, .srow__login .dash { display: inline !important; }
+.codechip { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: var(--radius-xs); background: var(--color-bg-tertiary); font-size: var(--text-body); font-weight: var(--font-weight-semibold); letter-spacing: 0.15em; }
+.srow__date { display: flex; gap: 4px; font-size: var(--text-caption); line-height: var(--leading-caption); color: var(--color-fg-tertiary); }
+.lfilters .csearch { flex: none; }
+.srow__date b { font-weight: var(--font-weight-regular); }
+
+/* ---------- Десктоп ---------- */
+@media (min-width: 1024px) {
+  .ptitle--tabs { align-items: flex-end; }
+  .ptitle__short { display: none; }
+  .ltabs { align-self: flex-end; margin-bottom: 4px; }
+
+  .lfilters { flex-direction: row; align-items: center; gap: 12px; }
+  .lfilters .select { height: 52px; }
+  .lf__obj { flex: 0 0 220px !important; width: 220px !important; }
+  .lf__who { flex: 0 0 260px !important; width: 260px !important; }
+  .lf__dates { flex: 0 0 332px; }
+  .lf__spacer { display: block; flex: 1; }
+  .lfilters .btn { width: auto; height: 40px; font-size: var(--text-body); line-height: var(--leading-body); padding: 0 16px; }
+  .lf__go { order: 9; }
+  .lf__reset { order: 8; }
+  .lfilters--sms .csearch { flex: 0 0 360px; }
+  .lfilters .csearch { flex: 0 0 360px; }
+
+  .ltable__head, .lrow { display: grid; column-gap: 16px; padding-inline: 24px; align-items: start; }
+  .ltable__head { height: 44px; align-items: center; border-bottom: 1px solid var(--color-border-secondary); font-size: var(--text-caption); line-height: var(--leading-caption); letter-spacing: 0.06em; text-transform: uppercase; font-weight: var(--font-weight-medium); color: var(--color-fg-tertiary); }
+  .ltable--log .ltable__head, .ltable--log .lrow { grid-template-columns: 120px 208px 248px minmax(0, 1fr) 120px; }
+  .ltable--log .ltable__head span:last-child { text-align: right; }
+  .lrow { grid-template-areas: "date who title chg ev" "date who link chg ev"; grid-template-rows: auto 1fr; padding-block: 16px; }
+  .lrow__date { flex-direction: column; gap: 0; font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-tertiary); }
+  .lrow__date b { font-weight: var(--font-weight-semibold); color: var(--color-fg-primary); }
+  .lrow__who { margin-top: 0; display: flex; flex-direction: column; font-size: var(--text-body); line-height: var(--leading-body); }
+  .lrow__who b { font-weight: var(--font-weight-medium); color: var(--color-fg-primary); }
+  .lrow__who span::before { content: none; }
+  .lrow__title { margin-top: 0; font-size: var(--text-body); line-height: var(--leading-body); }
+  .lrow__link { margin-top: 0; justify-self: start; }
+  .lrow__chg { margin-top: 0; gap: 0; }
+  .lrow__chg > div { flex-wrap: nowrap; gap: 6px; align-items: baseline; }
+  .lrow__chg dt { font-size: var(--text-body); line-height: var(--leading-body); }
+  .lrow__chg dd { font-size: var(--text-body); line-height: var(--leading-body); }
+  .lrow__chg dd.lv { padding: 0; border-radius: 0; background: none; line-height: var(--leading-body); }
+  .lrow__chg dt { flex-shrink: 0; }
+  .lrow__chg dd { flex: 1; min-width: 0; }
+  .lrow__ev { justify-content: flex-end; align-self: start; margin-top: -2px; }
+
+  .ltable--sms .ltable__head, .srow { grid-template-columns: 112px 148px 72px minmax(0, 1fr) 140px 112px 128px; align-items: center; }
+  .srow { grid-template-areas: "date phone code sms try login ip"; row-gap: 0; padding-block: 12px; min-height: 56px; }
+  .srow__date, .srow__login { display: flex; flex-direction: column; font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-tertiary); }
+  .srow__date b, .srow__login b { font-weight: var(--font-weight-semibold); color: var(--color-fg-primary); }
+  .srow__phone { font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-medium); }
+  .srow__code { justify-content: flex-start; }
+  .codechip { height: 24px; }
+  .srow__sms { margin-top: 0; }
+  .srow [data-label] { display: block; font-size: var(--text-body); line-height: var(--leading-body); }
+  .srow [data-label]::before { content: none; }
+  .srow__ip { color: var(--color-fg-tertiary); }
+  .srow__try { font-weight: var(--font-weight-semibold); }
+  .srow__try.is-zero { font-weight: var(--font-weight-regular); }
+  .srow__login span { display: block !important; }
+  .srow__login b + span::before { content: none; }
+  .srow__login .dash { color: var(--color-fg-muted); }
+  .ltable .clist__foot { padding-inline: 24px; }
+}

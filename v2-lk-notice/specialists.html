@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Выберите специалиста · Просебя</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css?v=20">
+</head>
+<body data-layout="client" data-active="">
+  <main class="main-wrap main-wrap--flex">
+    <a class="back" href="specialties.html"><span data-icon="back"></span>Назад</a>
+    <section class="panel">
+      <div class="panel__head" id="head"></div>
+      <div class="prows" id="list"></div>
+    </section>
+  </main>
+  <script src="assets/app.js?v=12"></script>
+  <script>
+    (function () {
+      document.querySelector("[data-icon=back]").outerHTML = ICONS.back;
+      var spec = qs("spec") || "psychologist";
+      var title = (SPECIALTIES.filter(function (s) { return s.id === spec; })[0] || SPECIALTIES[1]).title;
+      document.getElementById("head").innerHTML = PS.stepper(2, PS.flowSteps(), "Специалист") + '<h1 class="panel__title">' + title + "</h1>";
+      var list = document.getElementById("list");
+      var state = qs("state");   /* ?state=loading, ?state=error, ?state=none */
+      if (state === "error") { location.replace("error.html"); return; }
+      if (state === "none") {   /* нет свободного времени ни у одного специалиста */
+        list.outerHTML = '<div class="panel__empty panel__empty--flow"><img class="panel__ill" src="assets/illustration-time.png" alt="">' +
+          '<h2 class="panel__title">Свободных мест нет</h2>' +
+          '<p class="panel__sub">Сейчас ни у одного специалиста нет свободного времени. Загляните позже или выберите другую специальность.</p>' +
+          '<a class="btn btn--primary btn--l" href="specialties.html">Выбрать другую специальность</a></div>';
+        return;
+      }
+      if (state === "loading") {
+        for (var i = 0; i < 6; i++) list.insertAdjacentHTML("beforeend", '<div class="prow"><div class="prow__text"><div class="skeleton" style="width:55%;height:20px"></div><div class="skeleton" style="width:90%;height:20px"></div></div></div>');
+        return;
+      }
+      list.innerHTML = SPECIALISTS.map(function (s) {
+        return '<a class="prow" href="specialist.html?spec=' + spec + "&id=" + s.id + '">' + PS.photo(s.id, 56) +
+          '<div class="prow__text"><div class="prow__title">' + s.name + '</div><div class="prow__sub">' + whenLabel(s) + "</div></div>" + ICONS.chevron + "</a>";
+      }).join("");
+    })();
+  </script>
+</body>
+</html>

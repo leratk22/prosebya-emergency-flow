@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SMS-коды · Просебя</title>
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css?v=20">
+  <link rel="stylesheet" href="assets/staff.css?v=5">
+  <link rel="stylesheet" href="assets/staff-forms.css?v=3">
+  <link rel="stylesheet" href="assets/staff-log.css?v=3">
+</head>
+<body class="staff" data-role="support">
+  <header class="shead">
+    <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+    <nav class="shead__nav snav" aria-label="Разделы"><a class="snav__item" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="snav__item" href="staff-clients-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="snav__item is-active" href="staff-log-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="snav__item" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="shead__user suser" data-user-menu>
+      <button class="suser__btn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="suser__avatar"><svg class="si si--16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="suser__name">Тест Поддержка</span><svg class="si si--caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="suser__menu" role="menu"><a class="suser__row" role="menuitem" href="staff-login.html?state=logout"><svg class="si si--20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a></div>
+    </div>
+    <button class="shead__burger" type="button" aria-label="Меню" data-open-menu><svg class="si si--20" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+  </header>
+
+  <div class="sdrawer" data-drawer>
+    <div class="shead">
+      <a class="shead__logo" href="staff-support.html" aria-label="Просебя"><img src="assets/logo.svg" alt="Просебя" width="93" height="26"></a>
+      <button class="shead__burger" type="button" aria-label="Закрыть меню" data-close-menu><svg class="si si--16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+    </div>
+    <nav class="sdrawer__nav" aria-label="Разделы"><a class="sdrawer__row" href="#"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="4.5" cy="12" r="1.1" fill="currentColor"/><circle cx="4.5" cy="18" r="1.1" fill="currentColor"/></svg><span>Записи</span></a><a class="sdrawer__row" href="staff-clients-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20.5c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18.5 15.3c1.7.7 2.7 2.3 3 5.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Клиенты</span></a><a class="sdrawer__row is-active" href="staff-log-support.html" aria-current="page"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.8-6.5L3 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3.5V8h4.5M12 7.5V12l3.2 2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Журнал действий</span></a><a class="sdrawer__row" href="staff-support.html"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 2.8v3.4M16.5 2.8v3.4M3 10h18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Календарь</span></a></nav>
+    <div class="sdrawer__account">
+      <div class="sdrawer__row"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 20.5c.7-3.8 3.9-6 8.5-6s7.8 2.2 8.5 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Тест Поддержка</span></div>
+      <a class="sdrawer__row" href="staff-login.html?state=logout"><svg class="si" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h11M17 8l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выйти</span></a>
+    </div>
+  </div>
+
+  <main class="fmain">
+    <div class="fwrap">
+    <div class="ptitle ptitle--tabs">
+      <div class="ptitle__text"><h1>SMS-коды</h1><p><span class="ptitle__short">Коды входа клиентов по SMS.</span><span class="ptitle__more">Коды входа клиентов по SMS: кому и когда отправлен, доставлен ли, сколько было попыток ввода.</span></p></div>
+      <nav class="ltabs" aria-label="Раздел"><a class="ltabs__tab" href="staff-log-support.html">Журнал действий</a><a class="ltabs__tab is-active" href="staff-sms-support.html" aria-current="page">SMS-коды</a></nav>
+    </div>
+
+    <form class="lfilters lfilters--sms" data-sms-filters novalidate>
+      <label class="csearch"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="var(--color-fg-muted)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 13l4 4" stroke="var(--color-fg-muted)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg><input type="search" data-phone placeholder="Телефон или его часть" aria-label="Телефон или его часть" autocomplete="off"></label>
+      <span class="lf__spacer"></span>
+      <button class="btn btn--primary btn--l lf__go" type="submit">Показать</button>
+      <button class="btn btn--tertiary btn--l lf__reset" type="reset">Сбросить</button>
+    </form>
+
+    <section class="ltable ltable--sms" aria-label="SMS-коды">
+      <div class="ltable__head" aria-hidden="true"><span>Дата</span><span>Номер телефона</span><span>Код</span><span>SMS</span><span>Попыток ввода</span><span>Вход</span><span>IP</span></div>
+      <article class="lrow srow" data-q="+79997160635">
+        <div class="srow__date"><b>12.10.2026</b><span>11:20:34</span></div>
+        <div class="srow__phone">+7 999 716-06-35</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>12.10.2026</b><span>11:20:42</span></div>
+        <div class="srow__ip" data-label="IP:">45.114.60.12</div>
+      </article>
+      <article class="lrow srow" data-q="+79632343434">
+        <div class="srow__date"><b>12.10.2026</b><span>11:05:39</span></div>
+        <div class="srow__phone">+7 963 234-34-34</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>12.10.2026</b><span>11:05:42</span></div>
+        <div class="srow__ip" data-label="IP:">188.242.232.130</div>
+      </article>
+      <article class="lrow srow" data-q="+79609900111">
+        <div class="srow__date"><b>12.10.2026</b><span>11:04:33</span></div>
+        <div class="srow__phone">+7 960 990-01-11</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>12.10.2026</b><span>11:04:36</span></div>
+        <div class="srow__ip" data-label="IP:">31.56.229.67</div>
+      </article>
+      <article class="lrow srow" data-q="+79874392103">
+        <div class="srow__date"><b>11.10.2026</b><span>21:00:34</span></div>
+        <div class="srow__phone">+7 987 439-21-03</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>11.10.2026</b><span>21:00:37</span></div>
+        <div class="srow__ip" data-label="IP:">95.27.69.85</div>
+      </article>
+      <article class="lrow srow" data-q="+79818060441">
+        <div class="srow__date"><b>11.10.2026</b><span>18:55:45</span></div>
+        <div class="srow__phone">+7 981 806-04-41</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>11.10.2026</b><span>18:55:50</span></div>
+        <div class="srow__ip" data-label="IP:">94.19.213.24</div>
+      </article>
+      <article class="lrow srow" data-q="+79818060441">
+        <div class="srow__date"><b>11.10.2026</b><span>13:40:37</span></div>
+        <div class="srow__phone">+7 981 806-04-41</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">2</div>
+        <div class="srow__login" data-label="Вход:"><b>11.10.2026</b><span>13:40:45</span></div>
+        <div class="srow__ip" data-label="IP:">94.19.213.24</div>
+      </article>
+      <article class="lrow srow" data-q="+79818060441">
+        <div class="srow__date"><b>11.10.2026</b><span>13:37:11</span></div>
+        <div class="srow__phone">+7 981 806-04-41</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try is-zero" data-label="Попыток ввода:">0</div>
+        <div class="srow__login" data-label="Вход:"><span class="dash">–</span></div>
+        <div class="srow__ip" data-label="IP:">94.19.213.24</div>
+      </article>
+      <article class="lrow srow" data-q="+79818203015">
+        <div class="srow__date"><b>11.10.2026</b><span>13:17:50</span></div>
+        <div class="srow__phone">+7 981 820-30-15</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try is-zero" data-label="Попыток ввода:">0</div>
+        <div class="srow__login" data-label="Вход:"><span class="dash">–</span></div>
+        <div class="srow__ip" data-label="IP:">31.76.87.59</div>
+      </article>
+      <article class="lrow srow" data-q="+79609900111">
+        <div class="srow__date"><b>11.10.2026</b><span>11:57:44</span></div>
+        <div class="srow__phone">+7 960 990-01-11</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>11.10.2026</b><span>11:57:46</span></div>
+        <div class="srow__ip" data-label="IP:">31.56.229.67</div>
+      </article>
+      <article class="lrow srow" data-q="+79633233036">
+        <div class="srow__date"><b>10.10.2026</b><span>19:48:15</span></div>
+        <div class="srow__phone">+7 963 323-30-36</div>
+        <div class="srow__code"><span class="codechip">0000</span></div>
+        <div class="srow__sms" data-label="SMS:">Тестовый код, SMS не отправлялось</div>
+        <div class="srow__try" data-label="Попыток ввода:">1</div>
+        <div class="srow__login" data-label="Вход:"><b>10.10.2026</b><span>19:48:17</span></div>
+        <div class="srow__ip" data-label="IP:">178.253.16.229</div>
+      </article>
+      <p class="clist__empty" data-empty hidden>Таких номеров нет. Проверьте цифры.</p>
+      <div class="clist__foot"><span data-count>Показано 10 из 482</span><button class="clist__more" type="button" data-more>Показать ещё</button></div>
+    </section>
+    </div>
+  </main>
+
+  <div class="stoast" role="status" aria-live="polite" data-toast></div>
+  <script src="assets/staff-nav.js?v=1"></script>
+  <script src="assets/staff-log.js?v=1"></script>
+</body>
+</html>

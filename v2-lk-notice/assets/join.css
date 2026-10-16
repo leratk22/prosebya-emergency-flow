@@ -1,0 +1,58 @@
+/* Просебя · регистрация специалиста · дополнения к app.css (поля, кнопки и карточка — оттуда) */
+
+.card--join .controls { max-width: 480px; }
+.join__lead { max-width: 560px; }
+.join__row { display: flex; flex-direction: column; gap: 12px; }
+.join__actions { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 320px; margin: 12px auto 0; }
+.join__login { text-align: center; font-size: var(--text-body); line-height: var(--leading-body); color: var(--color-fg-tertiary); }
+.join__login a { font-weight: var(--font-weight-semibold); color: var(--color-fg-accent); }
+.join__login a:hover { text-decoration: underline; }
+.card--join .card__head { gap: 8px; }
+
+/* Показ пароля */
+.field__icon-btn { color: var(--color-fg-muted); cursor: pointer; }
+.field__icon-btn:hover { color: var(--color-fg-tertiary); }
+
+/* Выпадающий список специальностей */
+.field--select { position: relative; }
+.field--select .field__box { cursor: pointer; }
+.field--select .field__input { cursor: pointer; pointer-events: none; text-overflow: ellipsis; }
+.field__caret { flex-shrink: 0; color: var(--color-fg-muted); transition: transform 0.15s; }
+.field--select.is-open .field__box { border-bottom-color: var(--color-border-accent); }
+.field--select.is-open .field__caret { transform: rotate(180deg); }
+.field--select .field__box:focus-visible { outline: 2px solid var(--color-border-accent); outline-offset: -2px; border-radius: var(--radius-s); }
+/* поле readonly: подпись показываем, когда выбрано значение */
+.field--select:has(.field__input:not(:placeholder-shown)) .field__label { display: block; }
+
+.combo {
+  position: absolute; left: 0; right: 0; top: 60px; z-index: 20; display: none; flex-direction: column;
+  padding: 6px; background: var(--color-bg-primary); border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-m); box-shadow: 0 12px 24px -4px rgba(34, 38, 59, 0.16);
+}
+.field--select.is-open .combo { display: flex; }
+.combo__search {
+  display: flex; align-items: center; gap: 8px; height: 40px; margin-bottom: 4px; padding: 0 12px;
+  border-radius: var(--radius-s); background: var(--color-bg-tertiary); color: var(--color-fg-muted);
+}
+.combo__search input {
+  flex: 1; min-width: 0; padding: 0; border: 0; outline: 0; background: transparent;
+  font: inherit; font-size: var(--text-body); color: var(--color-fg-primary);
+}
+.combo__search input::placeholder { color: var(--color-fg-tertiary); }
+.combo__search[hidden] { display: none; }
+.combo__list { max-height: 208px; margin: 0; padding: 0; overflow-y: auto; list-style: none; }
+.combo__opt {
+  display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border-radius: var(--radius-s);
+  font-size: var(--text-body); line-height: var(--leading-body); font-weight: var(--font-weight-medium); color: var(--color-fg-primary); cursor: pointer;
+}
+.combo__opt > span { flex: 1; }
+.combo__opt:hover, .combo__opt.is-active { background: var(--color-bg-tertiary); }
+.combo__opt[aria-selected="true"] { font-weight: var(--font-weight-semibold); color: var(--color-fg-accent); }
+.combo__opt svg { display: none; flex-shrink: 0; color: var(--color-fg-accent); }
+.combo__opt[aria-selected="true"] svg { display: block; }
+.combo__empty { padding: 10px 12px; font-size: var(--text-body); color: var(--color-fg-tertiary); }
+
+@media (min-width: 640px) {
+  .join__row { flex-direction: row; gap: 16px; }
+  .join__row > .field { flex: 1; min-width: 0; }
+}
